@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->id();
+            $table->string('tel');
+            $table->string('rue');
+            $table->unsignedInteger('maisonNum');
+            $table->string('ville');
+            $table->string('pays');
+            $table->decimal('zip', 10, 2);
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
