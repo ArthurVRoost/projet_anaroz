@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('commentaires', function (Blueprint $table) {
             $table->id();
+            $table->text('message');
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('blog_id')->nullable()->constrained('blogs')->nullOnDelete();
             $table->timestamps();
         });
     }

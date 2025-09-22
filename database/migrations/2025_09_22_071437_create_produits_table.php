@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->decimal('prix', 8,2);
+            $table->unsignedBigInteger('stock');
+            $table->boolean('isPinned')->default(false);
+            $table->string('image1');
+            $table->string('image2')->nullable();
+            $table->string('image3')->nullable();
+            $table->string('image4')->nullable();
+            $table->string('couleur');
+            $table->text('description');
+            $table->foreignId('produitscategorie_id')->nullable()->constrained('produits_categories')->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }
