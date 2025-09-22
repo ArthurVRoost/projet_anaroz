@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('produitscategorie_id')->nullable()->constrained('produits_categories')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('promo_id')->nullable()->constrained('promos')->nullOnDelete();
             $table->timestamps();
         });
     }
