@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('paniers', function (Blueprint $table) {
             $table->id();
+            $table->integer('quantite');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('produit_id')->nullable()->constrained('produits')->nullOnDelete();
             $table->timestamps();
         });
     }

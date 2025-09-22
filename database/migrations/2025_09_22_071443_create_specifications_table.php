@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('specifications', function (Blueprint $table) {
             $table->id();
+            $table->decimal('width', 8, 2);
+            $table->decimal('height', 8, 2);
+            $table->decimal('depth', 8, 2);
+            $table->decimal('weight', 8, 2);
+            $table->boolean('quality_check')->default(false);
+            $table->foreignId('produit_id')->constrained('produits');
             $table->timestamps();
         });
     }
