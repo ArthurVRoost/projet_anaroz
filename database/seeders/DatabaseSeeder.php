@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Dupont',
             'prenom' => 'Jean',
             'pseudo' => 'Goat',
-            'role_id', 6,
+            'role_id' => 6,
             'email' => 'test@example.com',
         ]);
         $this->call([
@@ -29,7 +29,11 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             CommentaireSeeder::class,
             ContactInfoSeeder::class,
+            ProduitsCategorieSeeder::class,
             PromoSeeder::class,
+            ProduitSeeder::class,
+            SpecificationSeeder::class,
+
         ]);
         DB::table('blog_tag')->insert([
             

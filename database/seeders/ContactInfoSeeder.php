@@ -18,7 +18,8 @@ class ContactInfoSeeder extends Seeder
             [
                 'rue' => 'Place de la minoterie',
                 'ville' => 'Molenbeek',
-                'contryCode' => '+32',
+                'etat_province' => 'Brabant-Flamand',
+                'countryCode' => '+32',
                 'zip' => '1080',
                 'number' => 10,
                 'email' => 'AnarozMolengeek@email.com',
