@@ -4,17 +4,17 @@ import '../../css/details.css'
 import Nav from "@/Components/Nav";
 
 export default function Default({ produit, prixFinal, reduction, specifications, bannerImage }) {
-  const [activeTab, setActiveTab] = useState("description");
-const [activeImage, setActiveImage] = useState(produit.images[0]);
-  const [fade, setFade] = useState(false);
+    const [activeTab, setActiveTab] = useState("description");
+    const [activeImage, setActiveImage] = useState(produit.images[0]);
+    const [fade, setFade] = useState(false);
 
-  const handleThumbnailClick = (img) => {
-    setFade(true);
-    setTimeout(() => {
-      setActiveImage(img);
-      setFade(false);
-    }, 200); 
-  };
+    const handleThumbnailClick = (img) => {
+        setFade(true);
+        setTimeout(() => {
+        setActiveImage(img);
+        setFade(false);
+        }, 200); 
+    };
   return (
     <>
     <Nav/>
