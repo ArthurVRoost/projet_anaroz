@@ -1,0 +1,36 @@
+.featured-grid .card {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.featured-grid .card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 200px;
+}
+
+.text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.explore-link {
+  font-weight: bold;
+  color: #ec4899; /* rose Tailwind */
+  transition: opacity 0.3s ease;
+}
+
+.image-section {
+  max-height: 120px;
+  object-fit: contain;
+  margin-left: 15px;
+}

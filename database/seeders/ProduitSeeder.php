@@ -158,13 +158,13 @@ class ProduitSeeder extends Seeder
                 'couleur' => 'Blanc',
                 'produitscategorie_id' => 1,
                 'user_id' => 1,
-                'promo_id' => null,
+                'promo_id' => 1,
                 
             ],
             [
-                'nom' => 'Chaise Bureau Moderne',
+                'nom' => 'Canapé Bureau Moderne',
                 'description' => 'Chaise de bureau ergonomique avec dossier réglable.',
-                'prix' => 179.00,
+                'prix' => 189.00,
                 'stock' => 18,
                 'isPinned' => false,
                 'image1' => 'feature_1.png',
@@ -178,9 +178,9 @@ class ProduitSeeder extends Seeder
                 
             ],
             [
-                'nom' => 'Chaise Bureau Moderne',
+                'nom' => 'Bureau Moderne',
                 'description' => 'Chaise de bureau ergonomique avec dossier réglable.',
-                'prix' => 179.00,
+                'prix' => 169.00,
                 'stock' => 18,
                 'isPinned' => false,
                 'image1' => 'feature_2.png',
@@ -194,7 +194,7 @@ class ProduitSeeder extends Seeder
                 
             ],
             [
-                'nom' => 'Chaise Bureau Moderne',
+                'nom' => 'Fauteil Bureau Moderne',
                 'description' => 'Chaise de bureau ergonomique avec dossier réglable.',
                 'prix' => 179.00,
                 'stock' => 18,
@@ -210,9 +210,9 @@ class ProduitSeeder extends Seeder
                 
             ],
             [
-                'nom' => 'Chaise Bureau Moderne',
+                'nom' => 'Bibliotheque Bureau Moderne',
                 'description' => 'Chaise de bureau ergonomique avec dossier réglable.',
-                'prix' => 179.00,
+                'prix' => 189.00,
                 'stock' => 18,
                 'isPinned' => false,
                 'image1' => 'feature_4.png',
@@ -226,9 +226,9 @@ class ProduitSeeder extends Seeder
                 
             ],
             [
-                'nom' => 'Chaise Bureau Moderne',
+                'nom' => 'Lampe Bureau Moderne',
                 'description' => 'Chaise de bureau ergonomique avec dossier réglable.',
-                'prix' => 179.00,
+                'prix' => 169.00,
                 'stock' => 18,
                 'isPinned' => false,
                 'image1' => 'offer_img.png',

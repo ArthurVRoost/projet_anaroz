@@ -96,6 +96,55 @@ class SpecificationSeeder extends Seeder
                 'quality_check' => true,
                 'produit_id' => 9,
             ],
+            [
+                'width' => 40,
+                'height' => 50,
+                'depth' => 30,
+                'weight' => 7,
+                'quality_check' => true,
+                'produit_id' => 10,
+            ],
+            [
+                'width' => 40,
+                'height' => 50,
+                'depth' => 30,
+                'weight' => 7,
+                'quality_check' => true,
+                'produit_id' => 11,
+            ],
+
+            [
+                'width' => 40,
+                'height' => 50,
+                'depth' => 30,
+                'weight' => 7,
+                'quality_check' => true,
+                'produit_id' => 12,
+            ],
+            [
+                'width' => 40,
+                'height' => 50,
+                'depth' => 30,
+                'weight' => 7,
+                'quality_check' => true,
+                'produit_id' => 13,
+            ],
+            [
+                'width' => 40,
+                'height' => 50,
+                'depth' => 30,
+                'weight' => 7,
+                'quality_check' => true,
+                'produit_id' => 14,
+            ],
+            [
+                'width' => 40,
+                'height' => 50,
+                'depth' => 30,
+                'weight' => 7,
+                'quality_check' => true,
+                'produit_id' => 15,
+            ],
         ]);
     }
 }

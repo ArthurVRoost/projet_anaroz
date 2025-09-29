@@ -18,15 +18,18 @@ class HomeController extends Controller
         $bannerProducts = Produit::where('image1', 'banner_img.png')
             ->orWhere('image1', 'like', 'product_%')
             ->get();
-        
+        // URL de base pour les images
+        $imageBaseUrl = asset('storage');
         // Récupérer les produits featured (avec images feature_)
         $featuredProducts = Produit::whereIn('image1', [
             'feature_1.png', 
             'feature_2.png', 
             'feature_3.png', 
             'feature_4.png'
-        ])->get();
-        
+        ])->get()->map(function ($p) use ($imageBaseUrl) {
+            $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
+            return $p;
+        });
         // Récupérer les produits pour la section "Awesome Shop" (8 premiers produits avec product_)
         $shopProducts = Produit::where('image1', 'like', 'product_%')
             ->take(8)
@@ -43,8 +46,7 @@ class HomeController extends Controller
         // Récupérer toutes les catégories
         $categories = ProduitsCategorie::all();
         
-        // URL de base pour les images
-        $imageBaseUrl = asset('storage');
+        
         
         return Inertia::render('Home', compact(
             'bannerProducts',

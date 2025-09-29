@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 Route::get('/home', [HomeController::class, 'index']);
+Route::get('/details/{id}', [DetailsController::class, 'show'])->name('details.show');
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
