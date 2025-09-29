@@ -15,7 +15,9 @@ class HomeController extends Controller
     public function index()
     {
         // Récupérer les produits pour le carousel banner
-        $bannerProducts = Produit::where('image1', 'banner_img.png')->get();
+        $bannerProducts = Produit::where('image1', 'banner_img.png')
+            ->orWhere('image1', 'like', 'product_%')
+            ->get();
         
         // Récupérer les produits featured (avec images feature_)
         $featuredProducts = Produit::whereIn('image1', [

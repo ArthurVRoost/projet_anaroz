@@ -52,7 +52,6 @@ export default function Nav() {
             </div>
 
             <div className="dropdown-menu user-dropdown">
-              <Link href="/account" className="dropdown-item">Mon compte</Link>
               {/* si route() n'est pas défini dans ton projet, remplace par "/logout" */}
               <Link href={route ? route('logout') : '/logout'} method="post" as="button" className="dropdown-item">
                 Logout
