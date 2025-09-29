@@ -205,7 +205,7 @@ class ProduitSeeder extends Seeder
                 
             ],
             [
-                'nom' => 'Fauteil Bureau Moderne',
+                'nom' => 'Fauteuil Bureau Moderne',
                 'description' => 'Chaise de bureau ergonomique avec dossier réglable.',
                 'prix' => 179.00,
                 'stock' => 18,

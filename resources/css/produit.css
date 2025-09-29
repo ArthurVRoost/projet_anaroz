@@ -71,18 +71,23 @@
   gap: 20px;
 }
 
-.produit-card {
+.produit-card,
+.card {
   background: #fff;
   border: 1px solid #eee;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
+  transition: transform 0.2s, box-shadow 0.3s, border 0.3s;
   cursor: pointer;
-  transition: transform 0.2s;
 }
 
-.produit-card:hover {
+/* Effet hover avec ombre légère */
+.produit-card:hover,
+.card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* ombre douce */
+  border: 1px solid rgba(0, 0, 0, 0.08);       /* border subtile */
 }
 
 .produit-card img {

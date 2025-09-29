@@ -32,13 +32,13 @@ export default function Produit({bannerImage}){
       <div className="content">
         {/* === Sidebar Filtres === */}
         <aside className="filters">
-          <h3>Filtres</h3>
+          <h3 style={{fontWeight:'bold'}}>Filtres</h3>
 
           <div className="filter-group">
-            <h4>Catégories</h4>
+            <h4 style={{fontWeight:'bold'}}>Catégories</h4>
             <ul>
               <li>
-                <Link href={route("produits")} method="get">
+                <Link  href={route("produits")} method="get">
                   Toutes
                 </Link>
               </li>
@@ -60,7 +60,7 @@ export default function Produit({bannerImage}){
           </div>
 
           <div className="filter-group">
-            <h4>Couleur</h4>
+            <h4 style={{fontWeight:'bold'}}>Couleur</h4>
             <ul>
               <li>
                 <Link href={route("produits")} method="get">
@@ -111,7 +111,7 @@ export default function Produit({bannerImage}){
                     </Link>
                   </div>
                   <img
-                    src={`/storage/${p.image1}`}
+                    src={p.image_url}
                     alt={p.nom}
                     className="image-section"
                   />

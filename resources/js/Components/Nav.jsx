@@ -19,7 +19,7 @@ export default function Nav() {
         <div className="nav-item dropdown">
           <span className="nav-link">Shop ▾</span>
           <div className="dropdown-menu">
-            <Link href="/category" className="dropdown-item">Shop category</Link>
+            <Link href="/produits" className="dropdown-item">Shop category</Link>
             <Link href="/track-order" className="dropdown-item">Track your order</Link>
           </div>
         </div>

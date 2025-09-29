@@ -33,7 +33,28 @@ class ProduitController extends Controller
 
         $produits = $query->paginate(12)->withQueryString();
         $categories = ProduitsCategorie::all();
+
+        // URL de base pour les images
+        $imageBaseUrl = asset('storage');
+
+        // Ajouter image_url pour chaque produit
+        $produits->getCollection()->transform(function ($p) use ($imageBaseUrl) {
+            if (str_starts_with($p->image1, 'feature_')) {
+                $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
+            } elseif (str_starts_with($p->image1, 'product_')) {
+                $p->image_url = $imageBaseUrl . '/product/' . $p->image1;
+            } elseif (str_starts_with($p->image1, 'banner_')) {
+                $p->image_url = $imageBaseUrl . '/banner/' . $p->image1;
+            } else {
+                // fallback si le fichier est ailleurs
+                $p->image_url = $imageBaseUrl . '/' . $p->image1;
+            }
+            return $p;
+        });
+
+        // Image de bannière par défaut (exemple)
         $bannerImage = asset('storage/banner/feature_1.png');
+
         return Inertia::render('Produit', [
             'produits' => $produits,
             'bannerImage' => $bannerImage,
