@@ -3,26 +3,51 @@ import { useState } from "react";
 import '../../css/details.css'
 import Nav from "@/Components/Nav";
 
-export default function Default({ produit, prixFinal, reduction, specifications }) {
+export default function Default({ produit, prixFinal, reduction, specifications, bannerImage }) {
   const [activeTab, setActiveTab] = useState("description");
+const [activeImage, setActiveImage] = useState(produit.images[0]);
+  const [fade, setFade] = useState(false);
 
+  const handleThumbnailClick = (img) => {
+    setFade(true);
+    setTimeout(() => {
+      setActiveImage(img);
+      setFade(false);
+    }, 200); 
+  };
   return (
     <>
     <Nav/>
-    <div className="details-container">
-      {/* === Images produit === */}
-        <div className="details-images">
-        <img
-            src={produit.images[0]}
-            alt={produit.nom}
-            className="main-image"
-        />
-        <div className="thumbnail-list">
-            {produit.images.map((img, i) => (
-            <img key={i} src={img} alt="mini" className="thumbnail" />
-            ))}
+    <div className="carouDetails">
+        <div className="div1details">
+            <h2 className="detailsH1">Shop Single</h2>
+            <p className="detailsP">Home - Shop Single</p>
+        </div>
+        <div className="div2details">
+            <img className="detailsCarouImg" src={bannerImage} alt="" />
         </div>
     </div>
+    <div className="details-container">
+      {/* === Images produit === */}
+      <div className="details-images">
+        <img
+          src={activeImage}
+          alt={produit.nom}
+          className={`main-image ${fade ? "fade-out" : "fade-in"}`}
+        />
+        <div className="thumbnail-list">
+          {produit.images.map((img, i) => (
+            <img
+              key={i}
+              src={img}
+              alt="mini"
+              className={`thumbnail ${img === activeImage ? "active-thumb" : ""}`}
+              onClick={() => handleThumbnailClick(img)}
+            />
+          ))}
+        </div>
+      </div>
+    
 
       {/* === Infos produit === */}
       <div className="details-info">

@@ -52,12 +52,13 @@ class DetailsController extends Controller
         // fallback: racine
         return $baseUrl . '/' . $img;
     })->values();
-
+    $bannerImage = asset('storage/banner/feature_1.png');
     return Inertia::render('Details', [
         'produit' => $produit,
         'prixFinal' => $prixFinal,
         'reduction' => $reduction,
         'specifications' => $specifications,
+        'bannerImage' => $bannerImage,
     ]);
 }
 }

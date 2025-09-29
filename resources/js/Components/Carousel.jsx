@@ -12,8 +12,6 @@ export default function Carousel({ bannerProducts, imageBaseUrl }) {
             prev === 0 ? bannerProducts.length - 1 : prev - 1
         );
     };
-    console.log("Slides disponibles :", bannerProducts);
-console.log("Index actuel :", current);
     return (
         <div className="carousel-container">
             {bannerProducts.map((product, index) => (
