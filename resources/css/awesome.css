@@ -1,0 +1,83 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.awesome-section {
+  padding: 3rem 0;
+}
+
+.awesome-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  margin-left: 4%;
+  justify-content: space-between;
+  margin-right: 5%;
+}
+.awesome-arthur{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+.awesome-arthur span{
+    color: grey;
+    font-weight: bold;
+}
+.awesome-header .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.awesome-header .nav-buttons button {
+  font-weight: bold;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.awesome-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.awesome-card {
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.awesome-card:hover {
+  transform: translateY(-5px);
+}
+
+.awesome-card .image {
+  max-height: 160px;
+  object-fit: contain;
+  margin: 0 auto 1rem auto;
+  display: block;
+}
+
+.awesome-card .name {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.awesome-card .price {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.awesome-card .explore {
+  display: block;
+  margin-top: 0.5rem;
+  color: #ec4899;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}

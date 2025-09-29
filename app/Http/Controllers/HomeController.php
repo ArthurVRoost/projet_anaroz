@@ -31,15 +31,26 @@ class HomeController extends Controller
             return $p;
         });
         // Récupérer les produits pour la section "Awesome Shop" (8 premiers produits avec product_)
-        $shopProducts = Produit::where('image1', 'like', 'product_%')
+        $baseProducts = Produit::where('image1', 'like', 'product_%')
             ->take(8)
+            ->get(); 
+        $featureProducts = Produit::where('image1', 'like', 'feature_%')
+            ->take(2)
             ->get();
-        
         // Récupérer les best sellers (5 premiers produits)
         $bestSellers = Produit::where('image1', 'like', 'product_%')
             ->take(5)
             ->get();
-        
+
+        $awesomeProducts = $baseProducts->merge($featureProducts);
+        $awesomeProducts = $awesomeProducts->map(function ($p) use ($imageBaseUrl) {
+            if (str_starts_with($p->image1, 'feature_')) {
+                $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
+            } else {
+                $p->image_url = $imageBaseUrl . '/product/' . $p->image1;
+            }
+            return $p;
+        });
         // Récupérer le produit pour l'offre spéciale
         $offerProduct = Produit::where('image1', 'offer_img.png')->first();
         
@@ -51,11 +62,11 @@ class HomeController extends Controller
         return Inertia::render('Home', compact(
             'bannerProducts',
             'featuredProducts',
-            'shopProducts',
             'bestSellers',
             'offerProduct',
             'categories',
-            'imageBaseUrl'
+            'imageBaseUrl',
+            'awesomeProducts'
         ));
     }
 }
