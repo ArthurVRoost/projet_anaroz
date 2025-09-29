@@ -3,7 +3,7 @@ import Nav from "@/Components/Nav";
 import { Link } from "@inertiajs/react";
 import '../../css/home.css'
 import '../../css/awesome.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home({ bannerProducts, featuredProducts, shopProducts, bestSellers, offerProduct, categories, imageBaseUrl, awesomeProducts }) {
   const [startIndex, setStartIndex] = useState(0);
@@ -26,6 +26,45 @@ export default function Home({ bannerProducts, featuredProducts, shopProducts, b
         ? awesomeProducts.slice(0, (startIndex + 8) % awesomeProducts.length)
         : []
     );
+
+    // USEEFFECT SALE
+    const [targetDate, setTargetDate] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 5);
+    return d;
+  });
+  const [timeLeft, setTimeLeft] = useState({ days: 5, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance <= 0) {
+        // réinitialise pour un nouveau cycle de 5 jours
+        const next = new Date();
+        next.setTime(now + 5 * 24 * 60 * 60 * 1000);
+        setTargetDate(next);
+        setTimeLeft({ days: 5, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((distance / (1000 * 60)) % 60),
+        seconds: Math.floor((distance / 1000) % 60),
+      });
+    };
+
+    // première maj immédiate puis toutes les secondes
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  const pad = (n) => String(n).padStart(2, "0");
+
     return (
         <>
           <Nav/>
@@ -150,7 +189,26 @@ export default function Home({ bannerProducts, featuredProducts, shopProducts, b
               </div>
             </div>
           </section>
+          {/* SECTION 3 */}
+          <section className="weekly-sale">
+      <div className="container">
+        <div className="sale-content">
+          <h2>Weekly Sale On 60% Off All Products</h2>
 
+          <div className="countdown">
+            <div><span>{pad(timeLeft.days)}</span>Days</div>
+            <div><span>{pad(timeLeft.hours)}</span>Hrs</div>
+            <div><span>{pad(timeLeft.minutes)}</span>Min</div>
+            <div><span>{pad(timeLeft.seconds)}</span>Sec</div>
+          </div>
+
+          <div className="email-box">
+            <input type="email" placeholder="Enter your email" />
+            <button>Book Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
         </>
     );
 }

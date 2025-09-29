@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('image4')->nullable();
             $table->string('couleur');
             $table->text('description');
+            $table->integer('ventes');
             $table->foreignId('produitscategorie_id')->nullable()->constrained('produits_categories')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('promo_id')->nullable()->constrained('promos')->nullOnDelete();

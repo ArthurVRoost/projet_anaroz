@@ -34,3 +34,74 @@
   object-fit: contain;
   margin-left: 15px;
 }
+
+.weekly-sale {
+  background-color: #e9fafa;
+  width: 100%;
+  padding: 4rem 0;
+}
+
+.weekly-sale .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end; /* contenu aligné à droite */
+}
+
+.sale-content {
+  width: 50%; /* moitié droite */
+  text-align: left;
+}
+
+.sale-content h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.countdown {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #000; /* texte noir */
+}
+
+.countdown div {
+  text-align: center;
+}
+
+.countdown span {
+  display: block;
+  font-size: 2rem;
+  color: #000; /* chiffres noirs */
+}
+
+.email-box {
+  display: flex;
+  max-width: 400px;
+}
+
+.email-box input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  font-size: 1rem;
+}
+
+.email-box button {
+  font-weight: bold;
+  border: none;
+  padding: 0 1.5rem;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(to top right, #ff0000, #ff9900); /* dégradé rouge → orange */
+  color: #fff;
+}
+
+.email-box button:hover {
+  opacity: 0.9;
+}
