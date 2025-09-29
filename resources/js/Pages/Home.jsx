@@ -5,7 +5,7 @@ import '../../css/home.css'
 import '../../css/awesome.css'
 import { useEffect, useState } from "react";
 
-export default function Home({ bannerProducts, featuredProducts, shopProducts, bestSellers, offerProduct, categories, imageBaseUrl, awesomeProducts }) {
+export default function Home({ bannerProducts, featuredProducts, shopProducts, offerProduct, categories, imageBaseUrl, awesomeProducts, bestSellers }) {
   const [startIndex, setStartIndex] = useState(0);
 
   const nextSlide = () => {
@@ -209,6 +209,41 @@ export default function Home({ bannerProducts, featuredProducts, shopProducts, b
         </div>
       </div>
     </section>
+
+    {/* SECTION 4 */}
+    <section className="py-12">
+  <div className="container mx-auto px-4">
+    <h2 className="text-2xl font-bold mb-8">Best Sellers</h2>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+      {bestSellers.map((produit) => (
+        <div
+          key={produit.id}
+          className="group p-4 flex flex-col items-center justify-center rounded-lg shadow-sm hover:shadow-md transition"
+        >
+          {/* Image */}
+          <img
+            src={produit.image_url}
+            alt={produit.nom}
+            className="max-h-40 object-contain"
+          />
+
+          {/* Nom + prix */}
+          <h3 className="mt-4 font-bold text-center">{produit.nom}</h3>
+          <p className="text-gray-600 text-center">${Number(produit.prix).toFixed(2)}</p>
+
+          {/* Hover Explore Now */}
+          <a
+            href={route("details.show", produit.id)}
+            className="mt-2 opacity-0 group-hover:opacity-100 transition duration-300 text-pink-600 font-bold"
+          >
+            EXPLORE NOW →
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
         </>
     );
 }

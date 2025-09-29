@@ -37,10 +37,6 @@ class HomeController extends Controller
         $featureProducts = Produit::where('image1', 'like', 'feature_%')
             ->take(2)
             ->get();
-        // Récupérer les best sellers (5 premiers produits)
-        $bestSellers = Produit::where('image1', 'like', 'product_%')
-            ->take(5)
-            ->get();
 
         $awesomeProducts = $baseProducts->merge($featureProducts);
         $awesomeProducts = $awesomeProducts->map(function ($p) use ($imageBaseUrl) {
@@ -57,6 +53,23 @@ class HomeController extends Controller
         // Récupérer toutes les catégories
         $categories = ProduitsCategorie::all();
         
+        $bestSellers = Produit::orderBy('ventes', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($p) use ($imageBaseUrl) {
+                if (str_starts_with($p->image1, 'feature_')) {
+                    $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
+                } elseif (str_starts_with($p->image1, 'product_')) {
+                    $p->image_url = $imageBaseUrl . '/product/' . $p->image1;
+                } elseif ($p->image1 === 'offer_img.png') {
+                    $p->image_url = $imageBaseUrl . '/offer/' . $p->image1;
+                } elseif ($p->image1 === 'banner_img.png') {
+                    $p->image_url = $imageBaseUrl . '/banner/' . $p->image1;
+                } else {
+                    $p->image_url = $imageBaseUrl . '/' . $p->image1;
+                }
+                return $p;
+            });
         
         
         return Inertia::render('Home', compact(
@@ -66,7 +79,7 @@ class HomeController extends Controller
             'offerProduct',
             'categories',
             'imageBaseUrl',
-            'awesomeProducts'
+            'awesomeProducts',
         ));
     }
 }
