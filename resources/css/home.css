@@ -105,3 +105,37 @@
 .email-box button:hover {
   opacity: 0.9;
 }
+
+/* SECTION 5 */
+
+.section5{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.section5H3{
+    margin-top: 8%;
+    color: #c70d0d;
+}
+.section5H1{
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 2%;
+    margin-top: 1%;
+}
+.section5Btn{
+    margin-bottom: 8%;
+    background: linear-gradient(to top right, #ff0000, #ff9900);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+    margin-left: 1%;
+}
+
+.section5 input{
+    border: none;
+    width: 300px;
+    border-radius: 5%;
+}
