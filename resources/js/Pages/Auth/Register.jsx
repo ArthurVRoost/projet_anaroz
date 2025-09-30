@@ -1,120 +1,111 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import GuestLayout from '@/Layouts/GuestLayout'
+import { Head, Link, useForm } from '@inertiajs/react'
+import '../../../css/auth.css'
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+  const { data, setData, post, processing, errors, reset } = useForm({
+    nom: '',
+    prenom: '',
+    pseudo: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  })
 
-    const submit = (e) => {
-        e.preventDefault();
+  const submit = (e) => {
+    e.preventDefault()
+    post(route('register'), {
+      onFinish: () => reset('password', 'password_confirmation'),
+    })
+  }
 
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
-    };
+  return (
+    <GuestLayout>
+      <Head title="Register" />
 
-    return (
-        <GuestLayout>
-            <Head title="Register" />
+      <div className="auth-card">
+        <h1 className="auth-title">Register</h1>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+        <form onSubmit={submit} className="auth-form">
+          <input
+            type="text"
+            name="nom"
+            placeholder="Nom"
+            value={data.nom}
+            onChange={(e) => setData('nom', e.target.value)}
+            className="auth-input"
+            required
+          />
+          {errors.nom && <p className="auth-error">{errors.nom}</p>}
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+          <input
+            type="text"
+            name="prenom"
+            placeholder="Prénom"
+            value={data.prenom}
+            onChange={(e) => setData('prenom', e.target.value)}
+            className="auth-input"
+            required
+          />
+          {errors.prenom && <p className="auth-error">{errors.prenom}</p>}
 
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
+          <input
+            type="text"
+            name="pseudo"
+            placeholder="Pseudo"
+            value={data.pseudo}
+            onChange={(e) => setData('pseudo', e.target.value)}
+            className="auth-input"
+            required
+          />
+          {errors.pseudo && <p className="auth-error">{errors.pseudo}</p>}
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={data.email}
+            onChange={(e) => setData('email', e.target.value)}
+            className="auth-input"
+            required
+          />
+          {errors.email && <p className="auth-error">{errors.email}</p>}
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={data.password}
+            onChange={(e) => setData('password', e.target.value)}
+            className="auth-input"
+            required
+          />
+          {errors.password && <p className="auth-error">{errors.password}</p>}
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
+          <input
+            type="password"
+            name="password_confirmation"
+            placeholder="Confirm Password"
+            value={data.password_confirmation}
+            onChange={(e) => setData('password_confirmation', e.target.value)}
+            className="auth-input"
+            required
+          />
+          {errors.password_confirmation && (
+            <p className="auth-error">{errors.password_confirmation}</p>
+          )}
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+          <div className="auth-footer">
+            <Link href={route('login')} className="auth-link">
+              Already registered?
+            </Link>
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
-    );
+            <button type="submit" className="auth-button" disabled={processing}>
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+    </GuestLayout>
+  )
 }

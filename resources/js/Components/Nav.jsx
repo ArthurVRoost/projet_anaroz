@@ -30,7 +30,6 @@ export default function Nav() {
             <Link href="/blog" className="dropdown-item">Blogs table</Link>
           </div>
         </div>
-
         <Link href="/contact" className="nav-link">Contact</Link>
       </nav>
 

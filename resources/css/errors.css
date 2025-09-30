@@ -1,0 +1,36 @@
+.error-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #f9f9f9;
+  color: #333;
+}
+
+.error-page h1 {
+  font-size: 120px;
+  color: #f72585;
+  margin: 0;
+}
+
+.error-page p {
+  font-size: 20px;
+  margin: 15px 0;
+}
+
+.error-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #f72585;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.error-link:hover {
+  background: #d61c6e;
+}
