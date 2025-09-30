@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('numRandom')->unique();
             $table->decimal('prix', 10, 2);
+            $table->json('billing_address')->nullable();
+            $table->string('payment_method')->nullable();
             $table->enum('status', ['pending', 'confirmed'])->default('pending');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();

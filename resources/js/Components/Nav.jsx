@@ -20,7 +20,7 @@ export default function Nav() {
           <span className="nav-link">Shop ▾</span>
           <div className="dropdown-menu">
             <Link href="/produits" className="dropdown-item">Shop category</Link>
-            <Link href="/track-order" className="dropdown-item">Track your order</Link>
+            <Link href="/track" className="dropdown-item">Track your order</Link>
           </div>
         </div>
 
@@ -51,7 +51,9 @@ export default function Nav() {
             </div>
 
             <div className="dropdown-menu user-dropdown">
-              {/* si route() n'est pas défini dans ton projet, remplace par "/logout" */}
+              <Link href="/orders" className="dropdown-item">
+                Mes commandes
+              </Link>
               <Link href={route ? route('logout') : '/logout'} method="post" as="button" className="dropdown-item">
                 Logout
               </Link>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanierController;
@@ -27,6 +28,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout', [PanierController::class, 'checkout'])->name('cart.checkout');
 
     Route::get('/track', [PanierController::class, 'track'])->name('track');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders', [CommandeController::class, 'index'])->name('orders');
 });
 
 Route::get('/dashboard', function () {

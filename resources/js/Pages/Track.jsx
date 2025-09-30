@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { usePage, router } from '@inertiajs/react'
-import '../../css/cart.css'
+import '../../css/track.css'
 import Nav from '@/Components/Nav'
 import Footer from '@/Components/Footer'
 
@@ -35,6 +35,14 @@ export default function Track() {
             <h3>Commande #{commande.numRandom}</h3>
             <p>Total : {commande.prix} €</p>
             <p>Status : {commande.status}</p>
+            <p>
+              <strong>Adresse de livraison :</strong><br />
+              {commande.billing_address?.name}<br />
+              {commande.billing_address?.street}<br />
+              {commande.billing_address?.city}, {commande.billing_address?.postal}
+            </p>
+            <p><strong>Méthode de paiement :</strong> {commande.payment_method}</p>
+            <h4>Articles :</h4>
             <ul>
               {commande.produits.map((p) => (
                 <li key={p.id}>

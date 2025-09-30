@@ -58,7 +58,7 @@ class PanierController extends Controller
         return back();
     }
 
-    public function checkout()
+    public function checkout(Request $request)
 {
     $user = auth()->user();
     $paniers = $user->paniers()->with('produit.promo')->get(); // promo déjà chargée
@@ -80,6 +80,8 @@ class PanierController extends Controller
         'numRandom' => random_int(1000000000, 9999999999),
         'prix' => $total,
         'status' => 'pending',
+        'billing_address' => json_encode($request->billing_address),
+        'payment_method' => $request->payment_method,
     ]);
 
     foreach ($paniers as $panier) {

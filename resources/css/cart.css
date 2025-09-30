@@ -34,13 +34,7 @@
   background: #d61c6e;
 }
 
-.validation-container, .track-container {
-  text-align: center;
-}
 
-.validation-container strong {
-  color: #f72585;
-}
 
 .error {
   color: red;

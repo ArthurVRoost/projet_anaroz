@@ -8,8 +8,9 @@ class Commande extends Model
 {
     protected $table = 'commandes';
 
-    protected $fillable = ['numRandom', 'prix', 'status', 'user_id'];
+    protected $fillable = ['numRandom', 'prix', 'status', 'user_id', 'payment_method', 'billing_address'];
 
+    protected $casts = ['billing_address' => 'array',];
     public function user(){
         return $this->belongsTo(User::class);
     }
