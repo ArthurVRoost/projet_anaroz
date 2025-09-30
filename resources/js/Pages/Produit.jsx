@@ -95,26 +95,14 @@ export default function Produit({bannerImage}){
         <main className="produits-list">
           {produits.data.length > 0 ? (
             produits.data.map((p) => (
-              <div
-                className="card group flex-1 basis-[45%]"
-                key={p.id}
-              >
-                <div className="card-content">
-                  <div className="text-section">
-                    <h3 className="text-lg font-bold capitalize">{p.nom}</h3>
-                    <p className="price">{p.prix} €</p>
-                    <Link
-                      href={route("details.show", p.id)}
-                      className="explore-link opacity-0 group-hover:opacity-100 transition"
-                    >
-                      EXPLORE NOW →
-                    </Link>
-                  </div>
-                  <img
-                    src={p.image_url}
-                    alt={p.nom}
-                    className="image-section"
-                  />
+              <div className="produit-card" key={p.id}>
+                <img src={p.image_url} alt={p.nom} className="produit-img" />
+                <div className="produit-info">
+                  <h3>{p.nom}</h3>
+                  <p className="price">{p.prix} €</p>
+                  <Link href={route("details.show", p.id)} className="explore-link">
+                    EXPLORE NOW →
+                  </Link>
                 </div>
               </div>
             ))

@@ -108,3 +108,145 @@
   font-weight: bold;
   color: #333;
 }
+
+/* Filtres */
+.filters {
+  width: 240px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* espace entre Catégorie et Couleur */
+}
+
+.filter-group {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-group:last-child {
+  border-bottom: none;
+}
+
+.filter-group h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #222;
+  text-transform: uppercase;
+}
+
+.filter-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-group li {
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: #444;
+  transition: color 0.2s;
+}
+
+.filter-group li:hover,
+.filter-group .active {
+  color: #f72585;
+  font-weight: bold;
+}
+
+/* Liste produits */
+.produits-list {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* cartes plus larges */
+  gap: 30px; /* plus d’espace entre les cartes */
+}
+
+.produit-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.produit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.produit-img {
+  width: 100%;
+  height: 220px; /* images plus grandes */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.produit-info h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.produit-info .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f72585;
+  margin-bottom: 12px;
+}
+
+.explore-link {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #f72585;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.explore-link:hover {
+  color: #d61c6e;
+}
+/* === Search bar === */
+.search-bar {
+  margin: 30px auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-bar input {
+  width: 60%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #f72585;
+  box-shadow: 0 0 0 2px rgba(247, 37, 133, 0.2);
+}
+
+.search-bar button {
+  padding: 12px 20px;
+  background: #f72585;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-bar button:hover {
+  background: #d61c6e;
+}
