@@ -134,26 +134,28 @@ export default function Panier() {
                 />
 
                 <h3>Méthode de paiement</h3>
-                <label>
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="bancontact"
-                    checked={paymentMethod === 'bancontact'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  Bancontact
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="paypal"
-                    checked={paymentMethod === 'paypal'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  PayPal
-                </label>
+                    <div className="payment-options">
+                        <label>
+                            <input
+                            type="radio"
+                            name="payment"
+                            value="bancontact"
+                            checked={paymentMethod === 'bancontact'}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            />
+                            <span>Bancontact</span>
+                        </label>
+                        <label>
+                            <input
+                            type="radio"
+                            name="payment"
+                            value="paypal"
+                            checked={paymentMethod === 'paypal'}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            />
+                            <span>PayPal</span>
+                        </label>
+                        </div>
 
                 <div className="cart-summary">
                   <h3>Total: {total.toFixed(2)} €</h3>
