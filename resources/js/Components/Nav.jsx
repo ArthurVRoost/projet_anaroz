@@ -4,8 +4,8 @@ import '../../css/nav.css'
 export default function Nav() {
   const { auth, cartCount } = usePage().props; // Breeze/Inertia props
   const user = auth?.user;
-  const initials = (user?.first_name?.charAt(0) || user?.name?.charAt(0) || 'U').toUpperCase();
-  const username = user?.name || user?.first_name || 'User';
+  const initials = (user?.pseudo?.charAt(0) || user?.nom?.charAt(0) || 'U').toUpperCase();
+  const username = user?.pseudo || user?.nom || 'User';
 
   return (
     <header className="navbar">
