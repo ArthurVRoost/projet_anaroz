@@ -1,5 +1,5 @@
 import { Link, usePage, router } from '@inertiajs/react';
-import '../../css/produit.css';
+import '../../css/produit.css'
 import Footer from '@/Components/Footer';
 import Nav from '@/Components/Nav';
 
@@ -14,7 +14,7 @@ export default function Produit({ bannerImage }) {
     <>
       <Nav />
       <div className="carouDetails">
-        <div className="div1details" style={{ marginLeft: '15%' }}>
+        <div className="div1details " style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Shop Category</h2>
           <p className="detailsP">Home - Shop Category</p>
         </div>
@@ -106,29 +106,32 @@ export default function Produit({ bannerImage }) {
                   <div className="produit-info">
                     <h3>{p.nom}</h3>
 
-                    {p.promo_prix ? (
+                    {/* Prix avec promo si dispo */}
+                    {p.reduction ? (
                       <p className="price">
                         <span className="old-price">{p.prix} €</span>{" "}
-                        <span className="promo-price">{p.promo_prix} €</span>
+                        <span className="promo-price">{p.prixFinal} €</span>
+                        <span className="promo-label">(-{p.reduction}%)</span>
                       </p>
                     ) : (
                       <p className="price">{p.prix} €</p>
                     )}
 
-                    <Link
-                      href={route("details.show", p.id)}
-                      className="explore-link"
-                    >
-                      EXPLORE NOW →
-                    </Link>
-
-                    <button
-                      type="button"
-                      className="btn-add"
-                      onClick={() => handleAddToCart(p.id)}
-                    >
-                      Add to cart
-                    </button>
+                    <div className="actions">
+                      <Link
+                        href={route("details.show", p.id)}
+                        className="explore-link"
+                      >
+                        EXPLORE NOW →
+                      </Link>
+                      <button
+                        type="button"
+                        className="add-to-cart-btn"
+                        onClick={() => handleAddToCart(p.id)}
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))
@@ -140,5 +143,5 @@ export default function Produit({ bannerImage }) {
       </div>
       <Footer />
     </>
-  );
+  )
 }

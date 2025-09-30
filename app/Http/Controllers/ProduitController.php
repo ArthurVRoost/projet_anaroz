@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Produit;
 use App\Models\ProduitsCategorie;
+use App\Models\Promo;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProduitController extends Controller
 {
-   public function index(Request $request)
+    public function index(Request $request)
     {
-        $query = Produit::with('categorie');
+        $query = Produit::with(['categorie', 'promo']); // 👈 on charge aussi promo
 
         // 🔍 Recherche
         if ($request->filled('search')) {
@@ -37,8 +38,9 @@ class ProduitController extends Controller
         // URL de base pour les images
         $imageBaseUrl = asset('storage');
 
-        // Ajouter image_url pour chaque produit
+        // === Ajouter image_url + gestion promo ===
         $produits->getCollection()->transform(function ($p) use ($imageBaseUrl) {
+            // 🔹 Image principale
             if (str_starts_with($p->image1, 'feature_')) {
                 $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
             } elseif (str_starts_with($p->image1, 'product_')) {
@@ -46,9 +48,18 @@ class ProduitController extends Controller
             } elseif (str_starts_with($p->image1, 'banner_')) {
                 $p->image_url = $imageBaseUrl . '/banner/' . $p->image1;
             } else {
-                // fallback si le fichier est ailleurs
                 $p->image_url = $imageBaseUrl . '/' . $p->image1;
             }
+
+            // 🔹 Prix promo si applicable
+            $p->prixFinal = $p->prix;
+            $p->reduction = null;
+
+            if ($p->promo_id && $p->promo) {
+                $p->reduction = $p->promo->pourcentage;
+                $p->prixFinal = $p->prix - ($p->prix * ($p->promo->pourcentage / 100));
+            }
+
             return $p;
         });
 

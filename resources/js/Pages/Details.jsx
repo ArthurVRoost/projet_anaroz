@@ -1,139 +1,153 @@
-// resources/js/Pages/Details.jsx
 import { useState } from "react";
 import '../../css/details.css'
 import Nav from "@/Components/Nav";
+import { router } from "@inertiajs/react";
 
 export default function Default({ produit, prixFinal, reduction, specifications, bannerImage }) {
-    const [activeTab, setActiveTab] = useState("description");
-    const [activeImage, setActiveImage] = useState(produit.images[0]);
-    const [fade, setFade] = useState(false);
+  const [activeTab, setActiveTab] = useState("description");
+  const [activeImage, setActiveImage] = useState(produit.images[0]);
+  const [fade, setFade] = useState(false);
 
-    const handleThumbnailClick = (img) => {
-        setFade(true);
-        setTimeout(() => {
-        setActiveImage(img);
-        setFade(false);
-        }, 200); 
-    };
+  const handleThumbnailClick = (img) => {
+    setFade(true);
+    setTimeout(() => {
+      setActiveImage(img);
+      setFade(false);
+    }, 200);
+  };
+
+  const handleAddToCart = (id) => {
+    router.post(route("cart.store"), { produit_id: id });
+  };
+
   return (
     <>
-    <Nav/>
-    <div className="carouDetails">
+      <Nav />
+      <div className="carouDetails">
         <div className="div1details">
-            <h2 className="detailsH1">Shop Single</h2>
-            <p className="detailsP">Home - Shop Single</p>
+          <h2 className="detailsH1">Shop Single</h2>
+          <p className="detailsP">Home - Shop Single</p>
         </div>
         <div className="div2details">
-            <img className="detailsCarouImg" src={bannerImage} alt="" />
-        </div>
-    </div>
-    <div className="details-container">
-      {/* === Images produit === */}
-      <div className="details-images">
-        <img
-          src={activeImage}
-          alt={produit.nom}
-          className={`main-image ${fade ? "fade-out" : "fade-in"}`}
-        />
-        <div className="thumbnail-list">
-          {produit.images.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt="mini"
-              className={`thumbnail ${img === activeImage ? "active-thumb" : ""}`}
-              onClick={() => handleThumbnailClick(img)}
-            />
-          ))}
+          <img className="detailsCarouImg" src={bannerImage} alt="" />
         </div>
       </div>
-    
 
-      {/* === Infos produit === */}
-      <div className="details-info">
-        <h1 className="details-title">{produit.nom}</h1>
+      <div className="details-container">
+        {/* === Images produit === */}
+        <div className="details-images">
+          <img
+            src={activeImage}
+            alt={produit.nom}
+            className={`main-image ${fade ? "fade-out" : "fade-in"}`}
+          />
+          <div className="thumbnail-list">
+            {produit.images.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt="mini"
+                className={`thumbnail ${img === activeImage ? "active-thumb" : ""}`}
+                onClick={() => handleThumbnailClick(img)}
+              />
+            ))}
+          </div>
+        </div>
 
-        {/* Prix */}
-        <div className="price-wrapper">
+        {/* === Infos produit === */}
+        <div className="details-info">
+          <h1 className="details-title">{produit.nom}</h1>
+
+          {/* Prix */}
+          <div className="price-wrapper">
             {reduction ? (
-                <>
+              <>
                 <span className="old-price">
-                    ${Number(produit.prix).toFixed(2)}
+                  {Number(produit.prix).toFixed(2)} €
                 </span>
                 <span className="final-price">
-                    ${Number(prixFinal).toFixed(2)}
+                  {Number(prixFinal).toFixed(2)} €
                 </span>
                 <span className="reduction">(-{reduction}%)</span>
-                </>
+              </>
             ) : (
-                <span className="final-price">
-                ${Number(produit.prix).toFixed(2)}
-                </span>
+              <span className="final-price">
+                {Number(produit.prix).toFixed(2)} €
+              </span>
             )}
-        </div>
+          </div>
 
-        {/* Meta produit */}
-        <div className="product-meta">
-          <p>
-            <span>Category:</span> {produit.categorie?.nom}
-          </p>
-          <p>
-            <span>Availability:</span> {produit.stock > 0 ? "In Stock" : "Out of Stock"}
-          </p>
-        </div>
+          {/* Bouton panier */}
+          <button
+            type="button"
+            className="add-to-cart-btn"
+            onClick={() => handleAddToCart(produit.id)}
+          >
+            Add to Cart
+          </button>
 
-        {/* === Tabs === */}
-        <div className="details-tabs">
-          <button
-            className={`tab-btn ${activeTab === "description" ? "active" : ""}`}
-            onClick={() => setActiveTab("description")}
-          >
-            Description
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "specification" ? "active" : ""}`}
-            onClick={() => setActiveTab("specification")}
-          >
-            Specification
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "comments" ? "active" : ""}`}
-            onClick={() => setActiveTab("comments")}
-          >
-            Comments
-          </button>
-        </div>
+          {/* Meta produit */}
+          <div className="product-meta">
+            <p>
+              <span>Category:</span> {produit.categorie?.nom}
+            </p>
+            <p>
+              <span>Availability:</span> {produit.stock > 0 ? "In Stock" : "Out of Stock"}
+            </p>
+          </div>
 
-        {/* === Contenu des tabs === */}
-        <div className="tab-content">
+          {/* === Tabs === */}
+          <div className="details-tabs">
+            <button
+              className={`tab-btn ${activeTab === "description" ? "active" : ""}`}
+              onClick={() => setActiveTab("description")}
+            >
+              Description
+            </button>
+            <button
+              className={`tab-btn ${activeTab === "specification" ? "active" : ""}`}
+              onClick={() => setActiveTab("specification")}
+            >
+              Specification
+            </button>
+            <button
+              className={`tab-btn ${activeTab === "comments" ? "active" : ""}`}
+              onClick={() => setActiveTab("comments")}
+            >
+              Comments
+            </button>
+          </div>
+
+          {/* === Contenu des tabs === */}
+          <div className="tab-content">
             {activeTab === "description" && <p>{produit.description}</p>}
 
             {activeTab === "specification" && specifications.length > 0 && (
-                <ul>
+              <ul>
                 {specifications.map((spec, index) => (
-                    <li key={index}>
+                  <li key={index}>
                     <strong>Width:</strong> {spec.width} cm | 
                     <strong> Height:</strong> {spec.height} cm | 
                     <strong> Depth:</strong> {spec.depth} cm | 
                     <strong> Weight:</strong> {spec.weight} kg | 
                     <strong> Quality Check:</strong> {spec.quality_check ? "Yes" : "No"}
-                    </li>
+                  </li>
                 ))}
-                </ul>
+              </ul>
             )}
 
             {activeTab === "comments" && (
-                <form className="comment-form">
+              <form className="comment-form">
                 <input type="text" placeholder="Name" />
                 <input type="email" placeholder="Email" />
                 <input type="text" placeholder="Phone number" />
                 <textarea rows="4" placeholder="Message"></textarea>
                 <button type="submit">Submit</button>
-                </form>
+              </form>
             )}
-            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </>
   );
 }

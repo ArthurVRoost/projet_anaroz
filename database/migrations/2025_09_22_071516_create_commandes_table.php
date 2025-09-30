@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('numRandom', 10)->unique();
+            $table->unsignedBigInteger('numRandom')->unique();
             $table->decimal('prix', 10, 2);
             $table->enum('status', ['pending', 'confirmed'])->default('pending');
             $table->foreignId('user_id')->constrained('users');

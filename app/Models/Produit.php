@@ -36,4 +36,12 @@ class Produit extends Model
     public function promo(){
         return $this->belongsTo(Promo::class);
     }
+
+    public function getPromoPrixAttribute()
+{
+    if ($this->promo) {
+        return $this->prix - ($this->prix * ($this->promo->pourcentage / 100));
+    }
+    return null; // pas de promo → on garde prix normal
+}
 }

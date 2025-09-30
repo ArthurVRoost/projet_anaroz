@@ -59,40 +59,44 @@ class PanierController extends Controller
     }
 
     public function checkout()
-    {
-        $user = auth()->user();
-        $paniers = $user->paniers()->with('produit')->get();
+{
+    $user = auth()->user();
+    $paniers = $user->paniers()->with('produit.promo')->get(); // promo déjà chargée
 
-        if ($paniers->isEmpty()) {
-            return redirect()->route('cart')->with('error', 'Votre panier est vide.');
-        }
+    if ($paniers->isEmpty()) {
+        return redirect()->route('cart')->with('error', 'Votre panier est vide.');
+    }
 
-        $total = 0;
-        foreach ($paniers as $panier) {
-            $prix = $panier->produit->promo_prix ?? $panier->produit->prix;
-            $total += $prix * $panier->quantite;
-        }
+    $total = 0;
 
-        $commande = Commande::create([
-            'user_id' => $user->id,
-            'numRandom' => random_int(1000000000, 9999999999),
-            'prix' => $total,
-            'status' => 'pending',
-        ]);
+    foreach ($paniers as $panier) {
+        // ✅ Utilisation de l’accessor promo_prix
+        $prix = $panier->produit->promo_prix ?? $panier->produit->prix;
+        $total += $prix * $panier->quantite;
+    }
 
-        foreach ($paniers as $panier) {
-            $commande->produits()->attach($panier->produit_id, [
-                'quantite' => $panier->quantite,
-                'prix' => $panier->produit->promo_prix ?? $panier->produit->prix,
-            ]);
-        }
+    $commande = Commande::create([
+        'user_id' => $user->id,
+        'numRandom' => random_int(1000000000, 9999999999),
+        'prix' => $total,
+        'status' => 'pending',
+    ]);
 
-        $user->paniers()->delete();
-
-        return Inertia::render('Validation', [
-            'commande' => $commande,
+    foreach ($paniers as $panier) {
+        $commande->produits()->attach($panier->produit->id, [
+            'quantite' => $panier->quantite,
+            // ✅ même logique ici
+            'prix' => $panier->produit->promo_prix ?? $panier->produit->prix,
         ]);
     }
+
+    // 🧹 vider le panier
+    $user->paniers()->delete();
+
+    return Inertia::render('Validation', [
+        'commande' => $commande,
+    ]);
+}
 
     public function track(Request $request)
     {
