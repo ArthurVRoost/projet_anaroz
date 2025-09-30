@@ -17,4 +17,9 @@ class Commande extends Model
     public function articles(){
         return $this->hasMany(Article::class);
     }
+    public function produits(){
+        return $this->belongsToMany(Produit::class, 'commande_produit')
+                    ->withPivot('quantite', 'prix')
+                    ->withTimestamps();
+    }
 }

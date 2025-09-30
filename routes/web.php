@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,15 @@ Route::get('/details/{id}', [DetailsController::class, 'show'])->name('details.s
 
 Route::get('/produits', [ProduitController::class, 'index'])->name('produits');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [PanierController::class, 'index'])->name('cart');
+    Route::post('/cart', [PanierController::class, 'store'])->name('cart.store');
+    Route::put('/cart/{panier}', [PanierController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{panier}', [PanierController::class, 'destroy'])->name('cart.destroy');
+    Route::post('/checkout', [PanierController::class, 'checkout'])->name('cart.checkout');
+
+    Route::get('/track', [PanierController::class, 'track'])->name('track');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
