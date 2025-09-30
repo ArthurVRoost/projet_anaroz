@@ -27,7 +27,7 @@ export default function Nav() {
         <div className="nav-item dropdown">
           <span className="nav-link">Blog ▾</span>
           <div className="dropdown-menu">
-            <Link href="/blogs" className="dropdown-item">Blogs table</Link>
+            <Link href="/blog" className="dropdown-item">Blogs table</Link>
           </div>
         </div>
 

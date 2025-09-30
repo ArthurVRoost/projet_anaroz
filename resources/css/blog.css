@@ -1,0 +1,271 @@
+.carouDetails{
+    background-color: #E8FAFA;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    
+}
+.detailsH1{
+    font-weight: 500;
+    font-size: 40px;
+}
+.blog-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 15%;
+  gap: 30px;
+}
+
+/* Partie gauche (blogs) */
+.blog-left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.blog-img {
+  width: 100%;
+  height: auto;
+}
+
+.blog-date {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #f72585;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.blog-date .day {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.blog-content {
+  padding: 20px;
+}
+
+.blog-content h3 {
+  margin-bottom: 10px;
+}
+
+.blog-meta {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Partie droite (sidebar) */
+.blog-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.sidebar-card {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.search-input, .newsletter-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-btn, .newsletter-btn {
+  background: #f72585;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.category-list, .recent-posts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li, .recent-posts li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: #eee;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tag:hover, .filter-link:hover {
+  color: #f72585;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 1090px) {
+  .blog-container {
+    margin: 40px 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-container {
+    flex-direction: column;
+  }
+
+  .blog-right {
+    order: -1; /* sidebar en haut sur tablette */
+  }
+}
+
+@media (max-width: 576px) {
+  .blog-container {
+    margin: 20px 3%;
+  }
+
+  .blog-date {
+    top: 10px;
+    left: 10px;
+    padding: 6px;
+  }
+
+  .blog-date .day {
+    font-size: 14px;
+  }
+
+  .tags {
+    gap: 5px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+/* ------------------ COMMENTAIRES ------------------ */
+
+.comments-section {
+  margin-top: 40px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.comments-section h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.comment {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.comment strong {
+  color: #f72585;
+}
+
+/* ------------------ FORMULAIRE LEAVE A REPLY ------------------ */
+
+.leave-reply {
+  margin-top: 30px;
+}
+
+.leave-reply h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+}
+
+.leave-reply form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.leave-reply textarea {
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.leave-reply input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.leave-reply button {
+  background: #f72585;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.leave-reply button:hover {
+  background: #d61c6e;
+}
+
+/* ------------------ RESPONSIVE COMMENTAIRES ------------------ */
+@media (max-width: 576px) {
+  .comments-section {
+    padding: 15px;
+  }
+
+  .leave-reply textarea,
+  .leave-reply input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .leave-reply button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

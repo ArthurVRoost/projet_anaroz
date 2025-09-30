@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProduitController;
@@ -8,7 +9,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment');
+
 Route::get('/details/{id}', [DetailsController::class, 'show'])->name('details.show');
+
 Route::get('/produits', [ProduitController::class, 'index'])->name('produits');
 
 
