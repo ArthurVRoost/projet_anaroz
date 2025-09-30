@@ -1,82 +1,17 @@
-.cart-container, .validation-container, .track-container {
-  max-width: 900px;
+.cart-container {
+  max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
+  background: #EBFDFC;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.cart-table th, .cart-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+.cart-container h2 {
   text-align: center;
-}
-
-.cart-summary {
-  text-align: right;
-  margin-top: 20px;
-}
-
-.btn-pay {
-  background: #f72585;
-  color: #fff;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-pay:hover {
-  background: #d61c6e;
-}
-
-
-
-.error {
-  color: red;
-  margin-top: 15px;
-}
-
-.commande-details {
-  margin-top: 20px;
-  text-align: left;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.old-price {
-  text-decoration: line-through;
-  color: #888;
-  margin-right: 5px;
-}
-
-.promo-price {
-  color: #e60023;
+  margin-bottom: 20px;
   font-weight: bold;
-}
-
-.btn-pay {
-  background: #28a745;
-  color: white;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-pay:hover {
-  background: #218838;
-}
-
-.cart-container {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
+  color: #333;
 }
 
 .cart-table {
@@ -87,13 +22,29 @@
 
 .cart-table th,
 .cart-table td {
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 12px;
   text-align: center;
 }
 
 .cart-table th {
-  background: #f5f5f5;
+  background: #d9f5f5;
+  font-weight: bold;
+}
+
+.cart-table input[type="number"] {
+  width: 60px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .cart-summary {
@@ -101,27 +52,58 @@
   margin-top: 20px;
 }
 
+.cart-summary h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .btn-pay {
-  background-color: #ff2c72;
-  color: white;
-  padding: 10px 18px;
+  padding: 10px 20px;
+  background: #4ac1c1;
   border: none;
+  color: white;
   border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s;
 }
 
 .btn-pay:hover {
-  background-color: #e02465;
+  background: #38a3a3;
 }
 
-.btn-remove {
-  background: none;
-  border: none;
-  font-size: 18px;
+/* --- Formulaire adresse --- */
+.checkout-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  border: 1px solid #cdecec;
+}
+
+.checkout-form h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.payment-options {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.payment-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
-}
-
-.btn-remove:hover {
-  color: red;
 }

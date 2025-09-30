@@ -80,7 +80,7 @@ class PanierController extends Controller
         'numRandom' => random_int(1000000000, 9999999999),
         'prix' => $total,
         'status' => 'pending',
-        'billing_address' => json_encode($request->billing_address),
+        'billing_address' => $request->billing_address,
         'payment_method' => $request->payment_method,
     ]);
 

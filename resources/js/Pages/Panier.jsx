@@ -6,13 +6,14 @@ import Footer from '@/Components/Footer'
 
 export default function Panier() {
   const { paniers } = usePage().props
-  const [billingAddress, setBillingAddress] = useState({
-    name: '',
-    street: '',
-    city: '',
-    postal: ''
-  })
-  const [paymentMethod, setPaymentMethod] = useState('paypal')
+
+  // Champs d'adresse
+  const [name, setName] = useState('')
+  const [street, setStreet] = useState('')
+  const [city, setCity] = useState('')
+  const [postal, setPostal] = useState('')
+  const [country, setCountry] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('bancontact')
 
   const handleUpdate = (id, quantite) => {
     router.put(route('cart.update', id), { quantite })
@@ -22,26 +23,34 @@ export default function Panier() {
     router.delete(route('cart.destroy', id))
   }
 
-  const handleCheckout = (e) => {
-    e.preventDefault()
-    router.post(route('cart.checkout'), {
-      billing_address: billingAddress,
-      payment_method: paymentMethod
-    })
-  }
-
   const total = paniers.reduce(
     (acc, p) => acc + ((p.produit.promo_prix ?? p.produit.prix) * p.quantite),
     0
   )
+
+  const handleCheckout = (e) => {
+    e.preventDefault()
+    router.post(route('cart.checkout'), {
+      billing_address: {
+        name,
+        street,
+        city,
+        postal,
+        country,
+      },
+      payment_method: paymentMethod,
+    })
+  }
 
   return (
     <div>
       <Nav />
       <div className="cart-container">
         <h2>Votre Panier</h2>
+
         {paniers.length > 0 ? (
           <>
+            {/* === Tableau Panier === */}
             <table className="cart-table">
               <thead>
                 <tr>
@@ -84,73 +93,74 @@ export default function Panier() {
               </tbody>
             </table>
 
-            {/* Adresse de livraison */}
+            {/* === Formulaire Adresse + Paiement === */}
             <div className="checkout-form">
               <h3>Adresse de livraison</h3>
-              <input
-                type="text"
-                placeholder="Nom complet"
-                value={billingAddress.name}
-                onChange={(e) =>
-                  setBillingAddress({ ...billingAddress, name: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Rue et numéro"
-                value={billingAddress.street}
-                onChange={(e) =>
-                  setBillingAddress({ ...billingAddress, street: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Ville"
-                value={billingAddress.city}
-                onChange={(e) =>
-                  setBillingAddress({ ...billingAddress, city: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Code postal"
-                value={billingAddress.postal}
-                onChange={(e) =>
-                  setBillingAddress({ ...billingAddress, postal: e.target.value })
-                }
-              />
+              <form onSubmit={handleCheckout}>
+                <input
+                  type="text"
+                  placeholder="Nom complet"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Rue"
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Ville"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Code postal"
+                  value={postal}
+                  onChange={(e) => setPostal(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Pays"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                />
 
-              {/* Choix paiement */}
-              <h3>Méthode de paiement</h3>
-              <div className="payment-options">
+                <h3>Méthode de paiement</h3>
                 <label>
                   <input
                     type="radio"
-                    value="paypal"
-                    checked={paymentMethod === 'paypal'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  PayPal
-                </label>
-                <label>
-                  <input
-                    type="radio"
+                    name="payment"
                     value="bancontact"
                     checked={paymentMethod === 'bancontact'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   Bancontact
                 </label>
-              </div>
-            </div>
+                <label>
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="paypal"
+                    checked={paymentMethod === 'paypal'}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  PayPal
+                </label>
 
-            {/* Résumé + bouton payer */}
-            <div className="cart-summary">
-              <h3>Total: {total.toFixed(2)} €</h3>
-              <form onSubmit={handleCheckout}>
-                <button type="submit" className="btn-pay">
-                  Payer
-                </button>
+                <div className="cart-summary">
+                  <h3>Total: {total.toFixed(2)} €</h3>
+                  <button type="submit" className="btn-pay">
+                    Payer
+                  </button>
+                </div>
               </form>
             </div>
           </>
