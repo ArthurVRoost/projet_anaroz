@@ -1,0 +1,56 @@
+.cart-container, .validation-container, .track-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.cart-table th, .cart-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.cart-summary {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.btn-pay {
+  background: #f72585;
+  color: #fff;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-pay:hover {
+  background: #d61c6e;
+}
+
+.validation-container, .track-container {
+  text-align: center;
+}
+
+.validation-container strong {
+  color: #f72585;
+}
+
+.error {
+  color: red;
+  margin-top: 15px;
+}
+
+.commande-details {
+  margin-top: 20px;
+  text-align: left;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}

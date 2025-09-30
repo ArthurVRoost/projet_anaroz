@@ -249,3 +249,32 @@
 .search-bar button:hover {
   background: #d61c6e;
 }
+
+/* Prix avec promo */
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 5px;
+}
+
+.promo-price {
+  color: #f72585;
+  font-weight: bold;
+}
+
+/* Bouton Add to cart */
+.btn-add {
+  margin-top: 10px;
+  display: inline-block;
+  background: #f72585;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-add:hover {
+  background: #d61c6e;
+}
