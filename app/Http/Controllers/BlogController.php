@@ -7,6 +7,7 @@ use App\Models\BlogCategorie;
 use App\Models\Commentaire;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BlogController extends Controller
@@ -84,7 +85,7 @@ class BlogController extends Controller
 
         Commentaire::create([
             'message' => $request->message,
-            'user_id' => 1, // test user pour l'instant
+            'user_id' => Auth::id(), // test user pour l'instant
             'blog_id' => $id,
         ]);
 
