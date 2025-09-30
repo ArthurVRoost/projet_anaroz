@@ -87,7 +87,6 @@ class PanierController extends Controller
     foreach ($paniers as $panier) {
         $commande->produits()->attach($panier->produit->id, [
             'quantite' => $panier->quantite,
-            // ✅ même logique ici
             'prix' => $panier->produit->promo_prix ?? $panier->produit->prix,
         ]);
     }
@@ -112,9 +111,10 @@ class PanierController extends Controller
                 'error' => 'Aucune commande trouvée avec ce numéro.'
             ]);
         }
+        
 
         return Inertia::render('Track', [
-            'commande' => $commande
+            'commande' => $commande,
         ]);
     }
 }

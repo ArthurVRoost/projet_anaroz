@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react'
 import '../../css/nav.css'
-
+import { FaShoppingCart } from "react-icons/fa";
 export default function Nav() {
   const { auth, cartCount } = usePage().props; // Breeze/Inertia props
   const user = auth?.user;
@@ -36,7 +36,7 @@ export default function Nav() {
       <div className="navbar-right">
         {/* Cart - visible même si user non connecté */}
         <Link href="/cart" className="cart-link" aria-label="Cart">
-          <span className="cart-icon" aria-hidden>🛒</span>
+          <span className="cart-icon" aria-hidden><FaShoppingCart /></span>
           {Number(cartCount) > 0 && (
             <span className="cart-count" aria-live="polite">{cartCount}</span>
           )}
