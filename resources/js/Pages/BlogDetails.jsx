@@ -1,15 +1,14 @@
 import Footer from '@/Components/Footer'
 import Nav from '@/Components/Nav'
 import React, { useState } from 'react'
-import { usePage, router } from '@inertiajs/react'
+import { usePage, router, Link } from '@inertiajs/react'
 import '../../css/blog.css'
 
 export default function BlogDetails({ bannerImage }) {
-  const { blog, categories, tags, recentPosts } = usePage().props
+  const { blog, categories, tags, recentPosts, auth } = usePage().props
+
   const [form, setForm] = useState({
-    message: '',
-    name: '',
-    email: ''
+    message: ''
   })
 
   const handleChange = (e) => {
@@ -19,11 +18,13 @@ export default function BlogDetails({ bannerImage }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     router.post(route('blog.comment', blog.id), form)
+    setForm({ message: '' }) // reset du champ
   }
 
   return (
     <div>
       <Nav />
+      
       {/* Bannière */}
       <div className="carouDetails">
         <div className="div1details" style={{ marginLeft: '15%' }}>
@@ -52,47 +53,58 @@ export default function BlogDetails({ bannerImage }) {
             <h3>{blog.commentaires.length} Comments</h3>
             {blog.commentaires.map((comment, i) => (
               <div key={i} className="comment">
-                <p><strong>{comment.user?.pseudo}</strong> - {new Date(comment.created_at).toLocaleDateString()}</p>
+                <p>
+                  <strong>{comment.user?.pseudo}</strong>
+                  {" - "}
+                  {new Date(comment.created_at).toLocaleDateString()}{" "}
+                  {new Date(comment.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
                 <p>{comment.message}</p>
               </div>
             ))}
 
             <hr />
+
             {/* Leave a reply */}
-            <div className="leave-reply">
-              <h3>Leave a Reply</h3>
-              <form onSubmit={handleSubmit}>
-                <textarea
-                  name="message"
-                  placeholder="Write a comment"
-                  value={form.message}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your email address"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-                <button type="submit">Send Message</button>
-              </form>
-            </div>
+            {auth?.user ? (
+              <div className="leave-reply">
+                <h3>Leave a Reply</h3>
+                <form onSubmit={handleSubmit}>
+                  <textarea
+                    name="message"
+                    placeholder="Write a comment"
+                    value={form.message}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button type="submit">Send Message</button>
+                </form>
+              </div>
+            ) : (
+              <p><Link href={route('login')}>Connectez-vous</Link> pour laisser un commentaire.</p>
+            )}
           </div>
         </div>
 
-        {/* Partie droite sidebar */}
+        {/* Partie droite : sidebar */}
         <div className="blog-right">
+          {/* Search */}
+          <div className="sidebar-card">
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              const q = e.target.search.value
+              router.get(route('blog'), { search: q })
+            }}>
+              <input
+                type="text"
+                name="search"
+                placeholder="Search Keyword"
+                className="search-input"
+              />
+              <button type="submit" className="search-btn">SEARCH</button>
+            </form>
+          </div>
+
           {/* Catégories */}
           <div className="sidebar-card">
             <h4>Category</h4>
@@ -109,7 +121,9 @@ export default function BlogDetails({ bannerImage }) {
             <ul className="recent-posts">
               {recentPosts.map((post, i) => (
                 <li key={i}>
-                  <span>{post.titre.substring(0, 25)}...</span>
+                  <Link href={route('blog.show', post.id)}>
+                    <span>{post.titre.substring(0, 25)}...</span>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -120,7 +134,7 @@ export default function BlogDetails({ bannerImage }) {
             <h4>Tag Clouds</h4>
             <div className="tags">
               {tags.map((tag, i) => (
-                <span key={i} className="tag">{tag.nom}</span>
+                <span key={i} className="tag">{tag.nom} ({tag.blogs_count})</span>
               ))}
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../../css/carousel.css'
+import { Link } from "@inertiajs/react";
 export default function Carousel({ bannerProducts, imageBaseUrl }) {
     const [current, setCurrent] = useState(0);
 
@@ -15,7 +16,7 @@ export default function Carousel({ bannerProducts, imageBaseUrl }) {
     return (
         <div className="carousel-container">
             {bannerProducts.map((product, index) => (
-                <div
+                <Link key={product.id} href={route("details.show", product.id)}><div
                     key={product.id}
                     className={`carousel-slide ${
                         index === current ? "active" : ""
@@ -31,7 +32,8 @@ export default function Carousel({ bannerProducts, imageBaseUrl }) {
                             alt={product.nom}
                         />
                     </div>
-                </div>
+                </div></Link>
+                
             ))}
             <button className="carousel-btn prev" onClick={prevSlide}>
                 Previous

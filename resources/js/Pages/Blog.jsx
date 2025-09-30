@@ -49,7 +49,7 @@ export default function Blog({bannerImage}) {
                     </div>
                     <div className="blog-content">
                     <h3>
-                        <Link href={route('blog.show', blog.id)}>
+                        <Link style={{fontWeight:'bold'}} href={route('blog.show', blog.id)}>
                         {blog.titre}
                         </Link>
                     </h3>

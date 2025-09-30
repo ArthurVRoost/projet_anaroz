@@ -10,7 +10,7 @@ export default function Nav() {
   return (
     <header className="navbar">
       <div className="navbar-left">
-        <h1 className="logo">Aranoz.</h1>
+        <Link href="/"><h1 className="logo">Aranoz.</h1></Link>
       </div>
 
       <nav className="navbar-center">

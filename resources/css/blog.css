@@ -10,6 +10,7 @@
     font-weight: 500;
     font-size: 40px;
 }
+/* ------------------ CONTAINER GLOBAL ------------------ */
 .blog-container {
   display: flex;
   justify-content: space-between;
@@ -17,7 +18,7 @@
   gap: 30px;
 }
 
-/* Partie gauche (blogs) */
+/* ------------------ LISTE BLOGS ------------------ */
 .blog-left {
   flex: 2;
   display: flex;
@@ -68,7 +69,7 @@
   color: #666;
 }
 
-/* Partie droite (sidebar) */
+/* ------------------ SIDEBAR ------------------ */
 .blog-right {
   flex: 1;
   display: flex;
@@ -109,6 +110,11 @@
 .category-list li, .recent-posts li {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.category-list li:hover, .tag:hover {
+  color: #f72585;
 }
 
 .tags {
@@ -125,11 +131,80 @@
   cursor: pointer;
 }
 
-.tag:hover, .filter-link:hover {
+/* ------------------ COMMENTAIRES ------------------ */
+.comments-section {
+  margin-top: 40px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.comments-section h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.comment {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.comment strong {
   color: #f72585;
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+/* ------------------ LEAVE A REPLY ------------------ */
+.leave-reply {
+  margin-top: 30px;
+}
+
+.leave-reply h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+}
+
+.leave-reply form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.leave-reply textarea {
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.leave-reply button {
+  background: #f72585;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.leave-reply button:hover {
+  background: #d61c6e;
+}
+
+/* ------------------ RESPONSIVE ------------------ */
 @media (max-width: 1090px) {
   .blog-container {
     margin: 40px 5%;
@@ -169,97 +244,12 @@
     font-size: 12px;
     padding: 4px 8px;
   }
-}
 
-/* ------------------ COMMENTAIRES ------------------ */
-
-.comments-section {
-  margin-top: 40px;
-  background: #fff;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.comments-section h3 {
-  margin-bottom: 20px;
-  font-size: 20px;
-  color: #333;
-}
-
-.comment {
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.comment:last-child {
-  border-bottom: none;
-}
-
-.comment p {
-  margin: 5px 0;
-  line-height: 1.5;
-}
-
-.comment strong {
-  color: #f72585;
-}
-
-/* ------------------ FORMULAIRE LEAVE A REPLY ------------------ */
-
-.leave-reply {
-  margin-top: 30px;
-}
-
-.leave-reply h3 {
-  margin-bottom: 15px;
-  font-size: 20px;
-  color: #333;
-}
-
-.leave-reply form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.leave-reply textarea {
-  min-height: 120px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  resize: vertical;
-}
-
-.leave-reply input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-
-.leave-reply button {
-  background: #f72585;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.leave-reply button:hover {
-  background: #d61c6e;
-}
-
-/* ------------------ RESPONSIVE COMMENTAIRES ------------------ */
-@media (max-width: 576px) {
   .comments-section {
     padding: 15px;
   }
 
-  .leave-reply textarea,
-  .leave-reply input {
+  .leave-reply textarea {
     font-size: 14px;
     padding: 10px;
   }

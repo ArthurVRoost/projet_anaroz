@@ -72,10 +72,11 @@ class BlogController extends Controller
     }
 
     public function storeComment(Request $request, $id){
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Vous devez être connecté pour commenter.');
+        }
         $request->validate([
             'message' => 'required|string|max:500',
-            'name' => 'required|string|max:50',
-            'email' => 'required|email',
         ]);
 
         // Si tu veux forcer que seul un user connecté commente
