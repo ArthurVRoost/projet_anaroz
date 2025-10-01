@@ -200,9 +200,10 @@ export default function AdminProduit({ bannerImage }) {
               {promos.map(pr => <option key={pr.id} value={pr.id}>{pr.nom}</option>)}
             </select>
 
-            {[1,2,3,4].map(i => (
-              <input key={i} type="file" onChange={(e) => setData(`image${i}`, e.target.files[0])} className="p-2 border w-full mb-2" />
-            ))}
+            <input type="file" required onChange={(e) => setData("image1", e.target.files[0])} className="p-2 border w-full mb-2" />
+                {[2,3,4].map(i => (
+                <input key={i} type="file" onChange={(e) => setData(`image${i}`, e.target.files[0])} className="p-2 border w-full mb-2" />
+                ))}
 
             <div className="flex gap-4">
               <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded" disabled={processing}>

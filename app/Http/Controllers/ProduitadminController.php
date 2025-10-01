@@ -55,14 +55,19 @@ class ProduitadminController extends Controller
                 'couleur' => 'required|string|max:50',
                 'produitscategorie_id' => 'required|exists:produits_categories,id',
                 'promo_id' => 'nullable|exists:promos,id',
-                'image1' => 'nullable|image|max:2048',
+                'image1' => 'required|image|max:2048',
                 'image2' => 'nullable|image|max:2048',
                 'image3' => 'nullable|image|max:2048',
                 'image4' => 'nullable|image|max:2048',
             ]);
 
             $images = [];
-            foreach (['image1', 'image2', 'image3', 'image4'] as $imageField) {
+            // Image1 obligatoire
+            $path1 = $request->file('image1')->store('produits', 'public');
+            $images['image1'] = "storage/$path1";
+
+            // Images optionnelles
+            foreach (['image2', 'image3', 'image4'] as $imageField) {
                 if ($request->hasFile($imageField)) {
                     $path = $request->file($imageField)->store('produits', 'public');
                     $images[$imageField] = "storage/$path";
@@ -71,9 +76,9 @@ class ProduitadminController extends Controller
                 }
             }
             \Log::info('Données envoyées:', $validated + [
-    'user_id' => auth()->id(),
-    'images' => $images,
-]);
+                'user_id' => auth()->id(),
+                'images' => $images,
+            ]);
             Produit::create([
                 'nom' => $validated['nom'],
                 'description' => $validated['description'],
