@@ -11,3 +11,75 @@
     font-weight: 500;
     font-size: 40px;
 }
+.categories-section {
+  margin: 40px auto;
+  max-width: 600px;
+  padding: 10px 0;
+}
+
+.categories-section h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #FD3266;
+  border-bottom: 2px solid #FD3266;
+  padding-bottom: 6px;
+}
+
+.categories-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.delete-btn {
+  background: #FD3266;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #c81f4a;
+}
+
+.category-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.category-form input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-btn:hover {
+  background: #1e7e34;
+}

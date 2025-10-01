@@ -28,8 +28,7 @@ export default function NavAdmin() {
         <div className="admin-nav-item dropdown">
           <span className="admin-nav-link">Admin ▾</span>
           <div className="admin-dropdown-menu">
-            <Link href="/produits" className="admin-dropdown-item">Categories</Link>
-            <Link href="/track" className="admin-dropdown-item">Contact</Link>
+            <Link href="/admin/categories" className="admin-dropdown-item">Categories</Link>
           </div>
         </div>
 
@@ -65,7 +64,7 @@ export default function NavAdmin() {
       </nav>
 
       <div className="admin-navbar-right">
-        
+
         <div className="admin-nav-item dropdown admin-user-menu">
           <div className="admin-nav-link admin-user-trigger" role="button" tabIndex={0}>
             <div className="admin-user-avatar">{initials}</div>

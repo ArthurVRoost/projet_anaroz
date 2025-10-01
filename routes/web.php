@@ -8,6 +8,7 @@ use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\ProduitsCategorieController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,31 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [CommandeController::class, 'index'])->name('orders');
 });
 
+// ADMIN
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+
+// Affichage des deux types de catégories
+Route::get('/admin/categories', [ProduitsCategorieController::class, 'index'])->name('categories.index');
+
+// CRUD Produits
+Route::post('/admin/categories/produits', [ProduitsCategorieController::class, 'storeProduit'])->name('categories.produits.store');
+Route::delete('/admin/categories/produits/{id}', [ProduitsCategorieController::class, 'destroyProduit'])->name('categories.produits.destroy');
+
+// CRUD Blog
+Route::post('/admin/categories/blog', [ProduitsCategorieController::class, 'storeBlog'])->name('categories.blog.store');
+Route::delete('/admin/categories/blog/{id}', [ProduitsCategorieController::class, 'destroyBlog'])->name('categories.blog.destroy');
+
+// Tags CRUD
+Route::post('/admin/categories/tags', [ProduitsCategorieController::class, 'storeTag'])->name('categories.tags.store');
+Route::delete('/admin/categories/tags/{id}', [ProduitsCategorieController::class, 'destroyTag'])->name('categories.tags.destroy');
+
+
+
+
+
+
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
