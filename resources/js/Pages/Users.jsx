@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import '../../css/users.css'
 import NavAdmin from '@/Components/NavAdmin'
 import Footer from '@/Components/Footer'
@@ -58,13 +58,11 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
     })
   }
 
-  const fullName = (u) => u?.pseudo || `${u?.prenom ?? ''} ${u?.nom ?? ''}`.trim()
-
   return (
     <div>
       <NavAdmin/>
       <div className="carouDetailsnav">
-        <div className="div1details " style={{ marginLeft: '15%' }}>
+        <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Users Settings</h2>
           <p className="detailsP">Aranoz - Shop System</p>
         </div>
@@ -76,28 +74,73 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
       {/* CREATE */}
       <section className="users-section">
         <h2>Add User</h2>
-        <form onSubmit={handleCreate} className="user-form">
-          <input placeholder="Nom" value={createForm.data.nom}
-                 onChange={e => createForm.setData('nom', e.target.value)} />
-          <input placeholder="Prénom" value={createForm.data.prenom}
-                 onChange={e => createForm.setData('prenom', e.target.value)} />
-          <input placeholder="Pseudo" value={createForm.data.pseudo}
-                 onChange={e => createForm.setData('pseudo', e.target.value)} />
-          <input type="email" placeholder="Email" value={createForm.data.email}
-                 onChange={e => createForm.setData('email', e.target.value)} />
-          <input type="password" placeholder="Password" value={createForm.data.password}
-                 onChange={e => createForm.setData('password', e.target.value)} />
-          <input type="password" placeholder="Confirm Password" value={createForm.data.password_confirmation}
-                 onChange={e => createForm.setData('password_confirmation', e.target.value)} />
-          <select value={createForm.data.role_id}
-                  onChange={e => createForm.setData('role_id', e.target.value)}>
-            <option value="">Rôle (défaut: User)</option>
-            {roles?.map(r => <option key={r.id} value={r.id}>{r.nom}</option>)}
-          </select>
-          <button type="submit">Create</button>
+        <form onSubmit={handleCreate} className="user-form-vertical">
+          <div className="form-group">
+            <label>Nom</label>
+            <input
+              placeholder="Nom"
+              value={createForm.data.nom}
+              onChange={e => createForm.setData('nom', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Prénom</label>
+            <input
+              placeholder="Prénom"
+              value={createForm.data.prenom}
+              onChange={e => createForm.setData('prenom', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Pseudo</label>
+            <input
+              placeholder="Pseudo"
+              value={createForm.data.pseudo}
+              onChange={e => createForm.setData('pseudo', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              value={createForm.data.email}
+              onChange={e => createForm.setData('email', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              value={createForm.data.password}
+              onChange={e => createForm.setData('password', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={createForm.data.password_confirmation}
+              onChange={e => createForm.setData('password_confirmation', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Rôle</label>
+            <select
+              value={createForm.data.role_id}
+              onChange={e => createForm.setData('role_id', e.target.value)}
+            >
+              <option value="">(défaut: User)</option>
+              {roles?.map(r => (
+                <option key={r.id} value={r.id}>{r.nom}</option>
+              ))}
+            </select>
+          </div>
+          <button type="submit" className="btn-primary">Create</button>
         </form>
 
-        {/* erreurs simples */}
         {Object.values(createForm.errors || {}).length > 0 && (
           <div className="form-errors">
             {Object.values(createForm.errors).map((err, i) => <p key={i}>{err}</p>)}
@@ -111,27 +154,21 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
         <table className="users-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Title</th>
-              <th>Status</th>
-              <th>Actions</th>
-              <th>Actions</th>
-              <th>Actions</th>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Pseudo</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th colSpan="3">Actions</th>
             </tr>
           </thead>
           <tbody>
             {users?.map(u => (
               <tr key={u.id}>
-                {/* Name (avatar + name) */}
-                <td className="cell-name">
-                  <div className="avatar">{(u.pseudo?.[0] || u.prenom?.[0] || u.nom?.[0] || 'U').toUpperCase()}</div>
-                  <span className="name-text">{fullName(u)}</span>
-                </td>
-
-                {/* Title (email) */}
+                <td>{u.nom}</td>
+                <td>{u.prenom}</td>
+                <td>{u.pseudo}</td>
                 <td className="muted">{u.email}</td>
-
-                {/* Status (role badge) */}
                 <td>
                   <span className={`role-badge role-${(u.role?.nom || '').toLowerCase().replace(/\s+/g,'-')}`}>
                     {u.role?.nom || '—'}
@@ -154,7 +191,6 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
                       <select value={editForm.data.role_id} onChange={e=>editForm.setData('role_id', e.target.value)}>
                         {roles?.map(r => <option key={r.id} value={r.id}>{r.nom}</option>)}
                       </select>
-                      {/* Password optionnel en edit */}
                       <input type="password" placeholder="New password (optional)"
                              value={editForm.data.password}
                              onChange={e=>editForm.setData('password', e.target.value)} />
@@ -181,18 +217,20 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
         </table>
       </section>
 
-      {/* Modal Show (local, pas de route) */}
+      {/* Modal Show */}
       {showUser && (
         <div className="modal-backdrop" onClick={() => setShowUser(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <h3>User details</h3>
-            <p><strong>Nom:</strong> {showUser.nom}</p>
-            <p><strong>Prénom:</strong> {showUser.prenom}</p>
-            <p><strong>Pseudo:</strong> {showUser.pseudo}</p>
-            <p><strong>Email:</strong> {showUser.email}</p>
-            <p><strong>Rôle:</strong> {showUser.role?.nom || '—'}</p>
+            <div className="user-details">
+              <p><strong>Nom:</strong> {showUser.nom}</p>
+              <p><strong>Prénom:</strong> {showUser.prenom}</p>
+              <p><strong>Pseudo:</strong> {showUser.pseudo}</p>
+              <p><strong>Email:</strong> {showUser.email}</p>
+              <p><strong>Rôle:</strong> {showUser.role?.nom || '—'}</p>
+            </div>
             <div className="modal-actions">
-              <button onClick={() => setShowUser(null)} className="save-btn">Close</button>
+              <button onClick={() => setShowUser(null)} className="btn-primary">Close</button>
             </div>
           </div>
         </div>
