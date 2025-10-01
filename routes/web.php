@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogadminController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ContactFormController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PanierController;
+use App\Http\Controllers\ProduitadminController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProduitsCategorieController;
 use App\Http\Controllers\ProfileController;
@@ -71,6 +73,11 @@ Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateS
     ->name('orders.confirm');
 
 
+// BLOD CRUD
+Route::get('/admin/blogs', [BlogadminController::class, 'index'])->name('blogs.admin');
+
+// PRODUITS CRUD
+Route::get('/admin/produits', [ProduitadminController::class, 'index'])->name('produits.admin');
 
 
 

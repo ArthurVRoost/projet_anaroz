@@ -44,14 +44,14 @@ export default function NavAdmin() {
         <div className="admin-nav-item dropdown">
           <span className="admin-nav-link">Blog ▾</span>
           <div className="admin-dropdown-menu">
-            <Link href="/blog" className="admin-dropdown-item">Blogs</Link>
+            <Link href="/admin/blogs" className="admin-dropdown-item">Blogs</Link>
           </div>
         </div>
 
         <div className="admin-nav-item dropdown">
           <span className="admin-nav-link">Products ▾</span>
           <div className="admin-dropdown-menu">
-            <Link href="/products" className="admin-dropdown-item">Products</Link> 
+            <Link href="/admin/produits" className="admin-dropdown-item">Products</Link> 
           </div>
         </div>
 

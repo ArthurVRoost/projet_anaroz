@@ -1,0 +1,13 @@
+.carouDetailsnav{
+    background-color: #FEDADA;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    padding-top: 4%;
+    
+}
+.detailsH1{
+    font-weight: 500;
+    font-size: 40px;
+}
