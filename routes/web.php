@@ -66,7 +66,9 @@ Route::put('/admin/users/{id}', [RoleController::class, 'update'])->name('users.
 Route::delete('/admin/users/{id}', [RoleController::class, 'destroy'])->name('users.destroy');
 
 // ORDER CRUD
-Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.admin');
+Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateStatus'])
+    ->name('orders.confirm');
 
 
 
