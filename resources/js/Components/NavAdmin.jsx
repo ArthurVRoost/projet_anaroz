@@ -35,7 +35,7 @@ export default function NavAdmin() {
         <div className="admin-nav-item dropdown">
           <span className="admin-nav-link">Users ▾</span>
           <div className="admin-dropdown-menu">
-            <Link href="/users" className="admin-dropdown-item">Users</Link>
+            <Link href="/admin/users" className="admin-dropdown-item">Users</Link>
           </div>
         </div>
 
