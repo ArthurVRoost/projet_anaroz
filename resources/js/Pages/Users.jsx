@@ -1,30 +1,44 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import '../../css/users.css'
 import NavAdmin from '@/Components/NavAdmin'
 import Footer from '@/Components/Footer'
 import { useForm } from '@inertiajs/react'
 
-export default function Users({ bannerImage, users, roles }) {
-  const createForm = useForm({ name: "", email: "", role_id: "" })
-  const editForm = useForm({ id: null, name: "", email: "", role_id: "" })
+export default function Users({ bannerImage, users = [], roles = [] }) {
+  // CREATE form
+  const createForm = useForm({
+    nom: "", prenom: "", pseudo: "", email: "",
+    password: "", password_confirmation: "", role_id: ""
+  })
 
-  const [editingUser, setEditingUser] = useState(null)
+  // EDIT form
+  const editForm = useForm({
+    id: null, nom: "", prenom: "", pseudo: "", email: "", role_id: "", password: "", password_confirmation: ""
+  })
+
+  const [editingUserId, setEditingUserId] = useState(null)
+  const [showUser, setShowUser] = useState(null) // pour "Show"
 
   const handleCreate = (e) => {
     e.preventDefault()
     createForm.post(route('users.store'), {
       preserveScroll: true,
+      preserveState: true,
       onSuccess: () => createForm.reset(),
     })
   }
 
-  const handleEdit = (user) => {
-    setEditingUser(user.id)
+  const startEdit = (u) => {
+    setEditingUserId(u.id)
     editForm.setData({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role_id: user.role_id,
+      id: u.id,
+      nom: u.nom || "",
+      prenom: u.prenom || "",
+      pseudo: u.pseudo || "",
+      email: u.email || "",
+      role_id: u.role_id ?? 2,
+      password: "",
+      password_confirmation: ""
     })
   }
 
@@ -32,9 +46,19 @@ export default function Users({ bannerImage, users, roles }) {
     e.preventDefault()
     editForm.put(route('users.update', editForm.data.id), {
       preserveScroll: true,
-      onSuccess: () => setEditingUser(null),
+      preserveState: true,
+      onSuccess: () => setEditingUserId(null),
     })
   }
+
+  const handleDelete = (id) => {
+    editForm.delete(route('users.destroy', id), {
+      preserveScroll: true,
+      preserveState: true,
+    })
+  }
+
+  const fullName = (u) => u?.pseudo || `${u?.prenom ?? ''} ${u?.nom ?? ''}`.trim()
 
   return (
     <div>
@@ -49,103 +73,130 @@ export default function Users({ bannerImage, users, roles }) {
         </div>
       </div>
 
-      {/* CREATE USER */}
+      {/* CREATE */}
       <section className="users-section">
         <h2>Add User</h2>
         <form onSubmit={handleCreate} className="user-form">
-          <input 
-            type="text" 
-            placeholder="Name" 
-            value={createForm.data.name}
-            onChange={(e) => createForm.setData("name", e.target.value)}
-          />
-          <input 
-            type="email" 
-            placeholder="Email" 
-            value={createForm.data.email}
-            onChange={(e) => createForm.setData("email", e.target.value)}
-          />
-          <select 
-            value={createForm.data.role_id} 
-            onChange={(e) => createForm.setData("role_id", e.target.value)}
-          >
-            <option value="">Select Role</option>
-            {roles.map(role => (
-              <option key={role.id} value={role.id}>{role.nom}</option>
-            ))}
+          <input placeholder="Nom" value={createForm.data.nom}
+                 onChange={e => createForm.setData('nom', e.target.value)} />
+          <input placeholder="Prénom" value={createForm.data.prenom}
+                 onChange={e => createForm.setData('prenom', e.target.value)} />
+          <input placeholder="Pseudo" value={createForm.data.pseudo}
+                 onChange={e => createForm.setData('pseudo', e.target.value)} />
+          <input type="email" placeholder="Email" value={createForm.data.email}
+                 onChange={e => createForm.setData('email', e.target.value)} />
+          <input type="password" placeholder="Password" value={createForm.data.password}
+                 onChange={e => createForm.setData('password', e.target.value)} />
+          <input type="password" placeholder="Confirm Password" value={createForm.data.password_confirmation}
+                 onChange={e => createForm.setData('password_confirmation', e.target.value)} />
+          <select value={createForm.data.role_id}
+                  onChange={e => createForm.setData('role_id', e.target.value)}>
+            <option value="">Rôle (défaut: User)</option>
+            {roles?.map(r => <option key={r.id} value={r.id}>{r.nom}</option>)}
           </select>
           <button type="submit">Create</button>
         </form>
+
+        {/* erreurs simples */}
+        {Object.values(createForm.errors || {}).length > 0 && (
+          <div className="form-errors">
+            {Object.values(createForm.errors).map((err, i) => <p key={i}>{err}</p>)}
+          </div>
+        )}
       </section>
 
-      {/* LIST USERS */}
+      {/* LIST */}
       <section className="users-section">
         <h2>All Users</h2>
         <table className="users-table">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th colSpan="3">Actions</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Actions</th>
+              <th>Actions</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                {editingUser === user.id ? (
-                  <>
-                    <td>
-                      <input 
-                        type="text" 
-                        value={editForm.data.name} 
-                        onChange={(e) => editForm.setData("name", e.target.value)} 
-                      />
-                    </td>
-                    <td>
-                      <input 
-                        type="email" 
-                        value={editForm.data.email} 
-                        onChange={(e) => editForm.setData("email", e.target.value)} 
-                      />
-                    </td>
-                    <td>
-                      <select 
-                        value={editForm.data.role_id}
-                        onChange={(e) => editForm.setData("role_id", e.target.value)}
-                      >
-                        {roles.map(role => (
-                          <option key={role.id} value={role.id}>{role.nom}</option>
-                        ))}
+            {users?.map(u => (
+              <tr key={u.id}>
+                {/* Name (avatar + name) */}
+                <td className="cell-name">
+                  <div className="avatar">{(u.pseudo?.[0] || u.prenom?.[0] || u.nom?.[0] || 'U').toUpperCase()}</div>
+                  <span className="name-text">{fullName(u)}</span>
+                </td>
+
+                {/* Title (email) */}
+                <td className="muted">{u.email}</td>
+
+                {/* Status (role badge) */}
+                <td>
+                  <span className={`role-badge role-${(u.role?.nom || '').toLowerCase().replace(/\s+/g,'-')}`}>
+                    {u.role?.nom || '—'}
+                  </span>
+                </td>
+
+                {/* Actions: Show */}
+                <td>
+                  <button className="link-btn" onClick={() => setShowUser(u)}>Show</button>
+                </td>
+
+                {/* Actions: Edit */}
+                <td>
+                  {editingUserId === u.id ? (
+                    <form onSubmit={handleUpdate} className="inline-form">
+                      <input value={editForm.data.nom} onChange={e=>editForm.setData('nom', e.target.value)} placeholder="Nom" />
+                      <input value={editForm.data.prenom} onChange={e=>editForm.setData('prenom', e.target.value)} placeholder="Prénom" />
+                      <input value={editForm.data.pseudo} onChange={e=>editForm.setData('pseudo', e.target.value)} placeholder="Pseudo" />
+                      <input type="email" value={editForm.data.email} onChange={e=>editForm.setData('email', e.target.value)} placeholder="Email" />
+                      <select value={editForm.data.role_id} onChange={e=>editForm.setData('role_id', e.target.value)}>
+                        {roles?.map(r => <option key={r.id} value={r.id}>{r.nom}</option>)}
                       </select>
-                    </td>
-                    <td>
-                      <button onClick={handleUpdate}>Save</button>
-                      <button onClick={() => setEditingUser(null)}>Cancel</button>
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>
-                      <span className={`role-badge role-${user.role?.nom.toLowerCase().replace(" ", "-")}`}>
-                        {user.role?.nom}
-                      </span>
-                    </td>
-                    <td>
-                      <button onClick={() => handleEdit(user)} className="edit-btn">Edit</button>
-                    </td>
-                    <td>
-                      <button onClick={() => editForm.delete(route('users.destroy', user.id))} className="delete-btn">Delete</button>
-                    </td>
-                  </>
-                )}
+                      {/* Password optionnel en edit */}
+                      <input type="password" placeholder="New password (optional)"
+                             value={editForm.data.password}
+                             onChange={e=>editForm.setData('password', e.target.value)} />
+                      <input type="password" placeholder="Confirm (optional)"
+                             value={editForm.data.password_confirmation}
+                             onChange={e=>editForm.setData('password_confirmation', e.target.value)} />
+                      <div className="edit-actions">
+                        <button type="submit" className="save-btn">Save</button>
+                        <button type="button" className="cancel-btn" onClick={()=>setEditingUserId(null)}>Cancel</button>
+                      </div>
+                    </form>
+                  ) : (
+                    <button className="link-btn" onClick={() => startEdit(u)}>Edit</button>
+                  )}
+                </td>
+
+                {/* Actions: Delete */}
+                <td>
+                  <button className="delete-btn" onClick={() => handleDelete(u.id)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </section>
+
+      {/* Modal Show (local, pas de route) */}
+      {showUser && (
+        <div className="modal-backdrop" onClick={() => setShowUser(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h3>User details</h3>
+            <p><strong>Nom:</strong> {showUser.nom}</p>
+            <p><strong>Prénom:</strong> {showUser.prenom}</p>
+            <p><strong>Pseudo:</strong> {showUser.pseudo}</p>
+            <p><strong>Email:</strong> {showUser.email}</p>
+            <p><strong>Rôle:</strong> {showUser.role?.nom || '—'}</p>
+            <div className="modal-actions">
+              <button onClick={() => setShowUser(null)} className="save-btn">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer/>
     </div>
