@@ -20,24 +20,23 @@ export default function AdminProduit({ bannerImage }) {
     image2: null,
     image3: null,
     image4: null,
-  })
+    }, { forceFormData: true })
 
   // Créer un produit
   const handleSubmit = (e) => {
-    e.preventDefault()
-    post(route('produits.store'), {
-      forceFormData: true,
-      preserveScroll: true,
-      onSuccess: () => {
-        reset()
-        alert('Produit créé avec succès !')
-      },
-      onError: (errors) => {
-        console.error(errors)
-        alert('Erreur lors de la création')
-      }
-    })
-  }
+        e.preventDefault()
+        post(route('produits.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+            reset()
+            alert('Produit créé avec succès !')
+            },
+            onError: (errors) => {
+            console.error(errors)
+            alert('Erreur lors de la création')
+            }
+        })
+    }
 
   // Préparer édition
   const handleEdit = (p) => {
@@ -133,17 +132,19 @@ export default function AdminProduit({ bannerImage }) {
             {produits.map((p) => (
               <React.Fragment key={p.id}>
                 <tr>
-                  <td className="p-2 border">
-                    {p.image1 && (
-                      <img src={`/${p.image1}`} className="w-16 h-16 object-cover" />
-                    )}
-                  </td>
+                    <td className="p-2 border">
+                        {p.image_url ? (
+                            <img src={p.image_url} alt={p.nom} className="w-16 h-16 object-cover" />
+                        ) : (
+                            "Pas d’image"
+                        )}
+                    </td>
                   <td className="p-2 border">{p.nom}</td>
                   <td className="p-2 border">{p.prix} €</td>
                   <td className="p-2 border">{p.stock}</td>
                   <td className="p-2 border">{p.categorie?.nom}</td>
                   <td className="p-2 border">
-                    {p.promo ? `${p.promo.nom} (-${p.promo.reduction}%)` : '-'}
+                    {p.promo ? `${p.promo.nom} (-${p.promo.pourcentage}%)` : '-'}
                   </td>
                   <td className="p-2 border">
                     <button onClick={() => handleShow(p.id)} className="px-2 py-1 bg-gray-300 rounded">

@@ -8,7 +8,7 @@ class Produit extends Model
 {
     protected $table = 'produits';
 
-    protected $fillable = ['nom','prix','stock','isPinned','image1','image2','image3','image4','couleur','description','produitscategorie_id','user_id'];
+    protected $fillable = ['nom','prix','stock','isPinned','image1','image2','image3','image4','couleur','description','produitscategorie_id','user_id', 'promo_id', 'ventes'];
 
     public function categorie(){
         return $this->belongsTo(ProduitsCategorie::class, 'produitscategorie_id');

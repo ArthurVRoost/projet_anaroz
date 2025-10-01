@@ -12,19 +12,37 @@ use Illuminate\Support\Facades\Storage;
 class ProduitadminController extends Controller
 {
     public function index()
-    {
-        $bannerImage = asset('storage/banner/offer_img.png');
-        $produits = Produit::with(['categorie', 'user', 'promo'])->latest()->get();
-        $categories = ProduitsCategorie::all();
-        $promos = Promo::all();
+{
+    $bannerImage = asset('storage/banner/offer_img.png');
+    $produits = Produit::with(['categorie', 'user', 'promo'])->latest()->get();
+    $categories = ProduitsCategorie::all();
+    $promos = Promo::all();
 
-        return Inertia::render('AdminProduit', [
-            'bannerImage' => $bannerImage,
-            'produits' => $produits,
-            'categories' => $categories,
-            'promos' => $promos,
-        ]);
-    }
+    $imageBaseUrl = asset('storage');
+
+    // Ajouter un champ image_url
+    $produits->transform(function ($p) use ($imageBaseUrl) {
+        if (!$p->image1) {
+            $p->image_url = $imageBaseUrl . '/default.png'; // fallback
+        } elseif (str_starts_with($p->image1, 'feature_')) {
+            $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
+        } elseif (str_starts_with($p->image1, 'product_')) {
+            $p->image_url = $imageBaseUrl . '/product/' . $p->image1;
+        } elseif (str_starts_with($p->image1, 'banner_')) {
+            $p->image_url = $imageBaseUrl . '/banner/' . $p->image1;
+        } else {
+            $p->image_url = $imageBaseUrl . '/' . $p->image1;
+        }
+        return $p;
+    });
+
+    return Inertia::render('AdminProduit', [
+        'bannerImage' => $bannerImage,
+        'produits' => $produits,
+        'categories' => $categories,
+        'promos' => $promos,
+    ]);
+}
 
     public function store(Request $request)
     {
@@ -52,7 +70,10 @@ class ProduitadminController extends Controller
                     $images[$imageField] = null;
                 }
             }
-
+            \Log::info('Données envoyées:', $validated + [
+    'user_id' => auth()->id(),
+    'images' => $images,
+]);
             Produit::create([
                 'nom' => $validated['nom'],
                 'description' => $validated['description'],
