@@ -1,11 +1,15 @@
 import { Link, usePage } from '@inertiajs/react'
 import '../../css/nav.css'
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaBars } from "react-icons/fa";
+import { useState } from 'react';
+
 export default function Nav() {
-  const { auth, cartCount } = usePage().props; // Breeze/Inertia props
+  const { auth, cartCount } = usePage().props; 
   const user = auth?.user;
   const initials = (user?.pseudo?.charAt(0) || user?.nom?.charAt(0) || 'U').toUpperCase();
   const username = user?.pseudo || user?.nom || 'User';
+
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="navbar">
@@ -13,7 +17,12 @@ export default function Nav() {
         <Link href="/"><h1 className="logo">Aranoz.</h1></Link>
       </div>
 
-      <nav className="navbar-center">
+      {/* Menu Burger (mobile only) */}
+      <div className="burger-menu" onClick={() => setMenuOpen(!menuOpen)}>
+        <FaBars />
+      </div>
+
+      <nav className={`navbar-center ${menuOpen ? 'open' : ''}`}>
         <Link href="/" className="nav-link">Home</Link>
 
         <div className="nav-item dropdown">
@@ -34,7 +43,6 @@ export default function Nav() {
       </nav>
 
       <div className="navbar-right">
-        {/* Cart - visible même si user non connecté */}
         <Link href="/cart" className="cart-link" aria-label="Cart">
           <span className="cart-icon" aria-hidden><FaShoppingCart /></span>
           {Number(cartCount) > 0 && (
@@ -51,12 +59,8 @@ export default function Nav() {
             </div>
 
             <div className="dropdown-menu user-dropdown">
-              <Link href="/orders" className="dropdown-item">
-                Mes commandes
-              </Link>
-              <Link href={route ? route('logout') : '/logout'} method="post" as="button" className="dropdown-item">
-                Logout
-              </Link>
+              <Link href="/orders" className="dropdown-item">Mes commandes</Link>
+              <Link href={route ? route('logout') : '/logout'} method="post" as="button" className="dropdown-item">Logout</Link>
             </div>
           </div>
         ) : (

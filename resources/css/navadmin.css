@@ -1,66 +1,80 @@
-/* NAVBAR */
-.navbar {
+/* NAVBAR CONTAINER */
+.admin-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e9fafa;
+  background: #FEDADA;
   padding: 12px 60px;
   font-family: Arial, sans-serif;
   position: relative;
   z-index: 1000;
 }
 
-/* Logo */
-.logo {
+/* LOGO + BADGE */
+.admin-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-logo {
   font-size: 20px;
   font-weight: bold;
   margin-left: 10px;
 }
 
-/* Center Nav */
-.navbar-center {
+.admin-badge {
+  background: red;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* NAV LINKS CENTER */
+.admin-navbar-center {
   display: flex;
   gap: 25px;
   align-items: center;
 }
 
-.navbar-center.open {
+.admin-navbar-center.open {
   display: block;
   position: absolute;
   top: 60px;
   left: 0;
-  background: #e9fafa;
+  background: #FEDADA;
   width: 100%;
   padding: 15px;
 }
 
-/* Nav link */
-.nav-link {
+.admin-nav-link {
   text-decoration: none;
   color: black;
   font-size: 14px;
   cursor: pointer;
 }
 
-/* Dropdown */
-.nav-item {
+/* DROPDOWN */
+.admin-nav-item {
   position: relative;
 }
 
-.dropdown-menu {
+.admin-dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background: #FD3266; /* fond du bloc */
-  border-radius: 8px;   /* arrondi sur tout le bloc */
+  background: #FD3266; /* fond du bloc admin */
+  border-radius: 8px;
   padding: 8px 0;
   min-width: 160px;
   z-index: 2000;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-.dropdown-item {
+.admin-dropdown-item {
   display: block;
   padding: 8px 16px;
   color: white; /* texte blanc par défaut */
@@ -71,25 +85,25 @@
   transition: all 0.25s ease-in-out;
 }
 
-.dropdown-item:hover {
-  background: white;   /* fond blanc au survol */
-  color: #FD3266;      /* texte rose au survol */
+.admin-dropdown-item:hover {
+  background: white;   /* fond blanc */
+  color: #FD3266;      /* texte rose */
 }
 
-.nav-item:hover .dropdown-menu {
+.admin-nav-item:hover .admin-dropdown-menu {
   display: block;
 }
 
-/* Right side */
-.navbar-right {
+/* RIGHT SIDE */
+.admin-navbar-right {
   display: flex;
   align-items: center;
   gap: 20px;
   margin-right: 20px;
 }
 
-/* Cart */
-.cart-link {
+/* CART */
+.admin-cart-link {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -99,11 +113,11 @@
   font-size: 14px;
 }
 
-.cart-icon {
+.admin-cart-icon {
   font-size: 18px;
 }
 
-.cart-count {
+.admin-cart-count {
   position: absolute;
   top: -6px;
   right: -6px;
@@ -117,21 +131,22 @@
   color: #fff;
   font-size: 11px;
   border-radius: 999px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.8);
 }
 
-/* User */
-.user-menu {
+/* USER MENU */
+.admin-user-menu {
   position: relative;
 }
 
-.user-trigger {
+.admin-user-trigger {
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
 }
 
-.user-avatar {
+.admin-user-avatar {
   width: 32px;
   height: 32px;
   background: #ff3366;
@@ -144,11 +159,16 @@
   justify-content: center;
 }
 
-.username {
+.admin-username {
   font-size: 14px;
 }
 
-.user-dropdown {
+.admin-chev {
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+.admin-user-dropdown {
   display: none;
   position: absolute;
   top: 100%;
@@ -161,7 +181,7 @@
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-.user-dropdown .dropdown-item {
+.admin-user-dropdown .admin-dropdown-item {
   display: block;
   padding: 8px 16px;
   color: white; /* texte blanc par défaut */
@@ -175,33 +195,43 @@
   background: transparent;
 }
 
-.user-dropdown .dropdown-item:hover {
+.admin-user-dropdown .admin-dropdown-item:hover {
   background: white;   /* inversion hover */
   color: #FD3266;
 }
 
-.user-menu:hover .user-dropdown {
+.admin-user-menu:hover .admin-user-dropdown {
   display: block;
 }
 
-/* Burger menu */
-.burger-menu {
+/* BURGER MENU */
+.admin-burger-menu {
   display: none;
   font-size: 20px;
   cursor: pointer;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 576px) {
-  .navbar-center {
+  .admin-navbar-center {
     display: none;
     flex-direction: column;
     gap: 10px;
   }
-  .navbar-center.open {
+
+  .admin-navbar-center.open {
     display: flex;
   }
-  .burger-menu {
+
+  .admin-burger-menu {
     display: block;
+  }
+
+  .admin-navbar {
+    padding: 12px 20px;
+  }
+
+  .admin-navbar-right {
+    gap: 10px;
   }
 }

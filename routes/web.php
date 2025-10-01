@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ContactFormController;
@@ -36,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [CommandeController::class, 'index'])->name('orders');
 });
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
