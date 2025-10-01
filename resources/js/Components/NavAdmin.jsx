@@ -39,7 +39,7 @@ export default function NavAdmin() {
           </div>
         </div>
 
-        <Link href="/contact" className="admin-nav-link">Contact</Link>
+        <Link href="/admin/orders" className="admin-nav-link">Orders</Link>
 
         <div className="admin-nav-item dropdown">
           <span className="admin-nav-link">Blog ▾</span>
