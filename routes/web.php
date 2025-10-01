@@ -6,6 +6,7 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProduitsCategorieController;
@@ -64,7 +65,8 @@ Route::post('/admin/users', [RoleController::class, 'store'])->name('users.store
 Route::put('/admin/users/{id}', [RoleController::class, 'update'])->name('users.update');
 Route::delete('/admin/users/{id}', [RoleController::class, 'destroy'])->name('users.destroy');
 
-
+// ORDER CRUD
+Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
 
 
 
