@@ -10,6 +10,7 @@ use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProduitsCategorieController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -57,7 +58,11 @@ Route::delete('/admin/categories/blog/{id}', [ProduitsCategorieController::class
 Route::post('/admin/categories/tags', [ProduitsCategorieController::class, 'storeTag'])->name('categories.tags.store');
 Route::delete('/admin/categories/tags/{id}', [ProduitsCategorieController::class, 'destroyTag'])->name('categories.tags.destroy');
 
-
+// USERS CRUD
+Route::get('/admin/users', [RoleController::class, 'index'])->name('users.index');
+Route::post('/admin/users', [RoleController::class, 'store'])->name('users.store');
+Route::put('/admin/users/{id}', [RoleController::class, 'update'])->name('users.update');
+Route::delete('/admin/users/{id}', [RoleController::class, 'destroy'])->name('users.destroy');
 
 
 

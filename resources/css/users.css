@@ -1,0 +1,110 @@
+.carouDetailsnav{
+    background-color: #FEDADA;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    padding-top: 4%;
+    
+}
+.detailsH1{
+    font-weight: 500;
+    font-size: 40px;
+}
+.users-section {
+  margin: 40px auto;
+  max-width: 900px;
+}
+
+.users-section h2 {
+  font-size: 22px;
+  color: #FD3266;
+  border-bottom: 2px solid #FD3266;
+  margin-bottom: 15px;
+  padding-bottom: 6px;
+}
+
+.user-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.user-form input,
+.user-form select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.user-form button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-form button:hover {
+  background: #1e7e34;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.users-table th,
+.users-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.users-table th {
+  font-size: 14px;
+  color: #333;
+}
+
+.edit-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #0056b3;
+}
+
+.delete-btn {
+  background: #FD3266;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #c81f4a;
+}
+
+/* Roles badges */
+.role-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #fff;
+}
+
+.role-admin { background: #dc3545; }
+.role-user { background: #6c757d; }
+.role-community-manager { background: #17a2b8; }
+.role-agent { background: #ffc107; color: #000; }
+.role-webmaster { background: #007bff; }
+.role-public { background: #343a40; }
