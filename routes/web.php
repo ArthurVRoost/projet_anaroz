@@ -74,10 +74,21 @@ Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateS
 
 
 // BLOD CRUD
-Route::get('/admin/blogs', [BlogadminController::class, 'index'])->name('blogs.admin');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/blogs', [BlogadminController::class, 'index'])->name('blogs.index');
+    Route::post('/admin/blogs', [BlogadminController::class, 'store'])->name('blogs.store');
+    Route::put('/admin/blogs/{blog}', [BlogadminController::class, 'update'])->name('blogs.update');
+    Route::delete('/admin/blogs/{blog}', [BlogadminController::class, 'destroy'])->name('blogs.destroy');
+});
 
 // PRODUITS CRUD
-Route::get('/admin/produits', [ProduitadminController::class, 'index'])->name('produits.admin');
+Route::middleware(['auth'])->group(function () {
+    // Routes Produits
+    Route::get('/admin/produits', [ProduitadminController::class, 'index'])->name('produits.index');
+    Route::post('/admin/produits', [ProduitadminController::class, 'store'])->name('produits.store');
+    Route::put('/admin/produits/{produit}', [ProduitadminController::class, 'update'])->name('produits.update');
+    Route::delete('/admin/produits/{produit}', [ProduitadminController::class, 'destroy'])->name('produits.destroy');
+});
 
 
 

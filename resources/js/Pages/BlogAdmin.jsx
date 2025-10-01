@@ -1,21 +1,255 @@
 import Footer from '@/Components/Footer'
 import NavAdmin from '@/Components/NavAdmin'
-import React from 'react'
+import { usePage, router, useForm } from '@inertiajs/react'
+import { useState } from 'react'
+import '../../css/blogadmin.css'
 
-export default function BlogAdmin({bannerImage}) {
+export default function BlogAdmin({ bannerImage }) {
+  const { blogs, categories } = usePage().props
+  const [editingId, setEditingId] = useState(null)
+  const [showingId, setShowingId] = useState(null)
+
+  // Utilisation de useForm d'Inertia pour une meilleure gestion
+  const { data, setData, post, reset, processing, errors } = useForm({
+    titre: '',
+    description: '',
+    blogcategorie_id: '',
+    blog_path: null,
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    post(route('blogs.store'), {
+      forceFormData: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        reset()
+        alert('Blog créé avec succès !')
+      },
+      onError: (errors) => {
+        console.error('Erreurs:', errors)
+        alert('Erreur lors de la création: ' + JSON.stringify(errors))
+      }
+    })
+  }
+
+  const handleEdit = (blog) => {
+    setEditingId(blog.id)
+    setData({
+      titre: blog.titre,
+      description: blog.description,
+      blogcategorie_id: blog.blogcategorie_id,
+      blog_path: null
+    })
+  }
+
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('_method', 'PUT')
+    formData.append('titre', data.titre)
+    formData.append('description', data.description)
+    formData.append('blogcategorie_id', data.blogcategorie_id)
+    if (data.blog_path) {
+      formData.append('blog_path', data.blog_path)
+    }
+    
+    router.post(route('blogs.update', editingId), formData, {
+      preserveScroll: true,
+      onSuccess: () => {
+        setEditingId(null)
+        reset()
+        alert('Blog mis à jour avec succès !')
+      },
+      onError: (errors) => {
+        console.error('Erreurs:', errors)
+        alert('Erreur lors de la mise à jour: ' + JSON.stringify(errors))
+      }
+    })
+  }
+
+  const handleDelete = (id) => {
+    if (confirm('Supprimer ce blog ?')) {
+      router.delete(route('blogs.destroy', id), {
+        preserveScroll: true,
+        onSuccess: () => {
+          alert('Blog supprimé avec succès !')
+        }
+      })
+    }
+  }
+
+  const handleShow = (id) => {
+    setShowingId(showingId === id ? null : id)
+  }
+
+  const cancelEdit = () => {
+    setEditingId(null)
+    reset()
+  }
+
   return (
     <div>
-        <NavAdmin/>
-        <div className="carouDetailsnav">
-            <div className="div1details" style={{ marginLeft: '15%' }}>
-            <h2 className="detailsH1">Blogs Settings</h2>
-            <p className="detailsP">Aranoz - Shop System</p>
-            </div>
-            <div className="div2details">
-            <img className="detailsCarouImg" src={bannerImage} alt="" />
-            </div>
+      <NavAdmin />
+      <div className="carouDetailsnav">
+        <div className="div1details" style={{ marginLeft: '15%' }}>
+          <h2 className="detailsH1">Blogs Settings</h2>
+          <p className="detailsP">Aranoz - Shop System</p>
         </div>
-        <Footer/>
+        <div className="div2details">
+          <img className="detailsCarouImg" src={bannerImage} alt="" />
+        </div>
+      </div>
+
+      <div className="blog-admin-container">
+        <button className="btn-add">+ Add a New blog</button>
+
+        {/* Table */}
+        <table className="blog-table">
+          <thead>
+            <tr>
+              <th>Picture</th>
+              <th>Blog</th>
+              <th>Categorie</th>
+              <th>User Role</th>
+              <th>Details</th>
+              <th>Modification</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {blogs.map((b) => (
+              <>
+                <tr key={b.id}>
+                  <td>
+                    {b.blog_path && <img src={`/${b.blog_path}`} alt="" className="blog-thumb" />}
+                  </td>
+                  <td>{b.titre}</td>
+                  <td>{b.categorie?.nom}</td>
+                  <td><span className="role-badge">{b.user?.name || 'admin'}</span></td>
+                  <td>
+                    <button onClick={() => handleShow(b.id)} className="btn-show">
+                      {showingId === b.id ? 'Hide' : 'Show'}
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleEdit(b)} className="btn-edit">
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleDelete(b.id)} className="btn-delete">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+                {/* Ligne de détails */}
+                {showingId === b.id && (
+                  <tr>
+                    <td colSpan="7" style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
+                      <strong>Description complète:</strong>
+                      <p>{b.description}</p>
+                    </td>
+                  </tr>
+                )}
+              </>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Formulaire modification */}
+        {editingId && (
+          <form onSubmit={handleUpdate} className="blog-form">
+            <h3>Edit blog #{editingId}</h3>
+            <input 
+              type="text" 
+              value={data.titre} 
+              placeholder="Titre" 
+              onChange={(e) => setData('titre', e.target.value)} 
+              required 
+            />
+            <textarea 
+              value={data.description} 
+              placeholder="Description" 
+              onChange={(e) => setData('description', e.target.value)} 
+              required 
+            />
+            <select 
+              value={data.blogcategorie_id} 
+              onChange={(e) => setData('blogcategorie_id', e.target.value)} 
+              required
+            >
+              <option value="">Choisir une catégorie</option>
+              {categories?.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.nom}</option>
+              ))}
+            </select>
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={(e) => setData('blog_path', e.target.files[0])} 
+            />
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button type="submit" className="btn-save" disabled={processing}>
+                {processing ? 'Saving...' : 'Update'}
+              </button>
+              <button type="button" onClick={cancelEdit} className="btn-cancel">
+                Cancel
+              </button>
+            </div>
+            {errors && Object.keys(errors).length > 0 && (
+              <div style={{ color: 'red', marginTop: '10px' }}>
+                {Object.values(errors).map((err, i) => <div key={i}>{err}</div>)}
+              </div>
+            )}
+          </form>
+        )}
+
+        {/* Formulaire ajout blog */}
+        {!editingId && (
+          <form onSubmit={handleSubmit} className="blog-form">
+            <h3>Add new blog</h3>
+            <input 
+              type="text" 
+              value={data.titre} 
+              placeholder="Titre" 
+              onChange={(e) => setData('titre', e.target.value)} 
+              required 
+            />
+            <textarea 
+              value={data.description} 
+              placeholder="Description" 
+              onChange={(e) => setData('description', e.target.value)} 
+              required 
+            />
+            <select 
+              value={data.blogcategorie_id} 
+              onChange={(e) => setData('blogcategorie_id', e.target.value)} 
+              required
+            >
+              <option value="">Choisir une catégorie</option>
+              {categories?.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.nom}</option>
+              ))}
+            </select>
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={(e) => setData('blog_path', e.target.files[0])} 
+            />
+            <button type="submit" className="btn-save" disabled={processing}>
+              {processing ? 'Saving...' : 'Save'}
+            </button>
+            {errors && Object.keys(errors).length > 0 && (
+              <div style={{ color: 'red', marginTop: '10px' }}>
+                {Object.values(errors).map((err, i) => <div key={i}>{err}</div>)}
+              </div>
+            )}
+          </form>
+        )}
+      </div>
+
+      <Footer />
     </div>
   )
 }
