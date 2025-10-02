@@ -14,87 +14,92 @@ use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProduitsCategorieController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// === PUBLIC ===
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment');
 
-Route::get('/contact', [ContactFormController::class, 'index'])->name('blog');
-
+Route::get('/contact', [ContactFormController::class, 'index'])->name('contact');
 Route::get('/details/{id}', [DetailsController::class, 'show'])->name('details.show');
-
 Route::get('/produits', [ProduitController::class, 'index'])->name('produits');
 
+// === USER AUTH ===
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [PanierController::class, 'index'])->name('cart');
     Route::post('/cart', [PanierController::class, 'store'])->name('cart.store');
     Route::put('/cart/{panier}', [PanierController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{panier}', [PanierController::class, 'destroy'])->name('cart.destroy');
     Route::post('/checkout', [PanierController::class, 'checkout'])->name('cart.checkout');
-
     Route::get('/track', [PanierController::class, 'track'])->name('track');
-});
 
-Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [CommandeController::class, 'index'])->name('orders');
 });
 
-// ADMIN
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+// === ADMIN GLOBAL (tous sauf user_id 1 et 2) ===
+Route::middleware(['auth', 'exclude.users'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
-// Affichage des deux types de catégories
-Route::get('/admin/categories', [ProduitsCategorieController::class, 'index'])->name('categories.index');
+    // Catégories (Admin only)
+    Route::get('/admin/categories', [ProduitsCategorieController::class, 'index'])
+        ->middleware('role:Admin')
+        ->name('categories.index');
+    Route::post('/admin/categories/produits', [ProduitsCategorieController::class, 'storeProduit'])
+        ->middleware('role:Admin')
+        ->name('categories.produits.store');
+    Route::delete('/admin/categories/produits/{id}', [ProduitsCategorieController::class, 'destroyProduit'])
+        ->middleware('role:Admin')
+        ->name('categories.produits.destroy');
+    Route::post('/admin/categories/blog', [ProduitsCategorieController::class, 'storeBlog'])
+        ->middleware('role:Admin')
+        ->name('categories.blog.store');
+    Route::delete('/admin/categories/blog/{id}', [ProduitsCategorieController::class, 'destroyBlog'])
+        ->middleware('role:Admin')
+        ->name('categories.blog.destroy');
+    Route::post('/admin/categories/tags', [ProduitsCategorieController::class, 'storeTag'])
+        ->middleware('role:Admin')
+        ->name('categories.tags.store');
+    Route::delete('/admin/categories/tags/{id}', [ProduitsCategorieController::class, 'destroyTag'])
+        ->middleware('role:Admin')
+        ->name('categories.tags.destroy');
 
-// CRUD Produits
-Route::post('/admin/categories/produits', [ProduitsCategorieController::class, 'storeProduit'])->name('categories.produits.store');
-Route::delete('/admin/categories/produits/{id}', [ProduitsCategorieController::class, 'destroyProduit'])->name('categories.produits.destroy');
+    // Users (Admin only)
+    Route::get('/admin/users', [RoleController::class, 'index'])->middleware('role:Admin')->name('users.index');
+    Route::post('/admin/users', [RoleController::class, 'store'])->middleware('role:Admin')->name('users.store');
+    Route::put('/admin/users/{id}', [RoleController::class, 'update'])->middleware('role:Admin')->name('users.update');
+    Route::delete('/admin/users/{id}', [RoleController::class, 'destroy'])->middleware('role:Admin')->name('users.destroy');
 
-// CRUD Blog
-Route::post('/admin/categories/blog', [ProduitsCategorieController::class, 'storeBlog'])->name('categories.blog.store');
-Route::delete('/admin/categories/blog/{id}', [ProduitsCategorieController::class, 'destroyBlog'])->name('categories.blog.destroy');
+    // Produits (Webmaster + Admin)
+    Route::middleware('role:Webmaster,Admin')->group(function () {
+        Route::get('/admin/produits', [ProduitadminController::class, 'index'])->name('produits.index');
+        Route::post('/admin/produits', [ProduitadminController::class, 'store'])->name('produits.store');
+        Route::put('/admin/produits/{produit}', [ProduitadminController::class, 'update'])->name('produits.update');
+        Route::delete('/admin/produits/{produit}', [ProduitadminController::class, 'destroy'])->name('produits.destroy');
+    });
 
-// Tags CRUD
-Route::post('/admin/categories/tags', [ProduitsCategorieController::class, 'storeTag'])->name('categories.tags.store');
-Route::delete('/admin/categories/tags/{id}', [ProduitsCategorieController::class, 'destroyTag'])->name('categories.tags.destroy');
+    // Blogs (Community Manager + Admin)
+    Route::middleware('role:Community Manager,Admin')->group(function () {
+        Route::get('/admin/blogs', [BlogadminController::class, 'index'])->name('blogs.index');
+        Route::post('/admin/blogs', [BlogadminController::class, 'store'])->name('blogs.store');
+        Route::put('/admin/blogs/{blog}', [BlogadminController::class, 'update'])->name('blogs.update');
+        Route::delete('/admin/blogs/{blog}', [BlogadminController::class, 'destroy'])->name('blogs.destroy');
+    });
 
-// USERS CRUD
-Route::get('/admin/users', [RoleController::class, 'index'])->name('users.index');
-Route::post('/admin/users', [RoleController::class, 'store'])->name('users.store');
-Route::put('/admin/users/{id}', [RoleController::class, 'update'])->name('users.update');
-Route::delete('/admin/users/{id}', [RoleController::class, 'destroy'])->name('users.destroy');
-
-// ORDER CRUD
-Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.admin');
-Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateStatus'])
-    ->name('orders.confirm');
-
-
-// BLOD CRUD
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/blogs', [BlogadminController::class, 'index'])->name('blogs.index');
-    Route::post('/admin/blogs', [BlogadminController::class, 'store'])->name('blogs.store');
-    Route::put('/admin/blogs/{blog}', [BlogadminController::class, 'update'])->name('blogs.update');
-    Route::delete('/admin/blogs/{blog}', [BlogadminController::class, 'destroy'])->name('blogs.destroy');
+    // Orders (Agent + Admin)
+    Route::middleware('role:Agent,Admin')->group(function () {
+        Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.admin');
+        Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateStatus'])->name('orders.confirm');
+    });
 });
 
-// PRODUITS CRUD
-Route::middleware(['auth'])->group(function () {
-    // Routes Produits
-    Route::get('/admin/produits', [ProduitadminController::class, 'index'])->name('produits.index');
-    Route::post('/admin/produits', [ProduitadminController::class, 'store'])->name('produits.store');
-    Route::put('/admin/produits/{produit}', [ProduitadminController::class, 'update'])->name('produits.update');
-    Route::delete('/admin/produits/{produit}', [ProduitadminController::class, 'destroy'])->name('produits.destroy');
-});
-
-
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// === PROFILE + DASHBOARD ===
+Route::get('/dashboard', fn() => Inertia::render('Dashboard'))
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
