@@ -44,27 +44,33 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'exclude.roles'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
-    // Catégories (Admin only)
+    // Catégories (Admin + Community Manager)
     Route::get('/admin/categories', [ProduitsCategorieController::class, 'index'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.index');
+
     Route::post('/admin/categories/produits', [ProduitsCategorieController::class, 'storeProduit'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.produits.store');
+
     Route::delete('/admin/categories/produits/{id}', [ProduitsCategorieController::class, 'destroyProduit'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.produits.destroy');
+
     Route::post('/admin/categories/blog', [ProduitsCategorieController::class, 'storeBlog'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.blog.store');
+
     Route::delete('/admin/categories/blog/{id}', [ProduitsCategorieController::class, 'destroyBlog'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.blog.destroy');
+
     Route::post('/admin/categories/tags', [ProduitsCategorieController::class, 'storeTag'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.tags.store');
+
     Route::delete('/admin/categories/tags/{id}', [ProduitsCategorieController::class, 'destroyTag'])
-        ->middleware('role:Admin')
+        ->middleware('role:Admin,Community Manager')
         ->name('categories.tags.destroy');
 
     // Users (Admin only)
