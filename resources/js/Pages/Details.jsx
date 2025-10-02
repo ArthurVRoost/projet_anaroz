@@ -5,7 +5,7 @@ import { router } from "@inertiajs/react";
 
 export default function Default({ produit, prixFinal, reduction, specifications, bannerImage }) {
   const [activeTab, setActiveTab] = useState("description");
-  const [activeImage, setActiveImage] = useState(produit.images[0]);
+  const [activeImage, setActiveImage] = useState(produit.images[0] || "/placeholder.png");
   const [fade, setFade] = useState(false);
 
   const handleThumbnailClick = (img) => {

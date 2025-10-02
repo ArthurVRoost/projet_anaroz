@@ -37,21 +37,29 @@ class DetailsController extends Controller
     ];
 
     $produit->images = collect($paths)->map(function ($img) use ($baseUrl) {
-        if (str_starts_with($img, 'feature_')) {
-            return $baseUrl . '/feature/large/' . $img;
-        }
-        if (str_starts_with($img, 'product_')) {
-            return $baseUrl . '/product/' . $img;
-        }
-        if (str_starts_with($img, 'banner_') || $img === 'banner_img.png') {
-            return $baseUrl . '/banner/' . $img;
-        }
-        if ($img === 'offer_img.png') {
-            return $baseUrl . '/offer/' . $img;
-        }
-        // fallback: racine
-        return $baseUrl . '/' . $img;
-    })->values();
+    if (!$img) return null; // si pas d'image
+
+    // ✅ Si déjà un chemin storage/... => asset direct
+    if (str_starts_with($img, 'storage/')) {
+        return asset($img);
+    }
+
+    if (str_starts_with($img, 'feature_')) {
+        return $baseUrl . '/feature/large/' . $img;
+    }
+    if (str_starts_with($img, 'product_')) {
+        return $baseUrl . '/product/' . $img;
+    }
+    if (str_starts_with($img, 'banner_') || $img === 'banner_img.png') {
+        return $baseUrl . '/banner/' . $img;
+    }
+    if ($img === 'offer_img.png') {
+        return $baseUrl . '/offer/' . $img;
+    }
+
+        // fallback
+    return $baseUrl . '/' . $img;
+        })->filter()->values();
     $bannerImage = asset('storage/banner/feature_1.png');
     return Inertia::render('Details', [
         'produit' => $produit,
