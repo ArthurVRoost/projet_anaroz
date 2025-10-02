@@ -8,11 +8,15 @@ export default function Nav() {
   const user = auth?.user;
   const initials = (user?.pseudo?.charAt(0) || user?.nom?.charAt(0) || 'U').toUpperCase();
   const username = user?.pseudo || user?.nom || 'User';
-  const role = user?.role?.nom;
+  
+  // On utilise role_id pour gérer l'accès
+  const roleId = user?.role_id;
+  const roleName = user?.role?.nom;
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const canAccessBackoffice = user && role && role !== "Public" && ![1, 2].includes(user.id);
+  // Bloque uniquement les rôles 1 (Public) et 2 (User)
+  const canAccessBackoffice = user && roleId && ![1, 2].includes(roleId);
 
   return (
     <header className="navbar">
@@ -65,9 +69,9 @@ export default function Nav() {
               <Link href="/orders" className="dropdown-item">Mes commandes</Link>
               <Link href={route ? route('logout') : '/logout'} method="post" as="button" className="dropdown-item">Logout</Link>
 
-              {/* Accès Back Office si rôle pas Public ou User */}
+              {/* Accès Admin pour les rôles >= 3 */}
               {canAccessBackoffice && (
-                <Link href="/admin" className="dropdown-item">Back Office</Link>
+                <Link href="/admin" className="dropdown-item">Admin</Link>
               )}
             </div>
           </div>
