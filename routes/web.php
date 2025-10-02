@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // === ADMIN GLOBAL (tous sauf user_id 1 et 2) ===
-Route::middleware(['auth', 'exclude.users'])->group(function () {
+Route::middleware(['auth', 'exclude.roles'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
     // Catégories (Admin only)

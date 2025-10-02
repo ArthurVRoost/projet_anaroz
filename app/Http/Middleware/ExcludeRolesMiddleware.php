@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExcludeUsersMiddleware
+class ExcludeRolesMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next){
+    public function handle($request, Closure $next)
+    {
         $user = Auth::user();
-        if ($user && in_array($user->id, [1, 2])) {
+
+        if ($user && in_array($user->role_id, [1, 2])) {
             abort(403, 'Accès refusé');
         }
 

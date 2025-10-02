@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // 🔑 Ajout de tes middlewares personnalisés
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
-            'exclude.users' => \App\Http\Middleware\ExcludeUsersMiddleware::class,
+            'exclude.roles' => \App\Http\Middleware\ExcludeRolesMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
