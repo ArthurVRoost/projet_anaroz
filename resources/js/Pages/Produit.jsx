@@ -109,8 +109,8 @@ export default function Produit({ bannerImage }) {
                     {/* Prix avec promo si dispo */}
                     {p.reduction ? (
                       <p className="price">
-                        <span className="old-price">{p.prix} €</span>{" "}
-                        <span className="promo-price">{p.prixFinal} €</span>
+                        <span className="old-price">{Number(p.prix).toFixed(2)} €</span>{" "}
+                        <span className="promo-price">{Number(p.prixFinal).toFixed(2)} €</span>
                         <span className="promo-label">(-{p.reduction}%)</span>
                       </p>
                     ) : (
