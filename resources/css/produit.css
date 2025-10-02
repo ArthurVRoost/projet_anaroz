@@ -4,7 +4,6 @@
     justify-content: center;
     gap: 50px;
     align-items: center;
-    
 }
 .detailsH1{
     font-weight: 500;
@@ -79,15 +78,15 @@
   padding: 10px;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.3s, border 0.3s;
-  cursor: pointer;
+  cursor: default;
 }
 
 /* Effet hover avec ombre légère */
 .produit-card:hover,
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* ombre douce */
-  border: 1px solid rgba(0, 0, 0, 0.08);       /* border subtile */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .produit-card img {
@@ -118,7 +117,7 @@
   border: 1px solid #ddd;
   display: flex;
   flex-direction: column;
-  gap: 25px; /* espace entre Catégorie et Couleur */
+  gap: 25px;
 }
 
 .filter-group {
@@ -160,8 +159,8 @@
 .produits-list {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* cartes plus larges */
-  gap: 30px; /* plus d’espace entre les cartes */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
 }
 
 .produit-card {
@@ -171,7 +170,7 @@
   padding: 15px;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.3s;
-  cursor: pointer;
+  cursor: default;
 }
 
 .produit-card:hover {
@@ -181,7 +180,7 @@
 
 .produit-img {
   width: 100%;
-  height: 220px; /* images plus grandes */
+  height: 220px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
@@ -200,18 +199,58 @@
   margin-bottom: 12px;
 }
 
-.explore-link {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: bold;
-  color: #f72585;
-  text-decoration: none;
-  transition: color 0.3s;
+/* === Actions (Explore + Add) === */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.explore-link:hover {
-  color: #d61c6e;
+/* Style commun pour les deux boutons (réduits) */
+.explore-btn,
+.add-to-cart-btn {
+  flex: 1;
+  min-width: 100px; /* plus petit */
+  padding: 8px 14px; /* réduit */
+  font-size: 13px; /* texte plus petit */
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
 }
+
+/* Bouton Explore (style secondaire) */
+.explore-btn {
+  background: #fff;
+  color: #f72585;
+  border: 2px solid #f72585;
+  text-decoration: none;
+}
+
+.explore-btn:hover {
+  background: #f72585;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Bouton Add to cart (style primaire) */
+.add-to-cart-btn {
+  background: #f72585;
+  color: #fff;
+  border: none;
+}
+
+.add-to-cart-btn:hover {
+  background: #d61c6e;
+  transform: translateY(-2px);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
+}
+
 /* === Search bar === */
 .search-bar {
   margin: 30px auto;
@@ -260,26 +299,4 @@
 .promo-price {
   color: #f72585;
   font-weight: bold;
-}
-
-/* Bouton Add to cart */
-.add-to-cart-btn {
-  margin-top: 8px;
-  padding: 10px 18px;
-  background: #f72585;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s, transform 0.1s;
-}
-
-.add-to-cart-btn:hover {
-  background: #d61c6e;
-  transform: translateY(-2px);
-}
-
-.add-to-cart-btn:active {
-  transform: translateY(0);
 }

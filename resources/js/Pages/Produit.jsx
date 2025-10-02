@@ -120,7 +120,7 @@ export default function Produit({ bannerImage }) {
                     <div className="actions">
                       <Link
                         href={route("details.show", p.id)}
-                        className="explore-link"
+                        className="explore-btn"
                       >
                         EXPLORE NOW →
                       </Link>
