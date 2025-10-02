@@ -32,7 +32,7 @@ class ProduitController extends Controller
             $query->where('couleur', $request->couleur);
         }
 
-        $produits = $query->paginate(12)->withQueryString();
+        $produits = $query->paginate(40)->withQueryString();
         $categories = ProduitsCategorie::all();
 
         // URL de base pour les images
@@ -40,7 +40,11 @@ class ProduitController extends Controller
 
         // === Ajouter image_url + gestion promo ===
         $produits->getCollection()->transform(function ($p) use ($imageBaseUrl) {
-            // 🔹 Image principale
+        // Si l'image est déjà un chemin "storage/...", on met directement asset()
+        if ($p->image1 && str_starts_with($p->image1, 'storage/')) {
+            $p->image_url = asset($p->image1);
+        } else {
+            // Ancien système (feature_, product_, banner_)
             if (str_starts_with($p->image1, 'feature_')) {
                 $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
             } elseif (str_starts_with($p->image1, 'product_')) {
@@ -50,18 +54,18 @@ class ProduitController extends Controller
             } else {
                 $p->image_url = $imageBaseUrl . '/' . $p->image1;
             }
+        }
 
-            // 🔹 Prix promo si applicable
-            $p->prixFinal = $p->prix;
-            $p->reduction = null;
+        // Gestion du prix promo
+        $p->prixFinal = $p->prix;
+        $p->reduction = null;
+        if ($p->promo_id && $p->promo) {
+            $p->reduction = $p->promo->pourcentage;
+            $p->prixFinal = $p->prix - ($p->prix * ($p->promo->pourcentage / 100));
+        }
 
-            if ($p->promo_id && $p->promo) {
-                $p->reduction = $p->promo->pourcentage;
-                $p->prixFinal = $p->prix - ($p->prix * ($p->promo->pourcentage / 100));
-            }
-
-            return $p;
-        });
+        return $p;
+    });
 
         // Image de bannière par défaut (exemple)
         $bannerImage = asset('storage/banner/feature_1.png');

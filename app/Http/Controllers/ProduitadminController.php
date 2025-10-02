@@ -24,6 +24,9 @@ class ProduitadminController extends Controller
     $produits->transform(function ($p) use ($imageBaseUrl) {
         if (!$p->image1) {
             $p->image_url = $imageBaseUrl . '/default.png'; // fallback
+        } elseif (str_starts_with($p->image1, 'storage/')) {
+            // Déjà un chemin "storage/..." => on fait juste asset()
+            $p->image_url = asset($p->image1);
         } elseif (str_starts_with($p->image1, 'feature_')) {
             $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
         } elseif (str_starts_with($p->image1, 'product_')) {
