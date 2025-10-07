@@ -1,12 +1,14 @@
 .orders-container {
   width: 80%;
   margin: 2rem auto;
+  font-family: sans-serif;
 }
 
 .orders-container h2 {
   margin-bottom: 1rem;
   font-size: 1.8rem;
   color: #333;
+  text-align: center;
 }
 
 .orders-table {
@@ -42,4 +44,107 @@
 .status.confirmed {
   color: green;
   font-weight: bold;
+}
+
+/* ================================================= */
+/* 🔹 RESPONSIVE DESIGN */
+/* ================================================= */
+
+/* ✅ Tablette (577px–992px) */
+@media (max-width: 992px) and (min-width: 577px) {
+  .orders-container {
+    width: 90%;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+  }
+
+  .orders-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .orders-table {
+    font-size: 0.95rem;
+  }
+}
+
+/* ✅ Mobile (max 576px) */
+@media (max-width: 576px) {
+  .orders-container {
+    width: 95%;
+  }
+
+  .orders-container h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Cache la version tableau */
+  .orders-table thead {
+    display: none;
+  }
+
+  .orders-table,
+  .orders-table tbody,
+  .orders-table tr,
+  .orders-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .orders-table tr {
+    margin-bottom: 1.2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+
+  .orders-table td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 120px; /* espace pour le label */
+    text-align: left; /* 🟢 aligné à gauche */
+    font-size: 0.95rem;
+  }
+
+  .orders-table td:last-child {
+    border-bottom: none;
+  }
+
+  .orders-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+    width: 100px;
+    text-align: left;
+  }
+
+  .orders-table ul {
+    padding-left: 0;
+    list-style: none;
+    margin: 0.5rem 0 0;
+  }
+
+  .orders-table li {
+    font-size: 0.9rem;
+  }
+
+  /* Statuts mieux visibles sur mobile */
+  .status.pending {
+    color: #ff9500;
+  }
+
+  .status.confirmed {
+    color: #16a34a;
+  }
 }
