@@ -1,20 +1,36 @@
-.carouDetailsnav{
-    background-color: #FEDADA;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    align-items: center;
-    padding-top: 4%;
-    
+/* ======== HEADER SECTION ======== */
+.carouDetailsnav {
+  background-color: #FEDADA;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 10%;
+  flex-wrap: wrap;
+  gap: 30px;
 }
-.detailsH1{
-    font-weight: 500;
-    font-size: 40px;
+
+.detailsH1 {
+  font-weight: 500;
+  font-size: 2.2rem;
 }
+
+.detailsP {
+  color: #555;
+  font-size: 1rem;
+}
+
+.detailsCarouImg {
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* ======== MAIN SECTIONS ======== */
 .categories-section {
+  width: 80%;              /* ✅ ne prend pas 100vw */
   margin: 40px auto;
-  max-width: 600px;
-  padding: 10px 0;
+  max-width: 800px;
+  padding: 20px 0;
 }
 
 .categories-section h2 {
@@ -36,18 +52,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 10px;
+  padding: 8px 12px;
   margin-bottom: 6px;
   background: #fff;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease;
+}
+
+.category-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .delete-btn {
   background: #FD3266;
   color: white;
   border: none;
-  padding: 4px 10px;
+  padding: 5px 12px;
   font-size: 13px;
   border-radius: 4px;
   cursor: pointer;
@@ -60,12 +81,12 @@
 .category-form {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .category-form input {
   flex: 1;
-  padding: 6px 8px;
+  padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -74,7 +95,7 @@
   background: #28a745;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 8px 16px;
   font-size: 13px;
   border-radius: 4px;
   cursor: pointer;
@@ -82,4 +103,115 @@
 
 .create-btn:hover {
   background: #1e7e34;
+}
+
+/* ===================================================== */
+/* 🔹 RESPONSIVE DESIGN */
+/* ===================================================== */
+
+/* ✅ Intermédiaire (769px–1089px) */
+@media (max-width: 1089px) and (min-width: 769px) {
+  .carouDetailsnav {
+    padding: 2.5rem 8%;
+  }
+
+  .detailsH1 {
+    font-size: 1.9rem;
+  }
+
+  .detailsCarouImg {
+    max-width: 250px;
+  }
+
+  .categories-section {
+    width: 85%;
+  }
+}
+
+/* ✅ Tablette (577px–768px) */
+@media (max-width: 768px) and (min-width: 577px) {
+  .carouDetailsnav {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 5%;
+  }
+
+  .detailsH1 {
+    font-size: 1.7rem;
+  }
+
+  .detailsCarouImg {
+    max-width: 200px;
+  }
+
+  .categories-section {
+    width: 90%;
+    padding: 10px 0;
+  }
+
+  .category-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .category-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .create-btn {
+    width: 100%;
+  }
+}
+
+/* ✅ Mobile (max 576px) */
+@media (max-width: 576px) {
+  .carouDetailsnav {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 20px;
+  }
+
+  .detailsH1 {
+    font-size: 1.5rem;
+  }
+
+  .detailsP {
+    font-size: 0.9rem;
+  }
+
+  .detailsCarouImg {
+    max-width: 160px;
+  }
+
+  .categories-section {
+    width: 90%;
+    padding: 0;
+  }
+
+  .categories-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .category-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .delete-btn {
+    align-self: flex-end;
+  }
+
+  .category-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .category-form input,
+  .create-btn {
+    width: 100%;
+  }
 }
