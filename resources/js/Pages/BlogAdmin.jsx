@@ -102,7 +102,7 @@ export default function BlogAdmin({ bannerImage }) {
       </div>
 
       <div className="blog-admin-container">
-        <button className="btn-add">+ Add a New blog</button>
+        
 
         {/* Table */}
         <table className="blog-table">

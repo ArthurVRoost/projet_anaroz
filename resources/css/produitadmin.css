@@ -1,13 +1,288 @@
-.carouDetailsnav{
-    background-color: #FEDADA;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    align-items: center;
-    padding-top: 4%;
-    
+/* =============================== */
+/* HEADER */
+/* =============================== */
+.carouDetailsnav {
+  background-color: #FEDADA;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 10%;
+  flex-wrap: wrap;
+  gap: 30px;
 }
-.detailsH1{
-    font-weight: 500;
-    font-size: 40px;
+
+.detailsH1 {
+  font-weight: 500;
+  font-size: 2.2rem;
+}
+
+.detailsP {
+  color: #555;
+  font-size: 1rem;
+}
+
+.detailsCarouImg {
+  max-width: 280px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* =============================== */
+/* TABLE PRODUITS */
+/* =============================== */
+.p-6 {
+  width: 80%; /* ✅ ne prend pas 100vw */
+  margin: 2rem auto;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+td img {
+  border-radius: 6px;
+}
+
+button {
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Buttons */
+.bg-gray-300 {
+  background: #e2e8f0;
+}
+.bg-gray-300:hover {
+  background: #cbd5e1;
+}
+.bg-green-500:hover {
+  background: #15803d;
+}
+.bg-red-500:hover {
+  background: #b91c1c;
+}
+.bg-blue-500:hover {
+  background: #2563eb;
+}
+.bg-gray-400:hover {
+  background: #9ca3af;
+}
+
+/* =============================== */
+/* FORMS (Add / Edit) */
+/* =============================== */
+form {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+form h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #2c7be5;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #2c7be5;
+  box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.2);
+}
+
+/* Boutons d’action */
+form .flex {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+form button {
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* =============================== */
+/* RESPONSIVE DESIGN */
+/* =============================== */
+
+/* ✅ Intermédiaire (769px–1089px) */
+@media (max-width: 1089px) and (min-width: 769px) {
+  .carouDetailsnav {
+    padding: 2.5rem 8%;
+  }
+
+  .detailsH1 {
+    font-size: 1.9rem;
+  }
+
+  .detailsCarouImg {
+    max-width: 240px;
+  }
+
+  .p-6 {
+    width: 85%;
+  }
+
+  table th, table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
+
+/* ✅ Tablette (577px–768px) */
+@media (max-width: 768px) and (min-width: 577px) {
+  .carouDetailsnav {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 5%;
+  }
+
+  .detailsH1 {
+    font-size: 1.7rem;
+  }
+
+  .detailsCarouImg {
+    max-width: 200px;
+  }
+
+  .p-6 {
+    width: 90%;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  table th:nth-child(1),
+  table td:nth-child(1) {
+    display: none; /* Cache la colonne image si trop large */
+  }
+
+  form {
+    max-width: 90%;
+  }
+}
+
+/* ✅ Mobile (max 576px) */
+@media (max-width: 576px) {
+  .carouDetailsnav {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 20px;
+  }
+
+  .detailsH1 {
+    font-size: 1.5rem;
+  }
+
+  .detailsP {
+    font-size: 0.9rem;
+  }
+
+  .detailsCarouImg {
+    max-width: 160px;
+  }
+
+  .p-6 {
+    width: 95%;
+    overflow-x: auto;
+  }
+
+  /* Rendre le tableau vertical */
+  table thead {
+    display: none;
+  }
+
+  table, table tbody, table tr, table td {
+    display: block;
+    width: 100%;
+  }
+
+  table tr {
+    margin-bottom: 1.2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+
+  table td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 120px;
+    text-align: left;
+  }
+
+  table td:last-child {
+    border-bottom: none;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    color: #444;
+    font-size: 0.85rem;
+    width: 100px;
+  }
+
+  /* Ajustement des formulaires */
+  form {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  form input,
+  form select,
+  form textarea {
+    font-size: 0.9rem;
+  }
+
+  form .flex {
+    flex-direction: column;
+  }
+
+  form button {
+    width: 100%;
+  }
 }
