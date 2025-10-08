@@ -3,6 +3,7 @@ import '../../css/users.css'
 import NavAdmin from '@/Components/NavAdmin'
 import Footer from '@/Components/Footer'
 import { useForm } from '@inertiajs/react'
+import { Toaster, toast } from 'react-hot-toast'
 
 export default function Users({ bannerImage, users = [], roles = [] }) {
   // CREATE form
@@ -17,17 +18,23 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
   })
 
   const [editingUserId, setEditingUserId] = useState(null)
-  const [showUser, setShowUser] = useState(null) // pour "Show"
+  const [showUser, setShowUser] = useState(null)
 
+  /** 🟢 CREATE USER */
   const handleCreate = (e) => {
     e.preventDefault()
     createForm.post(route('users.store'), {
       preserveScroll: true,
       preserveState: true,
-      onSuccess: () => createForm.reset(),
+      onSuccess: () => {
+        toast.success('Utilisateur créé avec succès')
+        createForm.reset()
+      },
+      onError: () => toast.error('Erreur lors de la création de l’utilisateur')
     })
   }
 
+  /** ✏️ START EDIT */
   const startEdit = (u) => {
     setEditingUserId(u.id)
     editForm.setData({
@@ -42,25 +49,69 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
     })
   }
 
+  /** 🔁 UPDATE USER */
   const handleUpdate = (e) => {
     e.preventDefault()
     editForm.put(route('users.update', editForm.data.id), {
       preserveScroll: true,
       preserveState: true,
-      onSuccess: () => setEditingUserId(null),
+      onSuccess: () => {
+        toast.success('Utilisateur mis à jour')
+        setEditingUserId(null)
+      },
+      onError: () => toast.error('Erreur lors de la mise à jour de l’utilisateur')
     })
   }
 
+  /** 🗑️ DELETE USER */
   const handleDelete = (id) => {
-    editForm.delete(route('users.destroy', id), {
-      preserveScroll: true,
-      preserveState: true,
-    })
+    toast((t) => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <span>Voulez-vous vraiment supprimer cet utilisateur ?</span>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => {
+              editForm.delete(route('users.destroy', id), {
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                  toast.dismiss(t.id)
+                  toast.success('Utilisateur supprimé avec succès')
+                },
+                onError: () => toast.error('Erreur lors de la suppression')
+              })
+            }}
+            style={{
+              backgroundColor: '#FD3166',
+              color: 'white',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Oui
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{
+              backgroundColor: '#ccc',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000 })
   }
 
   return (
     <div>
-      <NavAdmin/>
+      <NavAdmin />
+      <Toaster position="top-right" />
+
       <div className="carouDetailsnav">
         <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Users Settings</h2>
@@ -170,7 +221,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
                 <td>{u.pseudo}</td>
                 <td className="muted">{u.email}</td>
                 <td>
-                  <span className={`role-badge role-${(u.role?.nom || '').toLowerCase().replace(/\s+/g,'-')}`}>
+                  <span className={`role-badge role-${(u.role?.nom || '').toLowerCase().replace(/\s+/g, '-')}`}>
                     {u.role?.nom || '—'}
                   </span>
                 </td>
@@ -184,22 +235,22 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
                 <td>
                   {editingUserId === u.id ? (
                     <form onSubmit={handleUpdate} className="inline-form">
-                      <input value={editForm.data.nom} onChange={e=>editForm.setData('nom', e.target.value)} placeholder="Nom" />
-                      <input value={editForm.data.prenom} onChange={e=>editForm.setData('prenom', e.target.value)} placeholder="Prénom" />
-                      <input value={editForm.data.pseudo} onChange={e=>editForm.setData('pseudo', e.target.value)} placeholder="Pseudo" />
-                      <input type="email" value={editForm.data.email} onChange={e=>editForm.setData('email', e.target.value)} placeholder="Email" />
-                      <select value={editForm.data.role_id} onChange={e=>editForm.setData('role_id', e.target.value)}>
+                      <input value={editForm.data.nom} onChange={e => editForm.setData('nom', e.target.value)} placeholder="Nom" />
+                      <input value={editForm.data.prenom} onChange={e => editForm.setData('prenom', e.target.value)} placeholder="Prénom" />
+                      <input value={editForm.data.pseudo} onChange={e => editForm.setData('pseudo', e.target.value)} placeholder="Pseudo" />
+                      <input type="email" value={editForm.data.email} onChange={e => editForm.setData('email', e.target.value)} placeholder="Email" />
+                      <select value={editForm.data.role_id} onChange={e => editForm.setData('role_id', e.target.value)}>
                         {roles?.map(r => <option key={r.id} value={r.id}>{r.nom}</option>)}
                       </select>
                       <input type="password" placeholder="New password (optional)"
-                             value={editForm.data.password}
-                             onChange={e=>editForm.setData('password', e.target.value)} />
+                        value={editForm.data.password}
+                        onChange={e => editForm.setData('password', e.target.value)} />
                       <input type="password" placeholder="Confirm (optional)"
-                             value={editForm.data.password_confirmation}
-                             onChange={e=>editForm.setData('password_confirmation', e.target.value)} />
+                        value={editForm.data.password_confirmation}
+                        onChange={e => editForm.setData('password_confirmation', e.target.value)} />
                       <div className="edit-actions">
                         <button type="submit" className="save-btn">Save</button>
-                        <button type="button" className="cancel-btn" onClick={()=>setEditingUserId(null)}>Cancel</button>
+                        <button type="button" className="cancel-btn" onClick={() => setEditingUserId(null)}>Cancel</button>
                       </div>
                     </form>
                   ) : (
@@ -217,7 +268,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
         </table>
       </section>
 
-      {/* Modal Show */}
+      {/* MODAL SHOW */}
       {showUser && (
         <div className="modal-backdrop" onClick={() => setShowUser(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
@@ -236,7 +287,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
         </div>
       )}
 
-      <Footer/>
+      <Footer />
     </div>
   )
 }

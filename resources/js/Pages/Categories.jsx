@@ -2,6 +2,7 @@ import Footer from '@/Components/Footer'
 import NavAdmin from '@/Components/NavAdmin'
 import React from 'react'
 import { useForm } from '@inertiajs/react'
+import { Toaster, toast } from 'react-hot-toast'
 import '../../css/admin.css'
 
 export default function Categories({ bannerImage, produitsCategories, blogCategories, tags }) {
@@ -10,38 +11,99 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
   const blogForm = useForm({ nom: "" })
   const tagForm = useForm({ nom: "" })
 
+  /** 🟢 CREATE PRODUIT CATEGORY */
   const handleProduitSubmit = (e) => {
     e.preventDefault()
     produitForm.post(route('categories.produits.store'), {
       preserveScroll: true,
       preserveState: true,
-      onSuccess: () => produitForm.reset(),
+      onSuccess: () => {
+        toast.success('Catégorie produit créée avec succès')
+        produitForm.reset()
+      },
+      onError: () => toast.error('Erreur lors de la création de la catégorie produit')
     })
   }
 
+  /** 🟢 CREATE BLOG CATEGORY */
   const handleBlogSubmit = (e) => {
     e.preventDefault()
     blogForm.post(route('categories.blog.store'), {
       preserveScroll: true,
       preserveState: true,
-      onSuccess: () => blogForm.reset(),
+      onSuccess: () => {
+        toast.success('Catégorie blog créée avec succès')
+        blogForm.reset()
+      },
+      onError: () => toast.error('Erreur lors de la création de la catégorie blog')
     })
   }
 
+  /** 🟢 CREATE TAG */
   const handleTagSubmit = (e) => {
     e.preventDefault()
     tagForm.post(route('categories.tags.store'), {
       preserveScroll: true,
       preserveState: true,
-      onSuccess: () => tagForm.reset(),
+      onSuccess: () => {
+        toast.success('Tag créé avec succès')
+        tagForm.reset()
+      },
+      onError: () => toast.error('Erreur lors de la création du tag')
     })
+  }
+
+  /** 🗑️ DELETE avec confirmation toast */
+  const confirmDelete = (deleteFn, id, type) => {
+    toast((t) => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <span>Supprimer cette {type} ?</span>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => {
+              deleteFn(route(`categories.${type}.destroy`, id), {
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                  toast.dismiss(t.id)
+                  toast.success(`${type.charAt(0).toUpperCase() + type.slice(1)} supprimée`)
+                },
+                onError: () => toast.error(`Erreur lors de la suppression de la ${type}`)
+              })
+            }}
+            style={{
+              backgroundColor: '#FD3166',
+              color: 'white',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Oui
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{
+              backgroundColor: '#ccc',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000 })
   }
 
   return (
     <div>
-      <NavAdmin/>
+      <NavAdmin />
+      <Toaster position="top-right" />
+
       <div className="carouDetailsnav">
-        <div className="div1details " style={{ marginLeft: '15%' }}>
+        <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Categories Settings</h2>
           <p className="detailsP">Aranoz - Shop System</p>
         </div>
@@ -57,8 +119,8 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
           {produitsCategories.map((cat) => (
             <li key={cat.id} className="category-item">
               {cat.nom}
-              <button 
-                onClick={() => produitForm.delete(route('categories.produits.destroy', cat.id), { preserveScroll: true, preserveState: true })}
+              <button
+                onClick={() => confirmDelete(produitForm.delete, cat.id, 'produits')}
                 className="delete-btn"
               >
                 Delete
@@ -67,11 +129,11 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
           ))}
         </ul>
         <form onSubmit={handleProduitSubmit} className="category-form">
-          <input 
-            type="text" 
-            placeholder="New category..." 
-            value={produitForm.data.nom} 
-            onChange={(e) => produitForm.setData("nom", e.target.value)} 
+          <input
+            type="text"
+            placeholder="New category..."
+            value={produitForm.data.nom}
+            onChange={(e) => produitForm.setData("nom", e.target.value)}
           />
           <button type="submit" className="create-btn">Create</button>
         </form>
@@ -84,8 +146,8 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
           {blogCategories.map((cat) => (
             <li key={cat.id} className="category-item">
               {cat.nom}
-              <button 
-                onClick={() => blogForm.delete(route('categories.blog.destroy', cat.id), { preserveScroll: true, preserveState: true })}
+              <button
+                onClick={() => confirmDelete(blogForm.delete, cat.id, 'blog')}
                 className="delete-btn"
               >
                 Delete
@@ -94,11 +156,11 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
           ))}
         </ul>
         <form onSubmit={handleBlogSubmit} className="category-form">
-          <input 
-            type="text" 
-            placeholder="New blog category..." 
-            value={blogForm.data.nom} 
-            onChange={(e) => blogForm.setData("nom", e.target.value)} 
+          <input
+            type="text"
+            placeholder="New blog category..."
+            value={blogForm.data.nom}
+            onChange={(e) => blogForm.setData("nom", e.target.value)}
           />
           <button type="submit" className="create-btn">Create</button>
         </form>
@@ -111,8 +173,8 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
           {tags.map((tag) => (
             <li key={tag.id} className="category-item">
               {tag.nom}
-              <button 
-                onClick={() => tagForm.delete(route('categories.tags.destroy', tag.id), { preserveScroll: true, preserveState: true })}
+              <button
+                onClick={() => confirmDelete(tagForm.delete, tag.id, 'tags')}
                 className="delete-btn"
               >
                 Delete
@@ -121,17 +183,17 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
           ))}
         </ul>
         <form onSubmit={handleTagSubmit} className="category-form">
-          <input 
-            type="text" 
-            placeholder="New tag..." 
-            value={tagForm.data.nom} 
-            onChange={(e) => tagForm.setData("nom", e.target.value)} 
+          <input
+            type="text"
+            placeholder="New tag..."
+            value={tagForm.data.nom}
+            onChange={(e) => tagForm.setData("nom", e.target.value)}
           />
           <button type="submit" className="create-btn">Create</button>
         </form>
       </section>
 
-      <Footer/>
+      <Footer />
     </div>
   )
 }
