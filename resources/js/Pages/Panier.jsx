@@ -7,7 +7,7 @@ import Footer from '@/Components/Footer'
 export default function Panier() {
   const { paniers } = usePage().props
 
-  // Champs d'adresse
+  
   const [name, setName] = useState('')
   const [street, setStreet] = useState('')
   const [city, setCity] = useState('')
@@ -50,7 +50,7 @@ export default function Panier() {
 
         {paniers.length > 0 ? (
           <>
-            {/* === Tableau Panier === */}
+            
             <table className="cart-table">
               <thead>
                 <tr>
@@ -84,7 +84,7 @@ export default function Panier() {
                           className="btn-remove"
                           onClick={() => handleDelete(item.id)}
                         >
-                          ❌
+                          Delete
                         </button>
                       </td>
                     </tr>
@@ -93,7 +93,7 @@ export default function Panier() {
               </tbody>
             </table>
 
-            {/* === Formulaire Adresse + Paiement === */}
+           
             <div className="checkout-form">
               <h3>Adresse de livraison</h3>
               <form onSubmit={handleCheckout}>

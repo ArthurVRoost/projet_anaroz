@@ -6,13 +6,13 @@ import { useForm } from '@inertiajs/react'
 import { Toaster, toast } from 'react-hot-toast'
 
 export default function Users({ bannerImage, users = [], roles = [] }) {
-  // CREATE form
+  // CREATE FORM
   const createForm = useForm({
     nom: "", prenom: "", pseudo: "", email: "",
     password: "", password_confirmation: "", role_id: ""
   })
 
-  // EDIT form
+  // EDIT FORM
   const editForm = useForm({
     id: null, nom: "", prenom: "", pseudo: "", email: "", role_id: "", password: "", password_confirmation: ""
   })
@@ -20,7 +20,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
   const [editingUserId, setEditingUserId] = useState(null)
   const [showUser, setShowUser] = useState(null)
 
-  /** 🟢 CREATE USER */
+  // CREATE
   const handleCreate = (e) => {
     e.preventDefault()
     createForm.post(route('users.store'), {
@@ -34,7 +34,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
     })
   }
 
-  /** ✏️ START EDIT */
+  // EDIT
   const startEdit = (u) => {
     setEditingUserId(u.id)
     editForm.setData({
@@ -49,7 +49,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
     })
   }
 
-  /** 🔁 UPDATE USER */
+  // UPDATE
   const handleUpdate = (e) => {
     e.preventDefault()
     editForm.put(route('users.update', editForm.data.id), {
@@ -63,7 +63,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
     })
   }
 
-  /** 🗑️ DELETE USER */
+  // DEL
   const handleDelete = (id) => {
     toast((t) => (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -192,6 +192,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
           <button type="submit" className="btn-primary">Create</button>
         </form>
 
+              {/* ON PREND LEURS VALEURS ET PAS CLES */}
         {Object.values(createForm.errors || {}).length > 0 && (
           <div className="form-errors">
             {Object.values(createForm.errors).map((err, i) => <p key={i}>{err}</p>)}
@@ -199,7 +200,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
         )}
       </section>
 
-      {/* LIST */}
+     
       <section className="users-section">
         <h2>All Users</h2>
         <table className="users-table">
@@ -226,12 +227,12 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
                   </span>
                 </td>
 
-                {/* Actions: Show */}
+                {/* SHOW */}
                 <td>
                   <button className="link-btn" onClick={() => setShowUser(u)}>Show</button>
                 </td>
 
-                {/* Actions: Edit */}
+                {/* EDIT */}
                 <td>
                   {editingUserId === u.id ? (
                     <form onSubmit={handleUpdate} className="inline-form">
@@ -258,7 +259,7 @@ export default function Users({ bannerImage, users = [], roles = [] }) {
                   )}
                 </td>
 
-                {/* Actions: Delete */}
+               {/* DEL */}
                 <td>
                   <button className="delete-btn" onClick={() => handleDelete(u.id)}>Delete</button>
                 </td>

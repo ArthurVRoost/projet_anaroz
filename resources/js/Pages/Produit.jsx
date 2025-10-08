@@ -24,7 +24,7 @@ export default function Produit({ bannerImage }) {
       </div>
 
       <div className="produits-page">
-        {/* === Barre de recherche === */}
+        
         <form method="get" className="search-bar">
           <input
             type="text"
@@ -36,7 +36,7 @@ export default function Produit({ bannerImage }) {
         </form>
 
         <div className="content">
-          {/* === Sidebar Filtres === */}
+          
           <aside className="filters">
             <h3 style={{ fontWeight: 'bold' }}>Filtres</h3>
 
@@ -97,7 +97,7 @@ export default function Produit({ bannerImage }) {
             </div>
           </aside>
 
-          {/* === Liste Produits === */}
+          
           <main className="produits-list">
             {produits.data.length > 0 ? (
               produits.data.map((p) => (
@@ -106,7 +106,7 @@ export default function Produit({ bannerImage }) {
                   <div className="produit-info">
                     <h3>{p.nom}</h3>
 
-                    {/* Prix avec promo si dispo */}
+                    
                     {p.reduction ? (
                       <p className="price">
                         <span className="old-price">{Number(p.prix).toFixed(2)} €</span>{" "}

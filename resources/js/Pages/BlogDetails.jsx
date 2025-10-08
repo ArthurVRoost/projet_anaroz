@@ -11,6 +11,7 @@ export default function BlogDetails({ bannerImage }) {
     message: ''
   })
 
+  // COPIE DE CE QU'IL Y A DEJA + NOUVEAU
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
@@ -18,14 +19,14 @@ export default function BlogDetails({ bannerImage }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     router.post(route('blog.comment', blog.id), form)
-    setForm({ message: '' }) // reset du champ
+    setForm({ message: '' }) 
   }
 
   return (
     <div>
       <Nav />
       
-      {/* Bannière */}
+      
       <div className="carouDetails">
         <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Blog Details</h2>
@@ -37,9 +38,9 @@ export default function BlogDetails({ bannerImage }) {
       </div>
 
       <div className="blog-container">
-        {/* Partie gauche */}
+        
         <div className="blog-left">
-          {/* Blog en question */}
+         
           <div className="blog-card">
             <img src={`/${blog.blog_path}`} alt={blog.titre} className="blog-img" />
             <div className="blog-content">
@@ -48,7 +49,7 @@ export default function BlogDetails({ bannerImage }) {
             </div>
           </div>
 
-          {/* Commentaires */}
+          
           <div className="comments-section">
             <h3>{blog.commentaires.length} Comments</h3>
             {blog.commentaires.map((comment, i) => (
@@ -86,9 +87,9 @@ export default function BlogDetails({ bannerImage }) {
           </div>
         </div>
 
-        {/* Partie droite : sidebar */}
+        
         <div className="blog-right">
-          {/* Search */}
+          
           <div className="sidebar-card">
             <form onSubmit={(e) => {
               e.preventDefault()
@@ -105,7 +106,7 @@ export default function BlogDetails({ bannerImage }) {
             </form>
           </div>
 
-          {/* Catégories */}
+          
           <div className="sidebar-card">
             <h4>Category</h4>
             <ul className="category-list">
@@ -115,7 +116,7 @@ export default function BlogDetails({ bannerImage }) {
             </ul>
           </div>
 
-          {/* Posts récents */}
+         
           <div className="sidebar-card">
             <h4>Recent Post</h4>
             <ul className="recent-posts">
@@ -129,7 +130,7 @@ export default function BlogDetails({ bannerImage }) {
             </ul>
           </div>
 
-          {/* Tags */}
+          
           <div className="sidebar-card">
             <h4>Tag Clouds</h4>
             <div className="tags">
@@ -139,7 +140,7 @@ export default function BlogDetails({ bannerImage }) {
             </div>
           </div>
 
-          {/* Newsletter */}
+         
           <div className="sidebar-card">
             <h4>Newsletter</h4>
             <input type="email" placeholder="Enter email" className="newsletter-input" />

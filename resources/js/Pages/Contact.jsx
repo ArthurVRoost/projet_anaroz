@@ -19,9 +19,9 @@ export default function Contact({ bannerImage }) {
         </div>
       </div>
 
-      {/* === Container global === */}
+      
       <div className="contact-container">
-        {/* Iframe */}
+        
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2613.79422420027!2d4.3387872765001445!3d50.855470258119205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c38e84af80dd%3A0xe85cd9cd0218a4aa!2sPl.%20de%20la%20Minoterie%2010%2C%201080%20Molenbeek-Saint-Jean!5e1!3m2!1sfr!2sbe!4v1759241554052!5m2!1sfr!2sbe"
           width="100%"
@@ -32,9 +32,9 @@ export default function Contact({ bannerImage }) {
           referrerPolicy="no-referrer-when-downgrade"
         />
 
-        {/* Formulaire + Infos */}
+       
         <div className="contact-form-wrapper">
-          {/* Form */}
+          
           <div className="contact-form">
             <h3>Get in Touch</h3>
             <textarea placeholder="Enter Message"></textarea>
@@ -46,7 +46,7 @@ export default function Contact({ bannerImage }) {
             <button className="btn-send">SEND MESSAGE</button>
           </div>
 
-          {/* Infos Contact */}
+          
           <div className="contact-info">
             <div style={{display:'flex', alignItems:'center', gap:'10px'}}>
                 <span><IoLocationSharp /></span>

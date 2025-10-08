@@ -34,7 +34,7 @@ export default function Default({ produit, prixFinal, reduction, specifications,
       </div>
 
       <div className="details-container">
-        {/* === Images produit === */}
+        
         <div className="details-images">
           <img
             src={activeImage}
@@ -54,11 +54,11 @@ export default function Default({ produit, prixFinal, reduction, specifications,
           </div>
         </div>
 
-        {/* === Infos produit === */}
+        
         <div className="details-info">
           <h1 className="details-title">{produit.nom}</h1>
 
-          {/* Prix */}
+         
           <div className="price-wrapper">
             {reduction ? (
               <>
@@ -77,7 +77,7 @@ export default function Default({ produit, prixFinal, reduction, specifications,
             )}
           </div>
 
-          {/* Bouton panier */}
+         
           <button
             type="button"
             className="add-to-cart-btn"
@@ -86,7 +86,7 @@ export default function Default({ produit, prixFinal, reduction, specifications,
             Add to Cart
           </button>
 
-          {/* Meta produit */}
+         
           <div className="product-meta">
             <p>
               <span>Category:</span> {produit.categorie?.nom}
@@ -96,7 +96,7 @@ export default function Default({ produit, prixFinal, reduction, specifications,
             </p>
           </div>
 
-          {/* === Tabs === */}
+          
           <div className="details-tabs">
             <button
               className={`tab-btn ${activeTab === "description" ? "active" : ""}`}
@@ -118,7 +118,7 @@ export default function Default({ produit, prixFinal, reduction, specifications,
             </button>
           </div>
 
-          {/* === Contenu des tabs === */}
+         
           <div className="tab-content">
             {activeTab === "description" && <p>{produit.description}</p>}
 

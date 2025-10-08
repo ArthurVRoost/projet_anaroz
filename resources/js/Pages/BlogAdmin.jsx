@@ -17,7 +17,7 @@ export default function BlogAdmin({ bannerImage }) {
     blog_path: null,
   })
 
-  /** ✅ Créer un blog */
+  // CREATE 
   const handleSubmit = (e) => {
     e.preventDefault()
     post(route('blogs.store'), {
@@ -33,7 +33,7 @@ export default function BlogAdmin({ bannerImage }) {
     })
   }
 
-  /** ✏️ Passer en mode édition */
+  /** EDIT */
   const handleEdit = (blog) => {
     setEditingId(blog.id)
     setData({
@@ -44,7 +44,7 @@ export default function BlogAdmin({ bannerImage }) {
     })
   }
 
-  /** ♻️ Mettre à jour un blog */
+  /** UPDATE */
   const handleUpdate = (e) => {
     e.preventDefault()
     const formData = new FormData()
@@ -69,7 +69,7 @@ export default function BlogAdmin({ bannerImage }) {
     })
   }
 
-  /** 🗑️ Supprimer un blog */
+  /** DEL */
   const handleDelete = (id) => {
     toast((t) => (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -186,7 +186,7 @@ export default function BlogAdmin({ bannerImage }) {
           </tbody>
         </table>
 
-        {/* FORMULAIRE D'ÉDITION */}
+        {/* FORM EDIT */}
         {editingId && (
           <form onSubmit={handleUpdate} className="blog-form">
             <h3>Edit blog #{editingId}</h3>
@@ -234,7 +234,7 @@ export default function BlogAdmin({ bannerImage }) {
           </form>
         )}
 
-        {/* FORMULAIRE D’AJOUT */}
+        {/* FORM ADD */}
         {!editingId && (
           <form onSubmit={handleSubmit} className="blog-form">
             <h3>Add new blog</h3>

@@ -8,7 +8,7 @@ import Footer from "@/Components/Footer";
 
 export default function Home({ bannerProducts, featuredProducts, shopProducts, offerProduct, categories, imageBaseUrl, awesomeProducts, bestSellers }) {
   const [startIndex, setStartIndex] = useState(0);
-
+  // CAROUSEL
   const nextSlide = () => {
     setStartIndex((prev) => (prev + 2) % awesomeProducts.length);
   };
@@ -19,7 +19,7 @@ export default function Home({ bannerProducts, featuredProducts, shopProducts, o
     );
   };
 
-  // Produits affichés (8 visibles → 2 lignes de 4)
+  // 8 VISIBLE
   const visibleProducts = awesomeProducts
     .slice(startIndex, startIndex + 8)
     .concat(
@@ -42,7 +42,7 @@ export default function Home({ bannerProducts, featuredProducts, shopProducts, o
       const distance = targetDate.getTime() - now;
 
       if (distance <= 0) {
-        // réinitialise pour un nouveau cycle de 5 jours
+        // RESET 5 JOURS
         const next = new Date();
         next.setTime(now + 5 * 24 * 60 * 60 * 1000);
         setTargetDate(next);
@@ -58,7 +58,7 @@ export default function Home({ bannerProducts, featuredProducts, shopProducts, o
       });
     };
 
-    // première maj immédiate puis toutes les secondes
+    
     tick();
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);

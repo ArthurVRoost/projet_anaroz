@@ -32,7 +32,7 @@ export default function Track() {
 
         {commande && (
   <div className="commande-details">
-    {/* Bloc Infos Commande */}
+    
     <div className="commande-card">
       <h3>Order Info</h3>
       <p><strong>Order Number:</strong> {commande.numRandom}</p>
@@ -41,7 +41,7 @@ export default function Track() {
       <p><strong>Payment Method:</strong> {commande.payment_method}</p>
     </div>
 
-    {/* Bloc Adresse de livraison */}
+    
     <div className="commande-card">
   <h3>Billing Address</h3>
   {commande.billing_address ? (
@@ -57,7 +57,7 @@ export default function Track() {
   )}
 </div>
 
-    {/* Bloc Produits */}
+    
     <div className="commande-card" style={{ gridColumn: '1 / span 2' }}>
       <h3>Produits</h3>
       <ul>

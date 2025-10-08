@@ -6,12 +6,11 @@ import { Toaster, toast } from 'react-hot-toast'
 import '../../css/admin.css'
 
 export default function Categories({ bannerImage, produitsCategories, blogCategories, tags }) {
-  // forms
   const produitForm = useForm({ nom: "" })
   const blogForm = useForm({ nom: "" })
   const tagForm = useForm({ nom: "" })
 
-  /** 🟢 CREATE PRODUIT CATEGORY */
+  // CREATE PRODUIT
   const handleProduitSubmit = (e) => {
     e.preventDefault()
     produitForm.post(route('categories.produits.store'), {
@@ -25,7 +24,7 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
     })
   }
 
-  /** 🟢 CREATE BLOG CATEGORY */
+  // CREATE BLOG
   const handleBlogSubmit = (e) => {
     e.preventDefault()
     blogForm.post(route('categories.blog.store'), {
@@ -39,7 +38,7 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
     })
   }
 
-  /** 🟢 CREATE TAG */
+  // CREATE TAG
   const handleTagSubmit = (e) => {
     e.preventDefault()
     tagForm.post(route('categories.tags.store'), {
@@ -53,7 +52,7 @@ export default function Categories({ bannerImage, produitsCategories, blogCatego
     })
   }
 
-  /** 🗑️ DELETE avec confirmation toast */
+  // DEL
   const confirmDelete = (deleteFn, id, type) => {
     toast((t) => (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

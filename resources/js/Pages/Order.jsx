@@ -29,6 +29,7 @@ export default function Order() {
                   <td>{cmd.numRandom}</td>
                   <td>{new Date(cmd.created_at).toLocaleDateString()}</td>
                   <td className={`status ${cmd.status}`}>{cmd.status}</td>
+                  {/* CONVERTI VALEUR EN NOMBRE BUILT IN SINON PEUT RENVOYER UNE ERREUR PARCE QUE TO FIXED MARCHE PAS SUR STRING */}
                   <td>{Number(cmd.prix).toFixed(2)} €</td>
                   <td>
                     <ul>
