@@ -135,7 +135,6 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
 .comment-form button:hover {
@@ -179,10 +178,10 @@
 }
 
 .active-thumb {
-  border: 2px solid #ec4899; /* rose Tailwind */
+  border: 2px solid #ec4899; 
   opacity: 1;
 }
-/* Responsive */
+
 @media (max-width: 768px) {
   .details-container {
     grid-template-columns: 1fr;

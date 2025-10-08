@@ -66,14 +66,13 @@
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .btn-pay:hover {
   background: #38a3a3;
 }
 
-/* --- Formulaire adresse --- */
+
 .checkout-form {
   background: white;
   padding: 20px;
@@ -98,7 +97,7 @@
 .payment-options {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* plus d’espace entre chaque option */
+  gap: 15px;
   margin: 20px 0;
 }
 
@@ -106,15 +105,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 200px;              /* 👈 même largeur pour tous */
-  min-height: 45px;          /* 👈 hauteur uniforme */
+  width: 200px;              
+  min-height: 45px;        
   padding: 8px 14px;
   border: 2px solid #cdecec;
   border-radius: 8px;
   cursor: pointer;
   background: #f8fefe;
   transition: all 0.2s ease-in-out;
-  gap: 32px;                 /* 👈 espace entre bouton et texte */
+  gap: 32px;                 
 }
 
 .payment-options label:hover {
@@ -123,14 +122,14 @@
 }
 
 .payment-options input[type="radio"] {
-  accent-color: #4ac1c1; /* couleur du bouton sélectionné */
-  flex-shrink: 0;        /* 👈 empêche de rétrécir */
+  accent-color: #4ac1c1; 
+  flex-shrink: 0;        
 }
 
 .payment-options span {
   font-size: 15px;
   color: #333;
-  flex-grow: 1;          /* 👈 prend le reste de l’espace */
+  flex-grow: 1;          
 }
 
 .payment-options input[type="radio"]:checked + span {

@@ -58,7 +58,6 @@
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .btn-send:hover {
@@ -73,7 +72,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  gap: 30px; /* 👈 espace vertical entre chaque bloc */
+  gap: 30px; 
 }
 
 .contact-info p {
