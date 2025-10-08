@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import Footer from '@/Components/Footer'
 import NavAdmin from '@/Components/NavAdmin'
 import { usePage, router, useForm } from '@inertiajs/react'
+import { Toaster, toast } from 'react-hot-toast'
 import '../../css/produitadmin.css'
+
 export default function AdminProduit({ bannerImage }) {
   const { produits, categories, promos } = usePage().props
   const [editingId, setEditingId] = useState(null)
@@ -20,25 +22,22 @@ export default function AdminProduit({ bannerImage }) {
     image2: null,
     image3: null,
     image4: null,
-    }, { forceFormData: true })
+  }, { forceFormData: true })
 
-  // CREATE PRODUIT
+  /** 🟢 CREATE */
   const handleSubmit = (e) => {
-        e.preventDefault()
-        post(route('produits.store'), {
-            preserveScroll: true,
-            onSuccess: () => {
-            reset()
-            alert('Produit créé avec succès !')
-            },
-            onError: (errors) => {
-            console.error(errors)
-            alert('Erreur lors de la création')
-            }
-        })
-    }
+    e.preventDefault()
+    post(route('produits.store'), {
+      preserveScroll: true,
+      onSuccess: () => {
+        reset()
+        toast.success(' Produit créé avec succès')
+      },
+      onError: () => toast.error(' Erreur lors de la création')
+    })
+  }
 
-  // EDIT
+  /** ✏️ EDIT */
   const handleEdit = (p) => {
     setEditingId(p.id)
     setData({
@@ -56,12 +55,11 @@ export default function AdminProduit({ bannerImage }) {
     })
   }
 
-  // UPDATE
+  /** 🔁 UPDATE */
   const handleUpdate = (e) => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('_method', 'PUT')
-    // RECUP LES CLES SOUS TABLEAU
     Object.keys(data).forEach((key) => {
       if (data[key] !== null) formData.append(key, data[key])
     })
@@ -71,31 +69,61 @@ export default function AdminProduit({ bannerImage }) {
       onSuccess: () => {
         setEditingId(null)
         reset()
-        alert('Produit mis à jour !')
+        toast.success(' Produit mis à jour')
       },
-      onError: (errors) => {
-        console.error(errors)
-        alert('Erreur lors de la mise à jour')
-      }
+      onError: () => toast.error(' Erreur lors de la mise à jour')
     })
   }
 
-  // DEL
+  /** 🗑️ DELETE */
   const handleDelete = (id) => {
-    if (confirm('Supprimer ce produit ?')) {
-      router.delete(route('produits.destroy', id), {
-        preserveScroll: true,
-        onSuccess: () => {
-          alert('Produit supprimé avec succès !')
-        }
-      })
-    }
+    toast((t) => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <span>Voulez-vous vraiment supprimer ce produit ?</span>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => {
+              router.delete(route('produits.destroy', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                  toast.dismiss(t.id)
+                  toast.success(' Produit supprimé')
+                },
+                onError: () => toast.error(' Erreur lors de la suppression')
+              })
+            }}
+            style={{
+              backgroundColor: '#FD3166',
+              color: 'white',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Oui
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{
+              backgroundColor: '#ccc',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000 })
   }
 
+  
   const handleShow = (id) => {
     setShowingId(showingId === id ? null : id)
   }
 
+  
   const cancelEdit = () => {
     setEditingId(null)
     reset()
@@ -104,6 +132,8 @@ export default function AdminProduit({ bannerImage }) {
   return (
     <div>
       <NavAdmin />
+      <Toaster position="top-right" />
+
       <div className="carouDetailsnav">
         <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Products Settings</h2>
@@ -115,6 +145,7 @@ export default function AdminProduit({ bannerImage }) {
       </div>
 
       <div className="p-6">
+        {/* TABLE PRODUITS */}
         <table className="w-full border">
           <thead className="bg-gray-200">
             <tr>
@@ -131,17 +162,13 @@ export default function AdminProduit({ bannerImage }) {
           </thead>
           <tbody>
             {produits.map((p) => (
-              // REACT COMPREND QUE LES 2 TR SONT ENSEMBLE 
-              // MARCHE COMME UN CONTENAIRE INVISBLE
-              <React.Fragment key={p.id}>
+              <Fragment key={p.id}>
                 <tr>
-                    <td className="p-2 border">
-                        {p.image_url ? (
-                            <img src={p.image_url} alt={p.nom} className="w-16 h-16 object-cover" />
-                        ) : (
-                            "Pas d’image"
-                        )}
-                    </td>
+                  <td className="p-2 border">
+                    {p.image_url ? (
+                      <img src={p.image_url} alt={p.nom} className="w-16 h-16 object-cover" />
+                    ) : "Pas d’image"}
+                  </td>
                   <td className="p-2 border">{p.nom}</td>
                   <td className="p-2 border">{p.prix} €</td>
                   <td className="p-2 border">{p.stock}</td>
@@ -165,20 +192,21 @@ export default function AdminProduit({ bannerImage }) {
                     </button>
                   </td>
                 </tr>
+
                 {showingId === p.id && (
                   <tr>
                     <td colSpan="9" className="p-4 bg-gray-100">
-                      <strong>Description:</strong>
+                      <strong>Description :</strong>
                       <p>{p.description}</p>
                     </td>
                   </tr>
                 )}
-              </React.Fragment>
+              </Fragment>
             ))}
           </tbody>
         </table>
 
-        {/* FORM EDIT */}
+        {/* FORMULAIRE EDIT */}
         {editingId && (
           <form onSubmit={handleUpdate} className="mt-6 p-4 bg-gray-100 rounded">
             <h3 className="font-bold mb-2">Éditer produit #{editingId}</h3>
@@ -193,20 +221,22 @@ export default function AdminProduit({ bannerImage }) {
             <input type="text" value={data.couleur} placeholder="Couleur"
               onChange={(e) => setData('couleur', e.target.value)} className="p-2 border w-full mb-2" />
 
-            <select value={data.produitscategorie_id} onChange={(e) => setData('produitscategorie_id', e.target.value)} className="p-2 border w-full mb-2">
+            <select value={data.produitscategorie_id}
+              onChange={(e) => setData('produitscategorie_id', e.target.value)} className="p-2 border w-full mb-2">
               <option value="">Catégorie</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
             </select>
 
-            <select value={data.promo_id} onChange={(e) => setData('promo_id', e.target.value)} className="p-2 border w-full mb-2">
+            <select value={data.promo_id}
+              onChange={(e) => setData('promo_id', e.target.value)} className="p-2 border w-full mb-2">
               <option value="">Promo</option>
               {promos.map(pr => <option key={pr.id} value={pr.id}>{pr.nom}</option>)}
             </select>
 
             <input type="file" required onChange={(e) => setData("image1", e.target.files[0])} className="p-2 border w-full mb-2" />
-                {[2,3,4].map(i => (
-                <input key={i} type="file" onChange={(e) => setData(`image${i}`, e.target.files[0])} className="p-2 border w-full mb-2" />
-                ))}
+            {[2, 3, 4].map(i => (
+              <input key={i} type="file" onChange={(e) => setData(`image${i}`, e.target.files[0])} className="p-2 border w-full mb-2" />
+            ))}
 
             <div className="flex gap-4">
               <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded" disabled={processing}>
@@ -219,7 +249,7 @@ export default function AdminProduit({ bannerImage }) {
           </form>
         )}
 
-        {/* FORM ADD */}
+        {/* FORMULAIRE AJOUT */}
         {!editingId && (
           <form onSubmit={handleSubmit} className="mt-6 p-4 bg-gray-100 rounded">
             <h3 className="font-bold mb-2">Ajouter un produit</h3>
@@ -234,17 +264,19 @@ export default function AdminProduit({ bannerImage }) {
             <input type="text" value={data.couleur} placeholder="Couleur"
               onChange={(e) => setData('couleur', e.target.value)} className="p-2 border w-full mb-2" />
 
-            <select value={data.produitscategorie_id} onChange={(e) => setData('produitscategorie_id', e.target.value)} className="p-2 border w-full mb-2">
+            <select value={data.produitscategorie_id}
+              onChange={(e) => setData('produitscategorie_id', e.target.value)} className="p-2 border w-full mb-2">
               <option value="">Catégorie</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
             </select>
 
-            <select value={data.promo_id} onChange={(e) => setData('promo_id', e.target.value)} className="p-2 border w-full mb-2">
+            <select value={data.promo_id}
+              onChange={(e) => setData('promo_id', e.target.value)} className="p-2 border w-full mb-2">
               <option value="">Promo</option>
               {promos.map(pr => <option key={pr.id} value={pr.id}>{pr.nom}</option>)}
             </select>
 
-            {[1,2,3,4].map(i => (
+            {[1, 2, 3, 4].map(i => (
               <input key={i} type="file" onChange={(e) => setData(`image${i}`, e.target.files[0])} className="p-2 border w-full mb-2" />
             ))}
 
