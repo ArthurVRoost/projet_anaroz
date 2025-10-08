@@ -83,11 +83,7 @@
   right: 40px;
 }
 
-/* ------------------------------- */
-/* 🔹 Responsive Design */
-/* ------------------------------- */
 
-/* ✅ Grand écran (desktop) : min 1090px */
 @media (min-width: 1090px) {
   .carousel-text h1 {
     font-size: 3rem;
@@ -97,7 +93,7 @@
   }
 }
 
-/* ✅ Intermédiaire (769px–1089px) */
+
 @media (max-width: 1089px) and (min-width: 769px) {
   .carousel-slide {
     padding: 0 60px;
@@ -113,7 +109,7 @@
   }
 }
 
-/* ✅ Tablette (577px–768px) */
+
 @media (max-width: 768px) and (min-width: 577px) {
   .carousel-slide {
     flex-direction: column;
@@ -149,7 +145,7 @@
   }
 }
 
-/* ✅ Mobile (max 576px) */
+
 @media (max-width: 576px) {
   .carousel-container {
     height: 70vh;
@@ -157,8 +153,8 @@
 
   .carousel-slide {
     flex-direction: column;
-    justify-content: center; /* centre verticalement */
-    align-items: center;     /* centre horizontalement */
+    justify-content: center; 
+    align-items: center;     
     text-align: center;
     padding: 20px;
   }
@@ -178,7 +174,7 @@
     max-width: 100%;
   }
 
-  /* 🔸 Masquer l’image sur mobile */
+ 
   .carousel-img {
     display: none;
   }

@@ -70,7 +70,6 @@
   background: #d61c6e;
 }
 
-/* Responsive */
 @media (max-width: 576px) {
   .auth-card {
     margin: 40px 15px;

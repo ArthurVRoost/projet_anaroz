@@ -10,7 +10,7 @@
     font-weight: 500;
     font-size: 40px;
 }
-/* ------------------ CONTAINER GLOBAL ------------------ */
+
 .blog-container {
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,7 @@
   gap: 30px;
 }
 
-/* ------------------ LISTE BLOGS ------------------ */
+
 .blog-left {
   flex: 2;
   display: flex;
@@ -69,7 +69,7 @@
   color: #666;
 }
 
-/* ------------------ SIDEBAR ------------------ */
+
 .blog-right {
   flex: 1;
   display: flex;
@@ -131,7 +131,7 @@
   cursor: pointer;
 }
 
-/* ------------------ COMMENTAIRES ------------------ */
+
 .comments-section {
   margin-top: 40px;
   background: #fff;
@@ -164,7 +164,7 @@
   color: #f72585;
 }
 
-/* ------------------ LEAVE A REPLY ------------------ */
+
 .leave-reply {
   margin-top: 30px;
 }
@@ -204,7 +204,7 @@
   background: #d61c6e;
 }
 
-/* ------------------ RESPONSIVE ------------------ */
+
 @media (max-width: 1090px) {
   .blog-container {
     margin: 40px 5%;
@@ -217,7 +217,7 @@
   }
 
   .blog-right {
-    order: -1; /* sidebar en haut sur tablette */
+    order: -1; 
   }
 }
 
