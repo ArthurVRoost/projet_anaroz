@@ -20,12 +20,12 @@ class RoleMiddleware
                 abort(403, 'Accès refusé');
             }
 
-            // Admin → accès total
+            // ADMIN ACCES TOUT
             if ($user->role && $user->role->nom === 'Admin') {
                 return $next($request);
             }
 
-            // Sinon, vérifie le rôle
+            // PAS ADMIN CHECK ROLE
             if (in_array($user->role->nom, $roles)) {
                 return $next($request);
             }
