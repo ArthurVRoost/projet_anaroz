@@ -77,7 +77,6 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .btn-validate:hover {

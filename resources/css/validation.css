@@ -59,14 +59,12 @@
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.3s ease;
 }
 
 .track-link:hover {
   background: #d61c6e;
 }
 
-/* Animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;

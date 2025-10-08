@@ -1,4 +1,4 @@
-/* NAVBAR CONTAINER */
+
 .admin-navbar {
   display: flex;
   justify-content: space-between;
@@ -10,7 +10,7 @@
   z-index: 1000;
 }
 
-/* LOGO + BADGE */
+
 .admin-logo-container {
   display: flex;
   align-items: center;
@@ -32,7 +32,7 @@
   font-weight: bold;
 }
 
-/* NAV LINKS CENTER */
+
 .admin-navbar-center {
   display: flex;
   gap: 25px;
@@ -56,7 +56,7 @@
   cursor: pointer;
 }
 
-/* DROPDOWN */
+
 .admin-nav-item {
   position: relative;
 }
@@ -66,7 +66,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #FD3266; /* fond du bloc admin */
+  background: #FD3266; 
   border-radius: 8px;
   padding: 8px 0;
   min-width: 160px;
@@ -77,7 +77,7 @@
 .admin-dropdown-item {
   display: block;
   padding: 8px 16px;
-  color: white; /* texte blanc par défaut */
+  color: white; 
   text-decoration: none;
   font-size: 13px;
   white-space: nowrap;
@@ -86,15 +86,15 @@
 }
 
 .admin-dropdown-item:hover {
-  background: white;   /* fond blanc */
-  color: #FD3266;      /* texte rose */
+  background: white;   
+  color: #FD3266;     
 }
 
 .admin-nav-item:hover .admin-dropdown-menu {
   display: block;
 }
 
-/* RIGHT SIDE */
+
 .admin-navbar-right {
   display: flex;
   align-items: center;
@@ -102,7 +102,7 @@
   margin-right: 20px;
 }
 
-/* CART */
+
 .admin-cart-link {
   position: relative;
   display: inline-flex;
@@ -134,7 +134,7 @@
   box-shadow: 0 0 0 2px rgba(255,255,255,0.8);
 }
 
-/* USER MENU */
+
 .admin-user-menu {
   position: relative;
 }
@@ -173,7 +173,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #FD3266; /* bloc rose */
+  background: #FD3266;
   border-radius: 8px;
   padding: 8px 0;
   min-width: 160px;
@@ -184,7 +184,7 @@
 .admin-user-dropdown .admin-dropdown-item {
   display: block;
   padding: 8px 16px;
-  color: white; /* texte blanc par défaut */
+  color: white;
   text-decoration: none;
   font-size: 13px;
   white-space: nowrap;
@@ -196,7 +196,7 @@
 }
 
 .admin-user-dropdown .admin-dropdown-item:hover {
-  background: white;   /* inversion hover */
+  background: white;   
   color: #FD3266;
 }
 
@@ -204,14 +204,14 @@
   display: block;
 }
 
-/* BURGER MENU */
+
 .admin-burger-menu {
   display: none;
   font-size: 20px;
   cursor: pointer;
 }
 
-/* RESPONSIVE */
+
 @media (max-width: 576px) {
   .admin-navbar-center {
     display: none;

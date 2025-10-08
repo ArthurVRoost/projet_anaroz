@@ -46,11 +46,7 @@
   font-weight: bold;
 }
 
-/* ================================================= */
-/* 🔹 RESPONSIVE DESIGN */
-/* ================================================= */
 
-/* ✅ Tablette (577px–992px) */
 @media (max-width: 992px) and (min-width: 577px) {
   .orders-container {
     width: 90%;
@@ -71,7 +67,7 @@
   }
 }
 
-/* ✅ Mobile (max 576px) */
+
 @media (max-width: 576px) {
   .orders-container {
     width: 95%;
@@ -82,7 +78,7 @@
     margin-bottom: 1rem;
   }
 
-  /* Cache la version tableau */
+
   .orders-table thead {
     display: none;
   }
@@ -107,8 +103,8 @@
     border: none;
     border-bottom: 1px solid #eee;
     position: relative;
-    padding-left: 120px; /* espace pour le label */
-    text-align: left; /* 🟢 aligné à gauche */
+    padding-left: 120px; 
+    text-align: left; 
     font-size: 0.95rem;
   }
 
@@ -139,7 +135,7 @@
     font-size: 0.9rem;
   }
 
-  /* Statuts mieux visibles sur mobile */
+ 
   .status.pending {
     color: #ff9500;
   }

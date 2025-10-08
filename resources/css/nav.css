@@ -1,4 +1,4 @@
-/* NAVBAR */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -10,14 +10,14 @@
   z-index: 1000;
 }
 
-/* Logo */
+
 .logo {
   font-size: 20px;
   font-weight: bold;
   margin-left: 10px;
 }
 
-/* Center Nav */
+
 .navbar-center {
   display: flex;
   gap: 25px;
@@ -34,7 +34,7 @@
   padding: 15px;
 }
 
-/* Nav link */
+
 .nav-link {
   text-decoration: none;
   color: black;
@@ -42,7 +42,7 @@
   cursor: pointer;
 }
 
-/* Dropdown */
+
 .nav-item {
   position: relative;
 }
@@ -52,8 +52,8 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #FD3266; /* fond du bloc */
-  border-radius: 8px;   /* arrondi sur tout le bloc */
+  background: #FD3266; 
+  border-radius: 8px;   
   padding: 8px 0;
   min-width: 160px;
   z-index: 2000;
@@ -63,7 +63,7 @@
 .dropdown-item {
   display: block;
   padding: 8px 16px;
-  color: white; /* texte blanc par défaut */
+  color: white; 
   text-decoration: none;
   font-size: 13px;
   white-space: nowrap;
@@ -72,15 +72,15 @@
 }
 
 .dropdown-item:hover {
-  background: white;   /* fond blanc au survol */
-  color: #FD3266;      /* texte rose au survol */
+  background: white;  
+  color: #FD3266;     
 }
 
 .nav-item:hover .dropdown-menu {
   display: block;
 }
 
-/* Right side */
+
 .navbar-right {
   display: flex;
   align-items: center;
@@ -88,7 +88,7 @@
   margin-right: 20px;
 }
 
-/* Cart */
+
 .cart-link {
   position: relative;
   display: inline-flex;
@@ -119,7 +119,7 @@
   border-radius: 999px;
 }
 
-/* User */
+
 .user-menu {
   position: relative;
 }
@@ -153,7 +153,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #FD3266; /* bloc rose */
+  background: #FD3266;
   border-radius: 8px;
   padding: 8px 0;
   min-width: 160px;
@@ -164,7 +164,7 @@
 .user-dropdown .dropdown-item {
   display: block;
   padding: 8px 16px;
-  color: white; /* texte blanc par défaut */
+  color: white; 
   text-decoration: none;
   font-size: 13px;
   white-space: nowrap;
@@ -176,7 +176,7 @@
 }
 
 .user-dropdown .dropdown-item:hover {
-  background: white;   /* inversion hover */
+  background: white;  
   color: #FD3266;
 }
 
@@ -184,14 +184,14 @@
   display: block;
 }
 
-/* Burger menu */
+
 .burger-menu {
   display: none;
   font-size: 20px;
   cursor: pointer;
 }
 
-/* Responsive */
+
 @media (max-width: 576px) {
   .navbar-center {
     display: none;

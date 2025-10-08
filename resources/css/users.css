@@ -1,6 +1,4 @@
-/* ===================== */
-/* HEADER */
-/* ===================== */
+
 .carouDetailsnav {
   background-color: #FEDADA;
   display: flex;
@@ -27,11 +25,9 @@
   border-radius: 8px;
 }
 
-/* ===================== */
-/* USERS SECTIONS */
-/* ===================== */
+
 .users-section {
-  width: 80%;          /* ✅ ne prend pas 100vw */
+  width: 80%;          
   margin: 40px auto;
   max-width: 1000px;
 }
@@ -44,7 +40,7 @@
   padding-bottom: 6px;
 }
 
-/* CREATE USER FORM */
+
 .user-form-vertical {
   display: flex;
   flex-direction: column;
@@ -79,16 +75,13 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.25s ease;
 }
 
 .btn-primary:hover {
   background: #1a5bb8;
 }
 
-/* ===================== */
-/* TABLE */
-/* ===================== */
+
 .users-table {
   width: 100%;
   border-collapse: collapse;
@@ -116,7 +109,7 @@
   font-size: 0.9rem;
 }
 
-/* Roles badges */
+
 .role-badge {
   padding: 4px 8px;
   border-radius: 12px;
@@ -130,9 +123,7 @@
 .role-webmaster { background: #007bff; }
 .role-public { background: #343a40; }
 
-/* ===================== */
-/* ACTION BUTTONS */
-/* ===================== */
+
 .link-btn {
   background: transparent;
   color: #2c7be5;
@@ -161,9 +152,6 @@
   background: #c81f4a;
 }
 
-/* ===================== */
-/* EDIT FORM INSIDE TABLE */
-/* ===================== */
 .inline-form {
   display: flex;
   flex-wrap: wrap;
@@ -186,7 +174,7 @@
   margin-top: 4px;
 }
 
-/* 🟢 Save / Cancel Buttons stylisés */
+
 .save-btn {
   background: #28a745;
   color: white;
@@ -194,8 +182,7 @@
   padding: 6px 12px;
   border-radius: 5px;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  cursor: pointer
 }
 
 .save-btn:hover {
@@ -210,16 +197,13 @@
   border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 .cancel-btn:hover {
   background: #ccc;
 }
 
-/* ===================== */
-/* MODAL */
-/* ===================== */
+
 .modal {
   background: #fff;
   padding: 20px;
@@ -242,11 +226,7 @@
   text-align: center;
 }
 
-/* ===================== */
-/* RESPONSIVE DESIGN */
-/* ===================== */
 
-/* Intermédiaire (769px–1089px) */
 @media (max-width: 1089px) and (min-width: 769px) {
   .carouDetailsnav {
     padding: 2.5rem 8%;
@@ -262,7 +242,7 @@
   }
 }
 
-/* Tablette (577px–768px) */
+
 @media (max-width: 768px) and (min-width: 577px) {
   .carouDetailsnav {
     flex-direction: column;
@@ -288,7 +268,7 @@
   }
 }
 
-/* Mobile (max 576px) */
+
 @media (max-width: 576px) {
   .carouDetailsnav {
     flex-direction: column;
@@ -356,9 +336,7 @@
   }
 }
 
-/* ===================== */
-/* ANIMATION */
-/* ===================== */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }

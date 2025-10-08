@@ -30,7 +30,7 @@
   gap: 30px;
 }
 
-/* Sidebar filtres */
+
 .filters {
   width: 220px;
   background: #f9f9f9;
@@ -62,7 +62,7 @@
   font-weight: bold;
 }
 
-/* Liste produits */
+
 .produits-list {
   flex: 1;
   display: grid;
@@ -81,7 +81,7 @@
   cursor: default;
 }
 
-/* Effet hover avec ombre légère */
+
 .produit-card:hover,
 .card:hover {
   transform: translateY(-5px);
@@ -108,7 +108,7 @@
   color: #333;
 }
 
-/* Filtres */
+
 .filters {
   width: 240px;
   background: #f9f9f9;
@@ -155,7 +155,7 @@
   font-weight: bold;
 }
 
-/* Liste produits */
+
 .produits-list {
   flex: 1;
   display: grid;
@@ -199,7 +199,7 @@
   margin-bottom: 12px;
 }
 
-/* === Actions (Explore + Add) === */
+
 .actions {
   display: flex;
   justify-content: center;
@@ -207,13 +207,13 @@
   margin-top: 8px;
 }
 
-/* Style commun pour les deux boutons (réduits) */
+
 .explore-btn,
 .add-to-cart-btn {
   flex: 1;
-  min-width: 100px; /* plus petit */
-  padding: 8px 14px; /* réduit */
-  font-size: 13px; /* texte plus petit */
+  min-width: 100px;
+  padding: 8px 14px; 
+  font-size: 13px; 
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
@@ -221,7 +221,7 @@
   transition: background 0.2s, color 0.2s, transform 0.1s;
 }
 
-/* Bouton Explore (style secondaire) */
+
 .explore-btn {
   background: #fff;
   color: #f72585;
@@ -235,7 +235,7 @@
   transform: translateY(-2px);
 }
 
-/* Bouton Add to cart (style primaire) */
+
 .add-to-cart-btn {
   background: #f72585;
   color: #fff;
@@ -251,7 +251,7 @@
   transform: translateY(0);
 }
 
-/* === Search bar === */
+
 .search-bar {
   margin: 30px auto;
   text-align: center;
@@ -289,7 +289,7 @@
   background: #d61c6e;
 }
 
-/* Prix avec promo */
+
 .old-price {
   text-decoration: line-through;
   color: #888;

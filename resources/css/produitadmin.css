@@ -1,6 +1,4 @@
-/* =============================== */
-/* HEADER */
-/* =============================== */
+
 .carouDetailsnav {
   background-color: #FEDADA;
   display: flex;
@@ -27,11 +25,9 @@
   border-radius: 8px;
 }
 
-/* =============================== */
-/* TABLE PRODUITS */
-/* =============================== */
+
 .p-6 {
-  width: 80%; /* ✅ ne prend pas 100vw */
+  width: 80%; 
   margin: 2rem auto;
   overflow-x: auto;
 }
@@ -69,7 +65,7 @@ button:active {
   transform: scale(0.97);
 }
 
-/* Buttons */
+
 .bg-gray-300 {
   background: #e2e8f0;
 }
@@ -89,9 +85,7 @@ button:active {
   background: #9ca3af;
 }
 
-/* =============================== */
-/* FORMS (Add / Edit) */
-/* =============================== */
+
 form {
   max-width: 700px;
   margin: 0 auto;
@@ -123,7 +117,7 @@ form textarea:focus {
   box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.2);
 }
 
-/* Boutons d’action */
+
 form .flex {
   display: flex;
   gap: 1rem;
@@ -136,11 +130,7 @@ form button {
   cursor: pointer;
 }
 
-/* =============================== */
-/* RESPONSIVE DESIGN */
-/* =============================== */
 
-/* ✅ Intermédiaire (769px–1089px) */
 @media (max-width: 1089px) and (min-width: 769px) {
   .carouDetailsnav {
     padding: 2.5rem 8%;
@@ -164,7 +154,7 @@ form button {
   }
 }
 
-/* ✅ Tablette (577px–768px) */
+
 @media (max-width: 768px) and (min-width: 577px) {
   .carouDetailsnav {
     flex-direction: column;
@@ -190,7 +180,7 @@ form button {
 
   table th:nth-child(1),
   table td:nth-child(1) {
-    display: none; /* Cache la colonne image si trop large */
+    display: none;
   }
 
   form {
@@ -198,7 +188,7 @@ form button {
   }
 }
 
-/* ✅ Mobile (max 576px) */
+
 @media (max-width: 576px) {
   .carouDetailsnav {
     flex-direction: column;
@@ -224,7 +214,7 @@ form button {
     overflow-x: auto;
   }
 
-  /* Rendre le tableau vertical */
+
   table thead {
     display: none;
   }
@@ -266,7 +256,6 @@ form button {
     width: 100px;
   }
 
-  /* Ajustement des formulaires */
   form {
     width: 100%;
     padding: 1rem;
