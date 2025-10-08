@@ -11,8 +11,7 @@ use Illuminate\Validation\Rules\Password;
 
 class RoleController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $bannerImage = asset('storage/banner/offer_img.png');
 
         return Inertia::render('Users', [
@@ -22,8 +21,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $request->validate([
             'nom' => ['required','string','max:255'],
             'prenom' => ['required','string','max:255'],
@@ -39,14 +37,13 @@ class RoleController extends Controller
             'pseudo' => $request->pseudo,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => $request->role_id ?? 2, // par défaut "User"
+            'role_id' => $request->role_id ?? 2, 
         ]);
 
         return back();
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
        
         $user = User::findOrFail($id);
 
@@ -62,7 +59,7 @@ class RoleController extends Controller
         $data = $request->only('nom','prenom','pseudo','email','role_id');
 
         if ($request->filled('password')) {
-            $data['password'] = $request->password; // laisse Laravel hasher via cast
+            $data['password'] = $request->password; 
         }
 
         $user->update($data);

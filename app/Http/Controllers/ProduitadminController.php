@@ -11,45 +11,56 @@ use Illuminate\Support\Facades\Storage;
 
 class ProduitadminController extends Controller
 {
-    public function index()
-{
-    $bannerImage = asset('storage/banner/offer_img.png');
-    $produits = Produit::with(['categorie', 'user', 'promo'])->latest()->get();
-    $categories = ProduitsCategorie::all();
-    $promos = Promo::all();
+    
+    public function index(){
 
-    $imageBaseUrl = asset('storage');
+        $bannerImage = asset('storage/banner/offer_img.png');
+        $produits = Produit::with(['categorie', 'user', 'promo'])->latest()->get();
+        $categories = ProduitsCategorie::all();
+        $promos = Promo::all();
+        $imageBaseUrl = asset('storage');
 
-    // Ajouter un champ image_url
-    $produits->transform(function ($p) use ($imageBaseUrl) {
-        if (!$p->image1) {
-            $p->image_url = $imageBaseUrl . '/default.png'; // fallback
-        } elseif (str_starts_with($p->image1, 'storage/')) {
-            // Déjà un chemin "storage/..." => on fait juste asset()
-            $p->image_url = asset($p->image1);
-        } elseif (str_starts_with($p->image1, 'feature_')) {
-            $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
-        } elseif (str_starts_with($p->image1, 'product_')) {
-            $p->image_url = $imageBaseUrl . '/product/' . $p->image1;
-        } elseif (str_starts_with($p->image1, 'banner_')) {
-            $p->image_url = $imageBaseUrl . '/banner/' . $p->image1;
-        } else {
-            $p->image_url = $imageBaseUrl . '/' . $p->image1;
-        }
-        return $p;
-    });
+        // AJOUTE UN CHAMP IMAGE_URL POUR CHAQUE PRODUIT
+        $produits->transform(function ($p) use ($imageBaseUrl) {
+            // SI PAS D IMAGE, AFFICHE UNE IMAGE PAR DEFAUT
+            if (!$p->image1) {
+                $p->image_url = $imageBaseUrl . '/default.png';
+            }
+            // SI L IMAGE EST DEJA DANS STORAGE/
+            elseif (str_starts_with($p->image1, 'storage/')) {
+                $p->image_url = asset($p->image1);
+            }
+            // SI L IMAGE COMMENCE PAR FEATURE_
+            elseif (str_starts_with($p->image1, 'feature_')) {
+                $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
+            }
+            // SI L IMAGE COMMENCE PAR PRODUCT_
+            elseif (str_starts_with($p->image1, 'product_')) {
+                $p->image_url = $imageBaseUrl . '/product/' . $p->image1;
+            }
+            // SI L IMAGE COMMENCE PAR BANNER_
+            elseif (str_starts_with($p->image1, 'banner_')) {
+                $p->image_url = $imageBaseUrl . '/banner/' . $p->image1;
+            }
+            // SINON, ON AJOUTE LE CHEMIN DE BASE PAR DEFAUT
+            else {
+                $p->image_url = $imageBaseUrl . '/' . $p->image1;
+            }
+            return $p;
+        });
 
-    return Inertia::render('AdminProduit', [
-        'bannerImage' => $bannerImage,
-        'produits' => $produits,
-        'categories' => $categories,
-        'promos' => $promos,
-    ]);
-}
+        return Inertia::render('AdminProduit', [
+            'bannerImage' => $bannerImage,
+            'produits' => $produits,
+            'categories' => $categories,
+            'promos' => $promos,
+        ]);
+    }
 
-    public function store(Request $request)
-    {
+    
+    public function store(Request $request){
         try {
+            
             $validated = $request->validate([
                 'nom' => 'required|string|max:255',
                 'description' => 'required|string',
@@ -64,12 +75,11 @@ class ProduitadminController extends Controller
                 'image4' => 'nullable|image|max:2048',
             ]);
 
+           
             $images = [];
-            // Image1 obligatoire
             $path1 = $request->file('image1')->store('produits', 'public');
             $images['image1'] = "storage/$path1";
 
-            // Images optionnelles
             foreach (['image2', 'image3', 'image4'] as $imageField) {
                 if ($request->hasFile($imageField)) {
                     $path = $request->file($imageField)->store('produits', 'public');
@@ -78,10 +88,13 @@ class ProduitadminController extends Controller
                     $images[$imageField] = null;
                 }
             }
-            \Log::info('Données envoyées:', $validated + [
+
+            // LOG DES DONNEES POUR DEBUG
+            \Log::info('DONNEES ENVOYEES:', $validated + [
                 'user_id' => auth()->id(),
                 'images' => $images,
             ]);
+
             Produit::create([
                 'nom' => $validated['nom'],
                 'description' => $validated['description'],
@@ -99,17 +112,18 @@ class ProduitadminController extends Controller
                 'image4' => $images['image4'],
             ]);
 
-            return redirect()->back()->with('success', 'Produit créé avec succès !');
+            return redirect()->back()->with('success', 'Produit cree avec succes !');
             
         } catch (\Exception $e) {
-            \Log::error('Erreur création produit: ' . $e->getMessage());
+            // EN CAS D ERREUR, LOG ET MESSAGE D ERREUR
+            \Log::error('ERREUR CREATION PRODUIT: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function update(Request $request, Produit $produit)
-    {
+    public function update(Request $request, Produit $produit){
         try {
+            
             $validated = $request->validate([
                 'nom' => 'required|string|max:255',
                 'description' => 'required|string',
@@ -134,35 +148,38 @@ class ProduitadminController extends Controller
                 'promo_id' => $validated['promo_id'] ?? null,
             ];
 
-            // Gestion des images
+            // GERE LA MISE A JOUR DES IMAGES
             foreach (['image1', 'image2', 'image3', 'image4'] as $imageField) {
                 if ($request->hasFile($imageField)) {
-                    // Supprimer l'ancienne image si elle existe
+                    // SUPPRIME L ANCIENNE IMAGE SI ELLE EXISTE
                     if ($produit->$imageField) {
                         $oldPath = str_replace('storage/', '', $produit->$imageField);
                         if (Storage::disk('public')->exists($oldPath)) {
                             Storage::disk('public')->delete($oldPath);
                         }
                     }
+                    // AJOUTE LA NOUVELLE IMAGE
                     $path = $request->file($imageField)->store('produits', 'public');
                     $data[$imageField] = "storage/$path";
                 }
             }
 
+            // MET A JOUR LE PRODUIT DANS LA BASE
             $produit->update($data);
 
-            return redirect()->back()->with('success', 'Produit mis à jour !');
+            return redirect()->back()->with('success', 'Produit mis a jour !');
             
         } catch (\Exception $e) {
-            \Log::error('Erreur mise à jour produit: ' . $e->getMessage());
+            // LOG ET MESSAGE D ERREUR
+            \Log::error('ERREUR MISE A JOUR PRODUIT: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function destroy(Produit $produit)
-    {
+    
+    public function destroy(Produit $produit){
         try {
-            // Supprimer toutes les images
+            // SUPPRIME CHAQUE IMAGE DU PRODUIT SI ELLE EXISTE
             foreach (['image1', 'image2', 'image3', 'image4'] as $imageField) {
                 if ($produit->$imageField) {
                     $path = str_replace('storage/', '', $produit->$imageField);
@@ -172,12 +189,13 @@ class ProduitadminController extends Controller
                 }
             }
 
+            // SUPPRIME LE PRODUIT DE LA BASE
             $produit->delete();
-
-            return redirect()->back()->with('success', 'Produit supprimé !');
+            return redirect()->back()->with('success', 'Produit supprime !');
             
         } catch (\Exception $e) {
-            \Log::error('Erreur suppression produit: ' . $e->getMessage());
+            // LOG ET MESSAGE D ERREUR
+            \Log::error('ERREUR SUPPRESSION PRODUIT: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }

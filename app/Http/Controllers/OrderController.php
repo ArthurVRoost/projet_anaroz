@@ -11,8 +11,6 @@ class OrderController extends Controller
     public function index()
     {
         $bannerImage = asset('storage/banner/offer_img.png');
-
-        // ✅ On récupère les commandes avec l’utilisateur et les produits
         $commandes = Commande::with(['user', 'produits'])
             ->orderBy('created_at', 'desc')
             ->get();
@@ -29,6 +27,6 @@ class OrderController extends Controller
         'status' => 'confirmed',
     ]);
 
-    return back(); // Inertia va recharger la page avec les props
+    return back(); 
 }
 }

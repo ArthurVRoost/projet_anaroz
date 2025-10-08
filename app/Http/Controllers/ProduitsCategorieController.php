@@ -22,12 +22,12 @@ class ProduitsCategorieController extends Controller
         ]);
     }
 
-    // ---- Produits ----
+
     public function storeProduit(Request $request)
 {
     $request->validate(['nom' => 'required|string|max:255']);
     ProduitsCategorie::create(['nom' => $request->nom]);
-    return back(); // ⬅️ garde l'état et recharge les props
+    return back(); 
 }
 
     public function destroyProduit($id)
@@ -36,7 +36,7 @@ class ProduitsCategorieController extends Controller
         return redirect()->back();
     }
 
-    // ---- Blog ----
+
     public function storeBlog(Request $request)
 {
     $request->validate(['nom' => 'required|string|max:255']);

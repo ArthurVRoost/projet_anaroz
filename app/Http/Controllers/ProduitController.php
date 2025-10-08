@@ -12,9 +12,9 @@ class ProduitController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Produit::with(['categorie', 'promo']); // 👈 on charge aussi promo
+        $query = Produit::with(['categorie', 'promo']); 
 
-        // 🔍 Recherche
+        // SEARCH
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('nom', 'like', '%' . $request->search . '%')
@@ -22,29 +22,27 @@ class ProduitController extends Controller
             });
         }
 
-        // 📂 Filtre Catégorie
+        // FILTRE CAT
         if ($request->filled('categorie')) {
             $query->where('produitscategorie_id', $request->categorie);
         }
 
-        // 🎨 Filtre Couleur
+        // FILTRE COULEUR
         if ($request->filled('couleur')) {
             $query->where('couleur', $request->couleur);
         }
 
         $produits = $query->paginate(40)->withQueryString();
         $categories = ProduitsCategorie::all();
-
-        // URL de base pour les images
         $imageBaseUrl = asset('storage');
 
-        // === Ajouter image_url + gestion promo ===
+    
         $produits->getCollection()->transform(function ($p) use ($imageBaseUrl) {
-        // Si l'image est déjà un chemin "storage/...", on met directement asset()
+
         if ($p->image1 && str_starts_with($p->image1, 'storage/')) {
             $p->image_url = asset($p->image1);
         } else {
-            // Ancien système (feature_, product_, banner_)
+        
             if (str_starts_with($p->image1, 'feature_')) {
                 $p->image_url = $imageBaseUrl . '/feature/large/' . $p->image1;
             } elseif (str_starts_with($p->image1, 'product_')) {
@@ -56,7 +54,7 @@ class ProduitController extends Controller
             }
         }
 
-        // Gestion du prix promo
+        // GESTION PROMO
         $p->prixFinal = $p->prix;
         $p->reduction = null;
         if ($p->promo_id && $p->promo) {
@@ -67,7 +65,7 @@ class ProduitController extends Controller
         return $p;
     });
 
-        // Image de bannière par défaut (exemple)
+    
         $bannerImage = asset('storage/banner/feature_1.png');
 
         return Inertia::render('Produit', [
