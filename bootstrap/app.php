@@ -19,7 +19,6 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        // 🔑 Ajout de tes middlewares personnalisés
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'exclude.roles' => \App\Http\Middleware\ExcludeRolesMiddleware::class,

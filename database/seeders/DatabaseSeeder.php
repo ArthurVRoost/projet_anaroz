@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             SpecificationSeeder::class,
 
         ]);
+        // MANY TO MANY, ON LINK A L'AVANCE DEJA CE QUI EST LINK DE PART LES SEEDERS
         DB::table('blog_tag')->insert([
             
             ['blog_id' => 1, 'tag_id' => 2],
