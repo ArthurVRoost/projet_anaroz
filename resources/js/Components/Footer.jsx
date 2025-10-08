@@ -9,7 +9,7 @@ export default function Footer(){
     <>
     <footer className="footer">
       <div className="footer-container">
-        {/* Colonne 1 */}
+       
         <div className="footer-col">
           <h4>Top Products</h4>
           <ul>
@@ -20,7 +20,7 @@ export default function Footer(){
           </ul>
         </div>
 
-        {/* Colonne 2 */}
+        
         <div className="footer-col">
           <h4>Quick Links</h4>
           <ul>
@@ -31,7 +31,7 @@ export default function Footer(){
           </ul>
         </div>
 
-        {/* Colonne 3 */}
+        
         <div className="footer-col">
           <h4>Features</h4>
           <ul>
@@ -42,7 +42,7 @@ export default function Footer(){
           </ul>
         </div>
 
-        {/* Colonne 4 */}
+        
         <div className="footer-col">
           <h4>Resources</h4>
           <ul>
@@ -53,7 +53,7 @@ export default function Footer(){
           </ul>
         </div>
 
-        {/* Colonne Newsletter */}
+       
         <div className="footer-col newsletter">
           <h4>Newsletter</h4>
           <p>
@@ -67,7 +67,7 @@ export default function Footer(){
         </div>
       </div>
 
-      {/* Bas du footer */}
+      
       <div className="footer-bottom">
         <p>
           Copyright ©2025 All rights reserved | This template is made with ♡ by Arthur

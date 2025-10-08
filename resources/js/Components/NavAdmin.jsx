@@ -19,7 +19,7 @@ export default function NavAdmin() {
         <span className="admin-badge">admin</span>
       </div>
 
-      {/* Menu Burger (mobile only) */}
+     
       <div className="admin-burger-menu" onClick={() => setMenuOpen(!menuOpen)}>
         <FaBars />
       </div>
