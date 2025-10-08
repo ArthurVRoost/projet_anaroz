@@ -17,7 +17,7 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// === PUBLIC ===
+// PUBLIC
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
@@ -28,7 +28,7 @@ Route::get('/contact', [ContactFormController::class, 'index'])->name('contact')
 Route::get('/details/{id}', [DetailsController::class, 'show'])->name('details.show');
 Route::get('/produits', [ProduitController::class, 'index'])->name('produits');
 
-// === USER AUTH ===
+// TANT QUE T'ES CO CA MARCHE 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [PanierController::class, 'index'])->name('cart');
     Route::post('/cart', [PanierController::class, 'store'])->name('cart.store');
@@ -40,11 +40,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [CommandeController::class, 'index'])->name('orders');
 });
 
-// === ADMIN GLOBAL (tous sauf user_id 1 et 2) ===
+// ADMIN TOUT LE MONDE SAUF 1 ET 2
 Route::middleware(['auth', 'exclude.roles'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
-    // Catégories (Admin + Community Manager)
+    // ADMIN + CM
     Route::get('/admin/categories', [ProduitsCategorieController::class, 'index'])
         ->middleware('role:Admin,Community Manager')
         ->name('categories.index');
@@ -73,13 +73,13 @@ Route::middleware(['auth', 'exclude.roles'])->group(function () {
         ->middleware('role:Admin,Community Manager')
         ->name('categories.tags.destroy');
 
-    // Users (Admin only)
+    // ADMIN
     Route::get('/admin/users', [RoleController::class, 'index'])->middleware('role:Admin')->name('users.index');
     Route::post('/admin/users', [RoleController::class, 'store'])->middleware('role:Admin')->name('users.store');
     Route::put('/admin/users/{id}', [RoleController::class, 'update'])->middleware('role:Admin')->name('users.update');
     Route::delete('/admin/users/{id}', [RoleController::class, 'destroy'])->middleware('role:Admin')->name('users.destroy');
 
-    // Produits (Webmaster + Admin)
+    // ADMIN + WEBMASTER
     Route::middleware('role:Webmaster,Admin')->group(function () {
         Route::get('/admin/produits', [ProduitadminController::class, 'index'])->name('produits.index');
         Route::post('/admin/produits', [ProduitadminController::class, 'store'])->name('produits.store');
@@ -87,7 +87,7 @@ Route::middleware(['auth', 'exclude.roles'])->group(function () {
         Route::delete('/admin/produits/{produit}', [ProduitadminController::class, 'destroy'])->name('produits.destroy');
     });
 
-    // Blogs (Community Manager + Admin)
+    // ADMIN + CM
     Route::middleware('role:Community Manager,Admin')->group(function () {
         Route::get('/admin/blogs', [BlogadminController::class, 'index'])->name('blogs.index');
         Route::post('/admin/blogs', [BlogadminController::class, 'store'])->name('blogs.store');
@@ -95,14 +95,14 @@ Route::middleware(['auth', 'exclude.roles'])->group(function () {
         Route::delete('/admin/blogs/{blog}', [BlogadminController::class, 'destroy'])->name('blogs.destroy');
     });
 
-    // Orders (Agent + Admin)
+    // ADMIN + AGENT
     Route::middleware('role:Agent,Admin')->group(function () {
         Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.admin');
         Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateStatus'])->name('orders.confirm');
     });
 });
 
-// === PROFILE + DASHBOARD ===
+
 Route::get('/dashboard', fn() => Inertia::render('Dashboard'))
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
