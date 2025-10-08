@@ -22,7 +22,7 @@ export default function AdminProduit({ bannerImage }) {
     image4: null,
     }, { forceFormData: true })
 
-  // Créer un produit
+  // CREATE PRODUIT
   const handleSubmit = (e) => {
         e.preventDefault()
         post(route('produits.store'), {
@@ -38,7 +38,7 @@ export default function AdminProduit({ bannerImage }) {
         })
     }
 
-  // Préparer édition
+  // EDIT
   const handleEdit = (p) => {
     setEditingId(p.id)
     setData({
@@ -56,11 +56,12 @@ export default function AdminProduit({ bannerImage }) {
     })
   }
 
-  // Sauvegarder édition
+  // UPDATE
   const handleUpdate = (e) => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('_method', 'PUT')
+    // RECUP LES CLES SOUS TABLEAU
     Object.keys(data).forEach((key) => {
       if (data[key] !== null) formData.append(key, data[key])
     })
@@ -79,7 +80,7 @@ export default function AdminProduit({ bannerImage }) {
     })
   }
 
-  // Supprimer
+  // DEL
   const handleDelete = (id) => {
     if (confirm('Supprimer ce produit ?')) {
       router.delete(route('produits.destroy', id), {
@@ -130,6 +131,8 @@ export default function AdminProduit({ bannerImage }) {
           </thead>
           <tbody>
             {produits.map((p) => (
+              // REACT COMPREND QUE LES 2 TR SONT ENSEMBLE 
+              // MARCHE COMME UN CONTENAIRE INVISBLE
               <React.Fragment key={p.id}>
                 <tr>
                     <td className="p-2 border">
@@ -175,7 +178,7 @@ export default function AdminProduit({ bannerImage }) {
           </tbody>
         </table>
 
-        {/* Formulaire EDIT */}
+        {/* FORM EDIT */}
         {editingId && (
           <form onSubmit={handleUpdate} className="mt-6 p-4 bg-gray-100 rounded">
             <h3 className="font-bold mb-2">Éditer produit #{editingId}</h3>
@@ -216,7 +219,7 @@ export default function AdminProduit({ bannerImage }) {
           </form>
         )}
 
-        {/* Formulaire ADD */}
+        {/* FORM ADD */}
         {!editingId && (
           <form onSubmit={handleSubmit} className="mt-6 p-4 bg-gray-100 rounded">
             <h3 className="font-bold mb-2">Ajouter un produit</h3>

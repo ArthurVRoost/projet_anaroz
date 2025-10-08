@@ -2,14 +2,14 @@ import Footer from '@/Components/Footer'
 import NavAdmin from '@/Components/NavAdmin'
 import { usePage, router, useForm } from '@inertiajs/react'
 import { useState } from 'react'
+import { Toaster, toast } from 'react-hot-toast'
 import '../../css/blogadmin.css'
-
+import React, { Fragment } from 'react'
 export default function BlogAdmin({ bannerImage }) {
   const { blogs, categories } = usePage().props
   const [editingId, setEditingId] = useState(null)
   const [showingId, setShowingId] = useState(null)
 
-  // Utilisation de useForm d'Inertia pour une meilleure gestion
   const { data, setData, post, reset, processing, errors } = useForm({
     titre: '',
     description: '',
@@ -17,6 +17,7 @@ export default function BlogAdmin({ bannerImage }) {
     blog_path: null,
   })
 
+  /** ✅ Créer un blog */
   const handleSubmit = (e) => {
     e.preventDefault()
     post(route('blogs.store'), {
@@ -24,15 +25,15 @@ export default function BlogAdmin({ bannerImage }) {
       preserveScroll: true,
       onSuccess: () => {
         reset()
-        alert('Blog créé avec succès !')
+        toast.success(' Blog créé avec succès')
       },
-      onError: (errors) => {
-        console.error('Erreurs:', errors)
-        alert('Erreur lors de la création: ' + JSON.stringify(errors))
+      onError: () => {
+        toast.error(' Erreur lors de la création du blog')
       }
     })
   }
 
+  /** ✏️ Passer en mode édition */
   const handleEdit = (blog) => {
     setEditingId(blog.id)
     setData({
@@ -43,6 +44,7 @@ export default function BlogAdmin({ bannerImage }) {
     })
   }
 
+  /** ♻️ Mettre à jour un blog */
   const handleUpdate = (e) => {
     e.preventDefault()
     const formData = new FormData()
@@ -53,35 +55,68 @@ export default function BlogAdmin({ bannerImage }) {
     if (data.blog_path) {
       formData.append('blog_path', data.blog_path)
     }
-    
+
     router.post(route('blogs.update', editingId), formData, {
       preserveScroll: true,
       onSuccess: () => {
         setEditingId(null)
         reset()
-        alert('Blog mis à jour avec succès !')
+        toast.success(' Blog mis à jour')
       },
-      onError: (errors) => {
-        console.error('Erreurs:', errors)
-        alert('Erreur lors de la mise à jour: ' + JSON.stringify(errors))
+      onError: () => {
+        toast.error(' Erreur lors de la mise à jour')
       }
     })
   }
 
+  /** 🗑️ Supprimer un blog */
   const handleDelete = (id) => {
-    if (confirm('Supprimer ce blog ?')) {
-      router.delete(route('blogs.destroy', id), {
-        preserveScroll: true,
-        onSuccess: () => {
-          alert('Blog supprimé avec succès !')
-        }
-      })
-    }
+    toast((t) => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <span>Voulez-vous vraiment supprimer ce blog ?</span>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => {
+              router.delete(route('blogs.destroy', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                  toast.dismiss(t.id)
+                  toast.success(' Blog supprimé')
+                },
+                onError: () => toast.error('Erreur lors de la suppression')
+              })
+            }}
+            style={{
+              backgroundColor: '#FD3166',
+              color: 'white',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Oui
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{
+              backgroundColor: '#ccc',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              border: 'none'
+            }}
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000 })
   }
 
+  
   const handleShow = (id) => {
     setShowingId(showingId === id ? null : id)
   }
+
 
   const cancelEdit = () => {
     setEditingId(null)
@@ -91,6 +126,8 @@ export default function BlogAdmin({ bannerImage }) {
   return (
     <div>
       <NavAdmin />
+      <Toaster position="top-right" />
+
       <div className="carouDetailsnav">
         <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Blogs Settings</h2>
@@ -102,9 +139,8 @@ export default function BlogAdmin({ bannerImage }) {
       </div>
 
       <div className="blog-admin-container">
-        
 
-        {/* Table */}
+        {/* TABLE DES BLOGS */}
         <table className="blog-table">
           <thead>
             <tr>
@@ -119,11 +155,9 @@ export default function BlogAdmin({ bannerImage }) {
           </thead>
           <tbody>
             {blogs.map((b) => (
-              <>
-                <tr key={b.id}>
-                  <td>
-                    {b.blog_path && <img src={`/${b.blog_path}`} alt="" className="blog-thumb" />}
-                  </td>
+              <Fragment key={b.id}>
+                <tr>
+                  <td>{b.blog_path && <img src={`/${b.blog_path}`} alt="" className="blog-thumb" />}</td>
                   <td>{b.titre}</td>
                   <td>{b.categorie?.nom}</td>
                   <td><span className="role-badge">{b.user?.name || 'admin'}</span></td>
@@ -133,17 +167,12 @@ export default function BlogAdmin({ bannerImage }) {
                     </button>
                   </td>
                   <td>
-                    <button onClick={() => handleEdit(b)} className="btn-edit">
-                      Edit
-                    </button>
+                    <button onClick={() => handleEdit(b)} className="btn-edit">Edit</button>
                   </td>
                   <td>
-                    <button onClick={() => handleDelete(b.id)} className="btn-delete">
-                      Delete
-                    </button>
+                    <button onClick={() => handleDelete(b.id)} className="btn-delete">Delete</button>
                   </td>
                 </tr>
-                {/* Ligne de détails */}
                 {showingId === b.id && (
                   <tr>
                     <td colSpan="7" style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
@@ -152,31 +181,31 @@ export default function BlogAdmin({ bannerImage }) {
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>
 
-        {/* Formulaire modification */}
+        {/* FORMULAIRE D'ÉDITION */}
         {editingId && (
           <form onSubmit={handleUpdate} className="blog-form">
             <h3>Edit blog #{editingId}</h3>
-            <input 
-              type="text" 
-              value={data.titre} 
-              placeholder="Titre" 
-              onChange={(e) => setData('titre', e.target.value)} 
-              required 
+            <input
+              type="text"
+              value={data.titre}
+              placeholder="Titre"
+              onChange={(e) => setData('titre', e.target.value)}
+              required
             />
-            <textarea 
-              value={data.description} 
-              placeholder="Description" 
-              onChange={(e) => setData('description', e.target.value)} 
-              required 
+            <textarea
+              value={data.description}
+              placeholder="Description"
+              onChange={(e) => setData('description', e.target.value)}
+              required
             />
-            <select 
-              value={data.blogcategorie_id} 
-              onChange={(e) => setData('blogcategorie_id', e.target.value)} 
+            <select
+              value={data.blogcategorie_id}
+              onChange={(e) => setData('blogcategorie_id', e.target.value)}
               required
             >
               <option value="">Choisir une catégorie</option>
@@ -184,10 +213,10 @@ export default function BlogAdmin({ bannerImage }) {
                 <option key={cat.id} value={cat.id}>{cat.nom}</option>
               ))}
             </select>
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={(e) => setData('blog_path', e.target.files[0])} 
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setData('blog_path', e.target.files[0])}
             />
             <div style={{ display: 'flex', gap: '10px' }}>
               <button type="submit" className="btn-save" disabled={processing}>
@@ -205,26 +234,26 @@ export default function BlogAdmin({ bannerImage }) {
           </form>
         )}
 
-        {/* Formulaire ajout blog */}
+        {/* FORMULAIRE D’AJOUT */}
         {!editingId && (
           <form onSubmit={handleSubmit} className="blog-form">
             <h3>Add new blog</h3>
-            <input 
-              type="text" 
-              value={data.titre} 
-              placeholder="Titre" 
-              onChange={(e) => setData('titre', e.target.value)} 
-              required 
+            <input
+              type="text"
+              value={data.titre}
+              placeholder="Titre"
+              onChange={(e) => setData('titre', e.target.value)}
+              required
             />
-            <textarea 
-              value={data.description} 
-              placeholder="Description" 
-              onChange={(e) => setData('description', e.target.value)} 
-              required 
+            <textarea
+              value={data.description}
+              placeholder="Description"
+              onChange={(e) => setData('description', e.target.value)}
+              required
             />
-            <select 
-              value={data.blogcategorie_id} 
-              onChange={(e) => setData('blogcategorie_id', e.target.value)} 
+            <select
+              value={data.blogcategorie_id}
+              onChange={(e) => setData('blogcategorie_id', e.target.value)}
               required
             >
               <option value="">Choisir une catégorie</option>
@@ -232,10 +261,10 @@ export default function BlogAdmin({ bannerImage }) {
                 <option key={cat.id} value={cat.id}>{cat.nom}</option>
               ))}
             </select>
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={(e) => setData('blog_path', e.target.files[0])} 
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setData('blog_path', e.target.files[0])}
             />
             <button type="submit" className="btn-save" disabled={processing}>
               {processing ? 'Saving...' : 'Save'}

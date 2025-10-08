@@ -1,12 +1,12 @@
 import Footer from '@/Components/Footer'
 import Nav from '@/Components/Nav'
-import React from 'react'
+import React, { useState } from 'react'
 import '../../css/blog.css'
 import { Link, router, usePage } from '@inertiajs/react'
 
 export default function Blog({bannerImage}) {
   const { blogs, categories, tags, filters } = usePage().props
-  const [search, setSearch] = React.useState(filters.search || '')
+  const [search, setSearch] = useState(filters.search || '')
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -23,7 +23,7 @@ export default function Blog({bannerImage}) {
   return (
     <div>
       <Nav />
-      {/* Bannière */}
+      
       <div className="carouDetails">
         <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Discover our Blogs</h2>
@@ -34,14 +34,15 @@ export default function Blog({bannerImage}) {
         </div>
       </div>
 
-      {/* Container principal */}
+     
       <div className="blog-container">
-        {/* Partie gauche : blogs */}
+       
         <div className="blog-left">
             {blogs.map((blog, index) => {
               const date = new Date(blog.created_at);
-              const day = date.getDate(); // donne 1 → 31 sans zéro devant
-              const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase(); // "APR"
+              const day = date.getDate(); 
+              // DONNE LE MOIS SOUS FORME DE 3 PREMIERE LETTRE
+              const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase(); 
 
               return (
                 <div className="blog-card" key={index}>
@@ -69,9 +70,9 @@ export default function Blog({bannerImage}) {
           })}
         </div>
 
-        {/* Partie droite : sidebar */}
+       
         <div className="blog-right">
-          {/* Search */}
+         
           <div className="sidebar-card">
             <form onSubmit={handleSearch}>
               <input
@@ -85,7 +86,7 @@ export default function Blog({bannerImage}) {
             </form>
           </div>
 
-          {/* Catégories */}
+         
           <div className="sidebar-card">
             <h4>Category</h4>
             <ul className="category-list">
@@ -97,7 +98,7 @@ export default function Blog({bannerImage}) {
             </ul>
           </div>
 
-          {/* Posts récents */}
+          
           <div className="sidebar-card">
             <h4>Recent Post</h4>
             <ul className="recent-posts">
@@ -105,7 +106,8 @@ export default function Blog({bannerImage}) {
                 const date = new Date(post.created_at);
                 const day = date.getDate();
                 const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-                const year = date.getFullYear().toString().slice(-2); // "25" au lieu de "2025"
+                // VA DONNER LES 2 DERNIERS CHIFFRES DE L'ANNEE GENRE 25 AU LIEU DE 2025
+                const year = date.getFullYear().toString().slice(-2); 
 
                 return (
                   <li key={i}>
@@ -118,7 +120,7 @@ export default function Blog({bannerImage}) {
             </ul>
           </div>
 
-          {/* Tags */}
+          
           <div className="sidebar-card">
             <h4>Tag Clouds</h4>
             <div className="tags">
@@ -134,7 +136,7 @@ export default function Blog({bannerImage}) {
             </div>
           </div>
 
-          {/* Newsletter */}
+          
           <div className="sidebar-card">
             <h4>Newsletter</h4>
             <input type="email" placeholder="Enter email" className="newsletter-input" />
