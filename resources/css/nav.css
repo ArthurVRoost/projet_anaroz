@@ -205,3 +205,30 @@
     display: block;
   }
 }
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-buttons .btn {
+  background-color: #FD3166;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 3px 10px rgba(253, 49, 102, 0.25);
+}
+
+.auth-buttons .btn:hover {
+  background-color: white;
+  color: #FD3166;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
