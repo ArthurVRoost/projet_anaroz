@@ -1,7 +1,8 @@
 import { useState } from "react";
-import '../../css/details.css'
+import '../../css/details.css';
 import Nav from "@/Components/Nav";
 import { router } from "@inertiajs/react";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function Default({ produit, prixFinal, reduction, specifications, bannerImage }) {
   const [activeTab, setActiveTab] = useState("description");
@@ -17,12 +18,36 @@ export default function Default({ produit, prixFinal, reduction, specifications,
   };
 
   const handleAddToCart = (id) => {
-    router.post(route("cart.store"), { produit_id: id });
+    router.post(route("cart.store"), { produit_id: id }, {
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        toast.success('Produit ajouté au panier !', {
+          duration: 3000,
+          style: {
+            border: '1px solid #FD3166',
+            padding: '12px 18px',
+            color: '#fff',
+            background: 'linear-gradient(135deg, #FD3166 0%, #ff6f9d 100%)',
+            fontWeight: 'bold',
+            fontSize: '14px',
+            boxShadow: '0 4px 15px rgba(253, 49, 102, 0.3)',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#FD3166',
+          },
+        });
+      },
+      onError: () => toast.error('Erreur lors de l’ajout au panier'),
+    });
   };
 
   return (
     <>
       <Nav />
+      <Toaster position="top-right" />
+
       <div className="carouDetails">
         <div className="div1details">
           <h2 className="detailsH1">Shop Single</h2>
@@ -34,7 +59,6 @@ export default function Default({ produit, prixFinal, reduction, specifications,
       </div>
 
       <div className="details-container">
-        
         <div className="details-images">
           <img
             src={activeImage}
@@ -54,30 +78,21 @@ export default function Default({ produit, prixFinal, reduction, specifications,
           </div>
         </div>
 
-        
         <div className="details-info">
           <h1 className="details-title">{produit.nom}</h1>
 
-         
           <div className="price-wrapper">
             {reduction ? (
               <>
-                <span className="old-price">
-                  {Number(produit.prix).toFixed(2)} €
-                </span>
-                <span className="final-price">
-                  {Number(prixFinal).toFixed(2)} €
-                </span>
+                <span className="old-price">{Number(produit.prix).toFixed(2)} €</span>
+                <span className="final-price">{Number(prixFinal).toFixed(2)} €</span>
                 <span className="reduction">(-{reduction}%)</span>
               </>
             ) : (
-              <span className="final-price">
-                {Number(produit.prix).toFixed(2)} €
-              </span>
+              <span className="final-price">{Number(produit.prix).toFixed(2)} €</span>
             )}
           </div>
 
-         
           <button
             type="button"
             className="add-to-cart-btn"
@@ -86,17 +101,11 @@ export default function Default({ produit, prixFinal, reduction, specifications,
             Add to Cart
           </button>
 
-         
           <div className="product-meta">
-            <p>
-              <span>Category:</span> {produit.categorie?.nom}
-            </p>
-            <p>
-              <span>Availability:</span> {produit.stock > 0 ? "In Stock" : "Out of Stock"}
-            </p>
+            <p><span>Category:</span> {produit.categorie?.nom}</p>
+            <p><span>Availability:</span> {produit.stock > 0 ? "In Stock" : "Out of Stock"}</p>
           </div>
 
-          
           <div className="details-tabs">
             <button
               className={`tab-btn ${activeTab === "description" ? "active" : ""}`}
@@ -118,7 +127,6 @@ export default function Default({ produit, prixFinal, reduction, specifications,
             </button>
           </div>
 
-         
           <div className="tab-content">
             {activeTab === "description" && <p>{produit.description}</p>}
 
@@ -126,10 +134,10 @@ export default function Default({ produit, prixFinal, reduction, specifications,
               <ul>
                 {specifications.map((spec, index) => (
                   <li key={index}>
-                    <strong>Width:</strong> {spec.width} cm | 
-                    <strong> Height:</strong> {spec.height} cm | 
-                    <strong> Depth:</strong> {spec.depth} cm | 
-                    <strong> Weight:</strong> {spec.weight} kg | 
+                    <strong>Width:</strong> {spec.width} cm |
+                    <strong> Height:</strong> {spec.height} cm |
+                    <strong> Depth:</strong> {spec.depth} cm |
+                    <strong> Weight:</strong> {spec.weight} kg |
                     <strong> Quality Check:</strong> {spec.quality_check ? "Yes" : "No"}
                   </li>
                 ))}

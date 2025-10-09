@@ -18,27 +18,36 @@ class PanierController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'produit_id' => 'required|exists:produits,id',
-        ]);
+    public function store(Request $request)
+{
+    $request->validate([
+        'produit_id' => 'required|exists:produits,id',
+    ]);
 
-        $panier = Panier::where('user_id', auth()->id())
-            ->where('produit_id', $request->produit_id)
-            ->first();
+    $userId = auth()->id();
 
-        if ($panier) {
-            $panier->increment('quantite');
-        } else {
-            Panier::create([
-                'user_id' => auth()->id(),
-                'produit_id' => $request->produit_id,
-                'quantite' => 1,
-            ]);
-        }
-
-        return redirect()->route('cart');
+    // S'il n'est pas connecté → redirige vers login
+    if (!$userId) {
+        return redirect()->route('login');
     }
+
+    $panier = Panier::where('user_id', $userId)
+        ->where('produit_id', $request->produit_id)
+        ->first();
+
+    if ($panier) {
+        $panier->increment('quantite');
+    } else {
+        Panier::create([
+            'user_id' => $userId,
+            'produit_id' => $request->produit_id,
+            'quantite' => 1,
+        ]);
+    }
+
+    
+    return back()->with('success', 'Produit ajouté au panier !');
+}
 
     public function update(Request $request, Panier $panier){
         $request->validate([

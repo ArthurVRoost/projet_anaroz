@@ -1,20 +1,47 @@
 import { Link, usePage, router } from '@inertiajs/react';
-import '../../css/produit.css'
+import '../../css/produit.css';
 import Footer from '@/Components/Footer';
 import Nav from '@/Components/Nav';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function Produit({ bannerImage }) {
   const { produits, categories, filters } = usePage().props;
 
   const handleAddToCart = (id) => {
-    router.post(route("cart.store"), { produit_id: id });
+    router.post(route("cart.store"), { produit_id: id }, {
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        toast.success('Produit ajouté au panier !', {
+          duration: 3000,
+          style: {
+            border: '1px solid #FD3166',
+            padding: '12px 18px',
+            color: '#fff',
+            background: 'linear-gradient(135deg, #FD3166 0%, #ff6f9d 100%)',
+            fontWeight: 'bold',
+            fontSize: '14px',
+            boxShadow: '0 4px 15px rgba(253, 49, 102, 0.3)',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#FD3166',
+          },
+        });
+      },
+      onError: () => {
+        toast.error('Erreur lors de l’ajout au panier');
+      },
+    });
   };
 
   return (
     <>
       <Nav />
+      <Toaster position="top-right" />
+
       <div className="carouDetails">
-        <div className="div1details " style={{ marginLeft: '15%' }}>
+        <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Shop Category</h2>
           <p className="detailsP">Home - Shop Category</p>
         </div>
@@ -24,7 +51,6 @@ export default function Produit({ bannerImage }) {
       </div>
 
       <div className="produits-page">
-        
         <form method="get" className="search-bar">
           <input
             type="text"
@@ -36,7 +62,6 @@ export default function Produit({ bannerImage }) {
         </form>
 
         <div className="content">
-          
           <aside className="filters">
             <h3 style={{ fontWeight: 'bold' }}>Filtres</h3>
 
@@ -44,9 +69,7 @@ export default function Produit({ bannerImage }) {
               <h4 style={{ fontWeight: 'bold' }}>Catégories</h4>
               <ul>
                 <li>
-                  <Link href={route("produits")} method="get">
-                    Toutes
-                  </Link>
+                  <Link href={route("produits")} method="get">Toutes</Link>
                 </li>
                 {categories.map((cat) => (
                   <li key={cat.id}>
@@ -68,20 +91,14 @@ export default function Produit({ bannerImage }) {
             <div className="filter-group">
               <h4 style={{ fontWeight: 'bold' }}>Couleur</h4>
               <ul>
-                <li>
-                  <Link href={route("produits")} method="get">
-                    Toutes
-                  </Link>
-                </li>
+                <li><Link href={route("produits")} method="get">Toutes</Link></li>
                 <li>
                   <Link
                     href={route("produits")}
                     method="get"
                     data={{ couleur: "Blanc", search: filters.search }}
                     className={filters.couleur === "Blanc" ? "active" : ""}
-                  >
-                    Blanc
-                  </Link>
+                  >Blanc</Link>
                 </li>
                 <li>
                   <Link
@@ -89,15 +106,12 @@ export default function Produit({ bannerImage }) {
                     method="get"
                     data={{ couleur: "Noir", search: filters.search }}
                     className={filters.couleur === "Noir" ? "active" : ""}
-                  >
-                    Noir
-                  </Link>
+                  >Noir</Link>
                 </li>
               </ul>
             </div>
           </aside>
 
-          
           <main className="produits-list">
             {produits.data.length > 0 ? (
               produits.data.map((p) => (
@@ -106,7 +120,6 @@ export default function Produit({ bannerImage }) {
                   <div className="produit-info">
                     <h3>{p.nom}</h3>
 
-                    
                     {p.reduction ? (
                       <p className="price">
                         <span className="old-price">{Number(p.prix).toFixed(2)} €</span>{" "}
@@ -143,5 +156,5 @@ export default function Produit({ bannerImage }) {
       </div>
       <Footer />
     </>
-  )
+  );
 }
