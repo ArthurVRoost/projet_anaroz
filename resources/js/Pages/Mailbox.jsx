@@ -1,6 +1,9 @@
-import { useForm, router } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
+import NavAdmin from '@/Components/NavAdmin';
+import { useForm } from '@inertiajs/react';
+import '../../css/mailbox.css';
 
-export default function Mailbox({ messages }) {
+export default function Mailbox({ messages, bannerImage }) {
   const { data, setData, post, reset } = useForm({ reply: '' });
 
   const handleReply = (id) => {
@@ -10,30 +13,54 @@ export default function Mailbox({ messages }) {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Boîte de réception</h1>
-      {messages.map((msg) => (
-        <div key={msg.id} className="border rounded-lg p-4 mb-4">
-          <p><strong>De :</strong> {msg.name} ({msg.email})</p>
-          <p><strong>Sujet :</strong> {msg.subject}</p>
-          <p className="mt-2">{msg.message}</p>
+    <>
+      <NavAdmin />
 
-          {!msg.replied && (
-            <form onSubmit={(e) => { e.preventDefault(); handleReply(msg.id); }} className="mt-4">
-              <textarea
-                className="border p-2 w-full"
-                placeholder="Votre réponse"
-                value={data.reply}
-                onChange={(e) => setData('reply', e.target.value)}
-              />
-              <button type="submit" className="bg-blue-600 text-white px-4 py-2 mt-2 rounded">
-                Envoyer la réponse
-              </button>
-            </form>
-          )}
-          {msg.replied && <p className="text-green-500 mt-2">Répondu ✅</p>}
+      {/* --- Bannière --- */}
+      <div className="mailbox-banner">
+        <div className="mailbox-banner-content">
+          <h2 className="mailbox-title">Mailbox</h2>
+          <p className="mailbox-subtitle">Aranoz - Shop System</p>
         </div>
-      ))}
-    </div>
+      </div>
+
+      {/* --- Contenu principal --- */}
+      <div className="mailbox-container">
+        <h1 className="mailbox-heading">Boîte de réception</h1>
+
+        {messages.map((msg) => (
+          <div key={msg.id} className="mailbox-card">
+            <p><strong>De :</strong> {msg.name} ({msg.email})</p>
+            <p><strong>Sujet :</strong> {msg.subject}</p>
+            <p className="mailbox-message">{msg.message}</p>
+
+            {!msg.replied && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleReply(msg.id);
+                  return false;
+                }}
+                className="mailbox-form"
+              >
+                <textarea
+                  className="mailbox-textarea"
+                  placeholder="Votre réponse"
+                  value={data.reply}
+                  onChange={(e) => setData('reply', e.target.value)}
+                />
+                <button type="submit" className="mailbox-btn">
+                  Envoyer la réponse
+                </button>
+              </form>
+            )}
+
+            {msg.replied && <p className="mailbox-replied">Répondu!</p>}
+          </div>
+        ))}
+      </div>
+
+      <Footer />
+    </>
   );
 }
