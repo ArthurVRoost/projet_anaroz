@@ -26,7 +26,7 @@ class PanierController extends Controller
 
     $userId = auth()->id();
 
-    // S'il n'est pas connecté → redirige vers login
+    
     if (!$userId) {
         return redirect()->route('login');
     }
@@ -94,13 +94,10 @@ class PanierController extends Controller
             ]);
         }
 
-        // 🧹 Vide le panier après validation
+        
         $user->paniers()->delete();
-
-        // ✉️ Envoie du mail de confirmation
         Mail::to($user->email)->send(new OrderReceivedMail($commande));
 
-        // ✅ Affiche la page de validation
         return Inertia::render('Validation', [
             'commande' => $commande,
         ]);

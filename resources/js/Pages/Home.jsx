@@ -22,7 +22,7 @@ export default function Home({
   });
   const { flash } = usePage().props;
 
-  // SLIDER "Awesome"
+ 
   const nextSlide = () => setStartIndex((prev) => (prev + 2) % awesomeProducts.length);
   const prevSlide = () => setStartIndex((prev) => (prev - 2 + awesomeProducts.length) % awesomeProducts.length);
 
@@ -70,7 +70,7 @@ export default function Home({
 
   const pad = (n) => String(n).padStart(2, "0");
 
-  // ✅ Fonction d'envoi newsletter
+  
   const handleSubscribe = (e) => {
     e.preventDefault();
     post(route("newsletter.subscribe"), {
@@ -83,7 +83,7 @@ export default function Home({
       <Nav />
       <Carousel bannerProducts={bannerProducts} imageBaseUrl={imageBaseUrl} />
 
-      {/* SECTION 1 : Featured Category */}
+      {/* SECTION 1*/}
       <section className="py-12">
         <h2 className="text-3xl font-bold text-center mb-10">Featured Category</h2>
 
@@ -178,7 +178,7 @@ export default function Home({
         </div>
       </section>
 
-      {/* SECTION 2 : Awesome */}
+      {/* SECTION 2  */}
       <section className="awesome-section">
         <div className="container">
           <div className="awesome-header">
@@ -211,7 +211,7 @@ export default function Home({
         </div>
       </section>
 
-      {/* SECTION 3 : Weekly Sale */}
+      {/* SECTION 3 */}
       <section className="weekly-sale">
         <div className="container">
           <div className="sale-content">
@@ -240,7 +240,7 @@ export default function Home({
         </div>
       </section>
 
-      {/* SECTION 4 : Best Sellers */}
+      {/* SECTION 4  */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8">Best Sellers</h2>
@@ -272,7 +272,7 @@ export default function Home({
         </div>
       </section>
 
-      {/* SECTION 5 : Newsletter */}
+      {/* SECTION 5  */}
       <section className="section5" style={{ backgroundColor: "#F6F8FE" }}>
         <h3 className="section5H3">JOIN OUR NEWSLETTER</h3>
         <h1 className="section5H1">Subscribe to get Updated with new offers</h1>

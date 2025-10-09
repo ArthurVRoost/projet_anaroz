@@ -16,7 +16,7 @@ export default function Mailbox({ messages, bannerImage }) {
     <>
       <NavAdmin />
 
-      {/* --- Bannière --- */}
+      
       <div className="mailbox-banner">
         <div className="mailbox-banner-content">
           <h2 className="mailbox-title">Mailbox</h2>
@@ -24,7 +24,7 @@ export default function Mailbox({ messages, bannerImage }) {
         </div>
       </div>
 
-      {/* --- Contenu principal --- */}
+      
       <div className="mailbox-container">
         <h1 className="mailbox-heading">Boîte de réception</h1>
 
