@@ -9,7 +9,7 @@
 
   <p>
     Nous avons le plaisir de vous informer que votre commande n° 
-    <strong>{{ $commande->numRandom }}</strong> a été validée avec succès. 🎉
+    <strong>{{ $commande->numRandom }}</strong> a été validée avec succès. 
   </p>
 
   <p>
