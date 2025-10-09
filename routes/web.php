@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitadminController;
@@ -21,6 +22,7 @@ use Inertia\Inertia;
 // PUBLIC
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment');
