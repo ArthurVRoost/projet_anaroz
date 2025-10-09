@@ -205,7 +205,7 @@
   font-size: 40px;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .details-container {
     grid-template-columns: 1fr;
