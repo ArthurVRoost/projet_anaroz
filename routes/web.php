@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogadminController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\HomeController;
@@ -19,7 +20,7 @@ use Inertia\Inertia;
 
 // PUBLIC
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment');
@@ -99,6 +100,8 @@ Route::middleware(['auth', 'exclude.roles'])->group(function () {
     Route::middleware('role:Agent,Admin')->group(function () {
         Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.admin');
         Route::put('/admin/orders/{commande}/confirm', [OrderController::class, 'updateStatus'])->name('orders.confirm');
+        Route::get('/admin/mailbox', [ContactController::class, 'index'])->name('admin.mailbox');
+        Route::post('/admin/mailbox/reply/{id}', [ContactController::class, 'reply'])->name('admin.mailbox.reply');
     });
 });
 

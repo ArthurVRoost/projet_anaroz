@@ -58,7 +58,7 @@ export default function NavAdmin() {
         <div className="admin-nav-item dropdown">
           <span className="admin-nav-link">Mailbox ▾</span>
           <div className="admin-dropdown-menu">
-            <Link href="/messages" className="admin-dropdown-item">Messages</Link> 
+            <Link href="/admin/mailbox" className="admin-dropdown-item">Messages</Link> 
           </div>
         </div>
       </nav>
