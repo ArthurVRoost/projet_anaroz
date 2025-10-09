@@ -7,7 +7,7 @@ import { IoMdMail } from "react-icons/io";
 import { useForm, usePage } from '@inertiajs/react';
 
 export default function Contact({ bannerImage }) {
-  // ✅ Hook useForm pour gérer les données du formulaire
+  
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
     email: '',
@@ -15,13 +15,13 @@ export default function Contact({ bannerImage }) {
     message: '',
   });
 
-  const { flash } = usePage().props; // pour les messages de succès Laravel (avec ->with())
+  const { flash } = usePage().props; 
 
-  // ✅ Fonction de soumission du formulaire
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     post(route('contact.send'), {
-      onSuccess: () => reset(), // vide les champs après succès
+      onSuccess: () => reset(), 
     });
   };
 
@@ -29,7 +29,7 @@ export default function Contact({ bannerImage }) {
     <div>
       <Nav />
 
-      {/* Bandeau haut */}
+      
       <div className="carouDetails">
         <div className="div1details" style={{ marginLeft: '15%' }}>
           <h2 className="detailsH1">Contact Us</h2>
@@ -40,9 +40,8 @@ export default function Contact({ bannerImage }) {
         </div>
       </div>
 
-      {/* Conteneur principal */}
       <div className="contact-container">
-        {/* Carte Google Maps */}
+        
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2613.79422420027!2d4.3387872765001445!3d50.855470258119205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c38e84af80dd%3A0xe85cd9cd0218a4aa!2sPl.%20de%20la%20Minoterie%2010%2C%201080%20Molenbeek-Saint-Jean!5e1!3m2!1sfr!2sbe!4v1759241554052!5m2!1sfr!2sbe"
           width="100%"
@@ -53,14 +52,12 @@ export default function Contact({ bannerImage }) {
           referrerPolicy="no-referrer-when-downgrade"
         />
 
-        {/* Formulaire + infos */}
         <div className="contact-form-wrapper">
 
-          {/* ✅ Formulaire de contact connecté au back */}
+        
           <div className="contact-form">
             <h3>Get in Touch</h3>
 
-            {/* Message de succès */}
             {flash?.success && (
               <p style={{ color: 'green', marginBottom: '10px' }}>{flash.success}</p>
             )}
@@ -105,7 +102,6 @@ export default function Contact({ bannerImage }) {
             </form>
           </div>
 
-          {/* Informations de contact */}
           <div className="contact-info">
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span><IoLocationSharp /></span>
