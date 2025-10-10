@@ -1,6 +1,8 @@
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
 import '../../../css/auth.css'
+import Nav from '@/Components/Nav'
+import Footer from '@/Components/Footer'
 
 export default function Register() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -20,7 +22,8 @@ export default function Register() {
   }
 
   return (
-    <GuestLayout>
+    <>
+    <Nav/>
       <Head title="Register" />
 
       <div className="auth-card">
@@ -106,6 +109,7 @@ export default function Register() {
           </div>
         </form>
       </div>
-    </GuestLayout>
+      <Footer/>
+    </>
   )
 }

@@ -1,6 +1,8 @@
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
 import '../../../css/auth.css'
+import Nav from '@/Components/Nav'
+import Footer from '@/Components/Footer'
 
 export default function Login({ status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -17,7 +19,8 @@ export default function Login({ status, canResetPassword }) {
   }
 
   return (
-    <GuestLayout>
+    <>
+    <Nav/>
       <Head title="Login" />
 
       <div className="auth-card">
@@ -66,6 +69,7 @@ export default function Login({ status, canResetPassword }) {
           </div>
         </form>
       </div>
-    </GuestLayout>
+      <Footer/>
+    </>
   )
 }
